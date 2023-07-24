@@ -1,4 +1,6 @@
-import { create } from 'zustand'
+import Tempo from '@/enum/tempo-enum';
+import { create } from 'zustand';
+
 
 type ChurrascoStore = {
   valorCarneHomem: number,
@@ -11,10 +13,9 @@ type ChurrascoStore = {
   valorSalGrosso: number,
   valorCarvao: number,
   valorGelo: number,
-  homens: number,
-  mulheres: number,
-  criancas: number,
-  temParticipantes: boolean,
+  homens: number | undefined,
+  mulheres: number | undefined,
+  criancas: number | undefined,
   temAssados: boolean,
   tembebidas: boolean,
   bovina: boolean,
@@ -29,13 +30,17 @@ type ChurrascoStore = {
   suco: boolean,
   salGrosso: number,
   carvao: number,
-  gelo: number
-  tempo: Tempo
+  gelo: number,
+  tempo: Tempo,
   totalGramasCarne: number,
 
+  temParticipantes: () => boolean,
+  setHomens: (homens: number) => void,
+  setMulheres: (mulheres: number) => void,
+  setCriancas: (criancas: number) => void,
 }
 
-const useStore = create<ChurrascoStore>()((set) => ({
+const initState = {
   valorCarneHomem: 400,
   valorCarneMulher: 300,
   valorCarneCrianca: 200,
@@ -46,10 +51,9 @@ const useStore = create<ChurrascoStore>()((set) => ({
   valorSalGrosso: 1000,
   valorCarvao: 5000,
   valorGelo: 1000,
-  homens: 0,
-  mulheres: 0,
-  criancas: 0,
-  temParticipantes: false,
+  homens: undefined,
+  mulheres: undefined,
+  criancas: undefined,
   temAssados: false,
   tembebidas: false,
   bovina: false,
@@ -67,5 +71,24 @@ const useStore = create<ChurrascoStore>()((set) => ({
   gelo: 0,
   tempo: Tempo.quatroHoras,
   totalGramasCarne: 0,
+}
+
+const churrascoStore = create<ChurrascoStore>()((set, get) => ({
+  ...initState,
+
+  temParticipantes: () => {
+    const homens = isNaN(get().homens ?? 0) ? 0 : get().homens ?? 0;
+    const mulheres = isNaN(get().mulheres ?? 0) ? 0 : get().mulheres ?? 0;
+    const criancas = isNaN(get().criancas ?? 0) ? 0 : get().criancas ?? 0;
+
+    return homens + mulheres + criancas > 0;
+  },
+
+  setHomens: (homens: number) => set(() => ({ homens })),
+  setMulheres: (mulheres: number) => set(() => ({ mulheres })),
+  setCriancas: (criancas: number) => set(() => ({ criancas })),
+
+
 }))
 
+export default churrascoStore;

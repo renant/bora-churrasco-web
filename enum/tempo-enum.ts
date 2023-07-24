@@ -4,3 +4,5 @@ enum Tempo {
   oitoHoras,
   dozeOuMaisHoras,
 }
+
+export default Tempo;
