@@ -10,25 +10,25 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <main className="flex min-h-screen flex-col items-center justify-between md:p-24">
         <section>
           <div className="text-white">
             <div className="container mx-auto flex flex-col md:flex-row items-center">
-              <div className="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
+              <div className="flex flex-col w-full lg:w-1/3 justify-center items-start p-4 md:p-8">
                 <h1 className="text-3xl md:text-5xl text-orange-300 tracking-loose">Bora Churrasco</h1>
                 <h2 className="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">Seu app Android para calcular churrasco
                 </h2>
                 <p className="text-sm md:text-base text-gray-50 mb-4">Churrascômetro, uma calculadora ideal para para não deixa que seu churrasco falte nada.</p>
-                <div className="flex flex-row justify-center content-center">
-                  <div className="flex flex-col justify-center pr-4 min-w-[144px]">
+                <div className="flex flex-col md:flex-row justify-center content-center">
+                  <div className="flex flex-col justify-center pr-4 min-w-[144px] w-[144px]">
                     <Link href="/participantes"
                       className="bg-transparent hover:bg-orange-300 text-orange-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-orange-300 hover:border-transparent">
                       Teste online</Link>
                   </div>
-                  <div className="flex flex-col justify-center pr-4 min-w-[144px]">
+                  <div className="flex flex-col justify-center pr-4 min-w-[144px] w-[144px]">
                     <a href='https://play.google.com/store/apps/details?id=io.ionic.bora.churras&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><Image width={150} height={150} alt='Disponível no Google Play' src='/google-play-badge.png' /></a>
                   </div>
-                  <div className="flex flex-col justify-center pr-4 min-w-[144px]">
+                  <div className="flex flex-col justify-center pr-4 min-w-[144px] w-[144px]">
                     <a href="https://www.buymeacoffee.com/renanteixeira"><img src="https://img.buymeacoffee.com/button-api/?text=Cafezinho&emoji=&slug=renanteixeira&button_colour=FF5F5F&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00" /></a>
                   </div>
                 </div>
