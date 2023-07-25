@@ -56,16 +56,17 @@ export default function Resultado() {
     }
   }, []);
 
+  const handleCalcularNovamente = useCallback(() => {
+    resetState();
+    router.push('/');
+  }, [resetState, router]);
 
   if (!temParticipantes()) {
     return <></>;
   }
 
 
-  const handleCalcularNovamente = useCallback(() => {
-    resetState();
-    router.push('/');
-  }, [resetState, router]);
+
 
   return <>
     <main className="flex min-h-screen flex-col items-center p-16 justify-between">
