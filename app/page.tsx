@@ -15,7 +15,7 @@ export default function Home() {
                 <p className="text-sm md:text-base text-gray-50 mb-4">Churrascômetro, uma calculadora ideal para para não deixa que seu churrasco falte nada.</p>
                 <div className="flex flex-row justify-center content-center">
                   <div className="flex flex-col justify-center pr-4 min-w-[144px]">
-                    <Link href="/assados"
+                    <Link href="/participantes"
                       className="bg-transparent hover:bg-orange-300 text-orange-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-orange-300 hover:border-transparent">
                       Teste online</Link>
                   </div>
