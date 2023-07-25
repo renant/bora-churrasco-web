@@ -29,17 +29,6 @@ class AssadosCalculados {
     this.paoAlho = paoAlho ?? 0;
   }
 
-  toMap(): { [key: string]: number } {
-    return {
-      bovina: this.bovina,
-      suina: this.suina,
-      linguica: this.linguica,
-      frango: this.frango,
-      queijo: this.queijo,
-      paoAlho: this.paoAlho,
-    };
-  }
-
   static fromMap(map: { [key: string]: number }): AssadosCalculados {
     return new AssadosCalculados({
       bovina: map['bovina'] ?? 0,
@@ -51,12 +40,8 @@ class AssadosCalculados {
     });
   }
 
-  toJson(): string {
-    return JSON.stringify(this.toMap());
-  }
-
-  static fromJson(source: string): AssadosCalculados {
-    return AssadosCalculados.fromMap(JSON.parse(source));
+  getTotalGramasCarne() : number {
+    return this.bovina + this.suina + this.linguica + this.frango + this.queijo;
   }
 }
 

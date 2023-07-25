@@ -8,8 +8,18 @@ import { buttonVariants } from "@/components/ui/button";
 import CheckButton from "@/components/ui/check-button";
 import churrascoStore from "@/lib/churrascoStore";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
 
 export default function Assados() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!temParticipantes()) {
+      router.push('/');
+    }
+  }, [])
+
   const {
     agua,
     changeAgua,
@@ -19,7 +29,12 @@ export default function Assados() {
     changeSuco,
     refrigerante,
     changeRefrigerante,
+    temParticipantes,
   } = churrascoStore();
+
+  if (!temParticipantes()) {
+    return <></>;
+  }
 
   return <>
     <main className="flex min-h-screen flex-col items-center p-16 justify-between">

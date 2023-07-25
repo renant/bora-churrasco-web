@@ -30,6 +30,10 @@ class BebidasCalculadas {
       refrigerante: map['refrigerante'] ?? 0,
     });
   }
+
+  getTotalBebidas(): number {
+    return this.cerveja + this.agua + this.suco + this.refrigerante;
+  }
 }
 
 export default BebidasCalculadas;

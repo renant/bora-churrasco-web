@@ -5,12 +5,27 @@ import CheckButton from "@/components/ui/check-button";
 import Tempo from "@/enum/tempo-enum";
 import churrascoStore from "@/lib/churrascoStore";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
 
-export default function Assados() {
+export default function TempoPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!temParticipantes()) {
+      router.push('/');
+    }
+  }, [])
+
   const {
     tempo,
     setTempo,
+    temParticipantes
   } = churrascoStore();
+
+  if (!temParticipantes()) {
+    return <></>;
+  }
 
   return <>
     <main className="flex min-h-screen flex-col items-center p-16 justify-between">

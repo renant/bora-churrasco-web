@@ -1,6 +1,7 @@
 import Tempo from '@/enum/tempo-enum';
 import AssadosCalculados from '@/models/assados-calculados';
 import BebidasCalculadas from '@/models/bebidas-calculadas';
+import EssenciaisCalculados from '@/models/essenciais-calculados';
 import ValoresReferencia from '@/models/valores-referencia';
 import { create } from 'zustand';
 
@@ -43,6 +44,7 @@ type ChurrascoStore = {
   totalGramasCarne: number,
   assadosCalculados: AssadosCalculados | undefined,
   bebidasCalculadas: BebidasCalculadas | undefined,
+  essenciaisCalculados: EssenciaisCalculados | undefined,	
 
   temParticipantes: () => boolean,
   temAssados: () => boolean,
@@ -72,6 +74,7 @@ type ChurrascoStore = {
 
   calcularAssados: (ref: ValoresReferencia, homens: number, mulheres: number, criancas: number, totalParticipantes: number) => void,
   calcularBebidas: (totalParticipantes: number, totalAdultos: number) => void,
+  calcularEssenciais: () => void,
   calcular: () => void,
 
   resetState: () => void,
@@ -108,6 +111,7 @@ const initState = {
   totalGramasCarne: 0,
   assadosCalculados: undefined,
   bebidasCalculadas: undefined,
+  essenciaisCalculados: undefined
 }
 
 const churrascoStore = create<ChurrascoStore>()((set, get) => ({
@@ -167,20 +171,6 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
   resetState: () => {
     set(() => ({ ...initState }));
   },
-
-  // resetarValoresReferencia: () => {
-  //   set(() => ({
-  //     valorCarneHomem: 400,
-  //     valorCarneMulher: 300,
-  //     valorCarneCrianca: 200,
-  //     valorPaoDeAlho: 400,
-  //     cervejaPessoa: 1000,
-  //     bebidasNaoAlcoolicas: 600,
-  //     valorAguaPessoa: 200,
-
-  //     totalGramasCarne: 0,
-  //   }));
-  // },
 
   getMultiplicadorTempo: () => {
     const tempo = get().tempo;
@@ -289,6 +279,19 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
     set(() => ({bebidasCalculadas:  BebidasCalculadas.fromMap(bebidas)})) ;
   },
 
+  calcularEssenciais() {
+    const bebidasCalculadas = get().bebidasCalculadas!.getTotalBebidas();
+    const totalGramasCarne = get().assadosCalculados!.getTotalGramasCarne();
+
+    const essenciaisCalculados = new EssenciaisCalculados({
+      carvao: Math.ceil((totalGramasCarne / 5000) * get().valorCarvao),
+      salGrosso: Math.ceil((totalGramasCarne / 10000) * get().valorSalGrosso),
+      gelo: Math.round((bebidasCalculadas / 1000) * get().valorGelo),
+    });
+
+    set(() => ({essenciaisCalculados}));
+  },
+
   calcular: () => {
     const homens = (get().homens ?? 0);
     const mulheres = (get().mulheres ?? 0);
@@ -302,8 +305,7 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
     
     get().calcularAssados(ref, homens, mulheres, criancas, totalParticipantes);
     get().calcularBebidas(totalParticipantes, totalAdultos);
-
-
+    get().calcularEssenciais();
   }
 }))
 
