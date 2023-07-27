@@ -1,12 +1,12 @@
 import { db } from "@/lib/firebase";
 import Recipe from "@/models/recipe";
-import { Timestamp, addDoc, collection, getDocs, limit, query, where } from "firebase/firestore";
+import { Timestamp, addDoc, collection, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 
 const addRecipe = async (recipe: Recipe) => {
     recipe.id = uuidv4();
 
-    const docRef = await addDoc(collection(db, "recipes"), {
+    await addDoc(collection(db, "recipes"), {
         id: recipe.id,
         name: recipe.name,
         imagePath: recipe.imagePath,
@@ -14,21 +14,38 @@ const addRecipe = async (recipe: Recipe) => {
         steps: recipe.steps,
         active: recipe.active,
         createdAt: Timestamp.fromDate(recipe.createdAt),
+        createdBy: recipe.createdBy,
     });
 
     return recipe;
 };
 
-const getRecipes = async () => {
+export type GetRecipesQuery = {
+    limitSize?: number;
+    afterId?: string;
+}
+
+const getRecipes = async (queryParam: GetRecipesQuery = {}) => {
     const recipesRef = collection(db, "recipes");
 
-    const q = query(recipesRef, where("active", "==", true));
+    let q = query(recipesRef, where("active", "==", true), orderBy("createdAt", "desc"));
+
+    if (queryParam.limitSize != undefined)
+        q = query(q, limit(queryParam.limitSize));
+
+    if (queryParam.afterId != undefined)  {
+        const lastQuery = query(recipesRef, where("id", "==", queryParam.afterId), limit(1));
+        const lastSnapshot = await getDocs(lastQuery);
+        const last = lastSnapshot.docs[0];
+
+        q = query(q, startAfter(last));
+    }
+    
     const snapshot = await getDocs(q);
 
     const recipes: any[] = [];
-    snapshot.forEach(async (doc) => {
+    snapshot.forEach((doc) => {
         const data = doc.data();
-
         recipes.push({
             id: data.id,
             name: data.name,
@@ -40,6 +57,8 @@ const getRecipes = async () => {
     });
     return recipes;
 }
+
+
 
 const getRecipeById = async (id: string) => {
     const recipesRef = collection(db, "recipes");
@@ -56,7 +75,7 @@ const getRecipeById = async (id: string) => {
             data.imagePath,
             data.ingredients,
             data.steps,
-            data.createdAt,
+            data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
             data.active,
             data.createdBy
         );
