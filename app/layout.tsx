@@ -1,4 +1,5 @@
 import { Header } from '@/components/ui/header'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import type { Metadata } from 'next'
 import { Oxygen } from 'next/font/google'
 import './globals.css'
@@ -17,10 +18,11 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-
-      <body className={"bg-red-800 " + oxygen.className}>
-        <Header />
-        {children}
+      <body className={"" + oxygen.className}>
+        <ScrollArea className='absolute h-screen  bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-red-600 via-red-900 to-amber-900'>
+          <Header />
+          {children}
+        </ScrollArea>
       </body>
     </html>
   )
