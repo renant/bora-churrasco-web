@@ -60,7 +60,7 @@ const getRecipes = async (queryParam: GetRecipesQuery = {}) => {
 
 
 
-const getRecipeById = async (id: string) => {
+const getRecipeById = async (id: string): Promise<Recipe | null>  => {
     const recipesRef = collection(db, "recipes");
 
     const q = query(recipesRef, where("id", "==", id), limit(1));
