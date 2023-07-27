@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebase";
 import Recipe from "@/models/recipe";
-import { addDoc, collection, getDocs, limit, query, where } from "firebase/firestore";
+import { Timestamp, addDoc, collection, getDocs, limit, query, where } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 
 const addRecipe = async (recipe: Recipe) => {
@@ -9,10 +9,11 @@ const addRecipe = async (recipe: Recipe) => {
     const docRef = await addDoc(collection(db, "recipes"), {
         id: recipe.id,
         name: recipe.name,
-        description: recipe.description,
         imagePath: recipe.imagePath,
         ingredients: recipe.ingredients,
-        steps: recipe.steps
+        steps: recipe.steps,
+        active: recipe.active,
+        createdAt: Timestamp.fromDate(recipe.createdAt),
     });
 
     return recipe;
@@ -21,21 +22,26 @@ const addRecipe = async (recipe: Recipe) => {
 const getRecipes = async () => {
     const recipesRef = collection(db, "recipes");
 
+    const q = query(recipesRef, where("active", "==", true));
+    const snapshot = await getDocs(q);
 
-    const snapshot = await getDocs(recipesRef);
     const recipes: any[] = [];
-    snapshot.forEach((doc) => {
+    snapshot.forEach(async (doc) => {
         const data = doc.data();
+
         recipes.push({
             id: data.id,
             name: data.name,
+            imagePath: data.imagePath,
+            createdAt:  data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
+            active: data.active,
+            createdBy: data.createdBy,
         });
     });
     return recipes;
 }
 
 const getRecipeById = async (id: string) => {
-  console.log(id);
     const recipesRef = collection(db, "recipes");
 
     const q = query(recipesRef, where("id", "==", id), limit(1));
@@ -47,10 +53,12 @@ const getRecipeById = async (id: string) => {
         recipe = new Recipe(
             data.id,
             data.name,
-            data.description,
             data.imagePath,
             data.ingredients,
-            data.steps
+            data.steps,
+            data.createdAt,
+            data.active,
+            data.createdBy
         );
     });
     

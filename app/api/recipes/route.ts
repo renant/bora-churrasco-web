@@ -3,28 +3,33 @@ import { addRecipe, getRecipes } from "@/services/recipe-service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  try {
+    const body = await request.json();
 
-  const recipe = addRecipe(new Recipe(
-    "",
-    body.name,
-    body.description,
-    body.imagePath,
-    body.ingredients,
-    body.steps
-  ));
+    const recipe = await addRecipe(new Recipe(
+      "",
+      body.name,
+      body.imagePath,
+      body.ingredients,
+      body.steps,
+      new Date(),
+      false,
+      body.createdBy
+    ));
+  
+    return NextResponse.json(recipe, {
+      status: 201,
+    });
+  } catch (error) {
+    return NextResponse.json({ "message": "error on create recipe" }, {
+      status: 400,
+    });
+  }
 
-  return NextResponse.json(recipe, {
-    status: 201,
-  });
 }
 
 
-export async function GET(request: NextRequest) {
-  const { search } = new URL(request.url)
-
-  console.log(search);
-
+export async function GET() {
   const recipes = await getRecipes();
 
   return NextResponse.json(recipes, {
