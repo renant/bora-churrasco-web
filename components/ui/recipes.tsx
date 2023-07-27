@@ -47,8 +47,8 @@ export function Recipes() {
       <h4 className="text-3xl text-orange-400 font-extrabold md:px-24 mb-2 ">Receitas</h4>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4 md:px-24">
         {recipes.map((recipe) => (
-          <Link className="hover:cursor-pointer" href={`recipes/${recipe.id}`}>
-            <Card key={recipe.id}>
+          <Link key={recipe.id} className="hover:cursor-pointer" href={`recipes/${recipe.id}`}>
+            <Card >
               <CardHeader>
                 <CardTitle>
                   {recipe.name}

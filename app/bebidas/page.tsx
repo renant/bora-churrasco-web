@@ -14,12 +14,6 @@ import { useEffect } from "react";
 export default function Assados() {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!temParticipantes()) {
-      router.push('/');
-    }
-  }, [])
-
   const {
     agua,
     changeAgua,
@@ -31,6 +25,14 @@ export default function Assados() {
     changeRefrigerante,
     temParticipantes,
   } = churrascoStore();
+
+  useEffect(() => {
+    if (!temParticipantes()) {
+      router.push('/');
+    }
+  }, [router, temParticipantes])
+
+
 
   if (!temParticipantes()) {
     return <></>;

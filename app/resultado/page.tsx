@@ -54,7 +54,7 @@ export default function Resultado() {
     } else {
       calcular();
     }
-  }, []);
+  }, [calcular, temParticipantes, router]);
 
   const handleCalcularNovamente = useCallback(() => {
     resetState();

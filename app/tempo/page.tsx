@@ -11,17 +11,18 @@ import { useEffect } from "react";
 export default function TempoPage() {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!temParticipantes()) {
-      router.push('/');
-    }
-  }, [])
-
   const {
     tempo,
     setTempo,
     temParticipantes
   } = churrascoStore();
+
+  useEffect(() => {
+    if (!temParticipantes()) {
+      router.push('/');
+    }
+  }, [temParticipantes, router])
+
 
   if (!temParticipantes()) {
     return <></>;

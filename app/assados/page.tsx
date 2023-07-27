@@ -16,12 +16,6 @@ import { useEffect } from "react";
 export default function Assados() {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!temParticipantes()) {
-      router.push('/');
-    }
-  }, [])
-
   const {
     bovina,
     changeBovina,
@@ -38,6 +32,14 @@ export default function Assados() {
     temAssados,
     temParticipantes
   } = churrascoStore();
+
+  useEffect(() => {
+    if (!temParticipantes()) {
+      router.push('/');
+    }
+  }, [router, temParticipantes])
+
+
 
   if (!temParticipantes()) {
     return <></>;
