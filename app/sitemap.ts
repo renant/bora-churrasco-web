@@ -6,14 +6,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const recipesRoutes = recipes.map(recipe => {
     return {
-      url: recipe.id ? `/recipes/${recipe.id}` : '',
+      url: recipe.id ? `recipes/${recipe.id}` : '',
       lastModified: recipe.createdAt,
     }
   });
 
   const routes = [''].map(route => {
     return {
-      url: route,
+      url: `https://www.borachurrasco.app/${route}`,
       lastModified: new Date(),
     }
   });
