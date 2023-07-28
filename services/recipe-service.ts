@@ -25,7 +25,7 @@ export type GetRecipesQuery = {
     afterId?: string;
 }
 
-const getRecipes = async (queryParam: GetRecipesQuery = {}) => {
+const getRecipes = async (queryParam: GetRecipesQuery = {}): Promise<Recipe[]> => {
     const recipesRef = collection(db, "recipes");
 
     let q = query(recipesRef, where("active", "==", true), orderBy("createdAt", "desc"));
