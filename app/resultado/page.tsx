@@ -119,7 +119,7 @@ export default function Resultado() {
                   Refrigerante: {getMedida(bebidasCalculadas!.refrigerante, TipoMedida.liquido)}
                 </li>}
                 {agua && <li className="text-sm md:text-md leading-relaxed md:leading-snug text-orange-300">
-                  Linguiça: {getMedida(bebidasCalculadas!.agua, TipoMedida.liquido)}
+                  Água: {getMedida(bebidasCalculadas!.agua, TipoMedida.liquido)}
                 </li>}
                 {suco && <li className="text-sm md:text-md leading-relaxed md:leading-snug text-orange-300">
                   Suco: {getMedida(bebidasCalculadas!.suco, TipoMedida.liquido)}
