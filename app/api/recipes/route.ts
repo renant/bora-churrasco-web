@@ -3,6 +3,12 @@ import { addRecipe, getRecipes } from "@/services/recipe-service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  if (request.headers.get('x-api-key') !== process.env.API_KEY) {
+    return NextResponse.json({ "message": "unauthorized" }, {
+      status: 401,
+    });
+  }
+
   try {
     const body = await request.json();
 
@@ -29,7 +35,13 @@ export async function POST(request: NextRequest) {
 }
 
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (request.headers.get('x-api-key') !== process.env.API_KEY) {
+    return NextResponse.json({ "message": "unauthorized" }, {
+      status: 401,
+    });
+  }
+
   const recipes = await getRecipes();
 
   return NextResponse.json(recipes, {
