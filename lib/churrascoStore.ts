@@ -293,9 +293,9 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
   },
 
   calcular: () => {
-    const homens = (get().homens ?? 0);
-    const mulheres = (get().mulheres ?? 0);
-    const criancas = (get().criancas ?? 0);
+    const homens = isNaN(get().homens ?? 0) ? 0 : get().homens ?? 0;
+    const mulheres = isNaN(get().mulheres ?? 0) ? 0 : get().mulheres ?? 0;
+    const criancas = isNaN(get().criancas ?? 0) ? 0 : get().criancas ?? 0;
 
     const totalParticipantes = Math.round(homens + mulheres + (criancas / 2));
     const totalAdultos = Math.round(homens + mulheres);
