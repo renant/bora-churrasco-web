@@ -1,11 +1,33 @@
-import { getRecipeById } from "@/services/recipe-service";
+import { getRecipeById, getRecipes } from "@/services/recipe-service";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+export async function generateStaticParams() {
+  const recipes = await getRecipes({});
+  return recipes.map((recipe) => ({
+    id: recipe.id
+  }))
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { id } = params;
+  const recipe = await getRecipeById(id);
+
+  if (!recipe) {
+    return {
+      title: "Bora Churrasco! - Receita não encontrada",
+      description: "Receita não encontrado"
+    }
+  }
+
+  return {
+    title: `${recipe.name} - Bora Churrasco`,
+    description: `Receita de ${recipe.name}`
+  }
+}
+
 export default async function RecipePage({ params }: { params: { id: string } }) {
   const recipe = await getRecipeById(params.id);
-
-  console.log(recipe);
 
   if (!recipe) {
     return notFound();
