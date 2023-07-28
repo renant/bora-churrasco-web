@@ -1,8 +1,9 @@
-import { Header } from '@/components/ui/header'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import type { Metadata } from 'next'
-import { Oxygen } from 'next/font/google'
-import './globals.css'
+import { Header } from '@/components/ui/header';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Analytics } from '@vercel/analytics/react';
+import type { Metadata } from 'next';
+import { Oxygen } from 'next/font/google';
+import './globals.css';
 
 const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default async function RootLayout({
           <Header />
           {children}
         </ScrollArea>
+        <Analytics />
       </body>
     </html>
   )
