@@ -32,7 +32,6 @@ const getPosts = async (): Promise<Post[]> => {
   const response = await fetch("https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query", {
     method: 'POST',
     headers,
-    cache: 'no-store',
   });
 
   const postsDatabase = await response.json() as PostsNotionDatabaseResult;
@@ -82,7 +81,6 @@ const getPost = async (slugId: string): Promise<PostContent> => {
   const response = await fetch(`https://api.notion.com/v1/pages/${id}`, {
     method: 'GET',
     headers,
-    cache: 'no-store',
   });
 
   const post = await response.json() as Result;
