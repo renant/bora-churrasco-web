@@ -49,7 +49,7 @@ export default function Home() {
           </p>
 
           <p>
-            A Calculadora de Churrasco é uma poderosa aliada para garantir o sucesso do seu evento, pois fornece informações precisas e detalhadas, permitindo que você faça ajustes de acordo com as particularidades do seu churrasco.
+            A Calculadora de Churrasco é uma poderosa aliada para garantir o sucesso do seu evento, pois fornece informações precisas e detalhadas para calculadora churrasco por pessoa, permitindo que você faça ajustes de acordo com as particularidades do seu churrasco.
           </p>
 
           <p>
