@@ -4,7 +4,7 @@ import BovinaIcon from "../icons/bovina-icon";
 
 export function Header() {
   return (
-    <div className="absolute min-w-full bg-red-800 pb-2 shadow-md">
+    <div className="absolute min-w-full bg-red-800 pb-2 shadow-md z-20">
       <div className="container mx-auto mt-2">
         <div className="flex justify-between">
           <div className="flex space-x-4">

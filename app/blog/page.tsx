@@ -1,4 +1,5 @@
 import { getPosts } from "@/services/notion-blog-service";
+import Link from "next/link";
 
 export default async function PostsPage() {
   const posts = await getPosts();
@@ -9,10 +10,10 @@ export default async function PostsPage() {
 
       <div>
         {posts.map((post) => (
-          <div key={post.id}>
+          <Link href={`post/${post.slugId}`} key={post.id}>
             <h2>{post.title}</h2>
             <p>{post.resume}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
