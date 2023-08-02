@@ -9,6 +9,22 @@ export async function generateStaticParams() {
   }))
 }
 
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug);
+
+  if (!post) {
+    return {
+      title: "Bora Churrasco! - Post não encontrado",
+      description: "Post não encontrado"
+    }
+  }
+
+  return {
+    title: `${post.title} - Bora Churrasco`,
+    description: `${post.resume}`
+  }
+}
+
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
 
