@@ -33,7 +33,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
   }
 
   return (
-    <main className="min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl md:px-64">
+    <main className="min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl px-9 lg:px-64">
       <div className="relative w-full h-64 z-0">
         <Image src={post.coverImage} fill={true} objectFit="cover" alt={`Image do post ${post.title}`} />
       </div>

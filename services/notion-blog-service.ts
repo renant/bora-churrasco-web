@@ -32,6 +32,20 @@ const getPosts = async (): Promise<Post[]> => {
   const response = await fetch("https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query", {
     method: 'POST',
     headers,
+    body: JSON.stringify({
+      "filter": {
+        "property": "Published",
+        "checkbox": {
+          "equals": true
+        }
+      },
+      "sorts": [
+        {
+          "property": "Date",
+          "direction": "descending"
+        }
+      ]
+    })
   });
 
   const postsDatabase = await response.json() as PostsNotionDatabaseResult;
@@ -39,16 +53,16 @@ const getPosts = async (): Promise<Post[]> => {
   return postsDatabase.results.map(post => {
     return {
       title: post.properties.Page.title[0].plain_text,
-      slug: post.properties.Slug.rich_text[0].plain_text,
+      slug: post.properties.Slug.rich_text.length > 0 ? post.properties.Slug.rich_text[0].plain_text : "",
       published: post.properties.Published.checkbox,
-      date: post.properties.Date.date.start,
+      date: post.properties.Date.date ? new Date(post.properties.Date.date.start) : null,
       coverImage: post.properties["Cover image"].files.length > 0 ? post.properties["Cover image"].files[0].file.url : "",
       resume: post.properties.Resume.rich_text[0].plain_text,
       url: post.url,
       id: post.url.split("/").pop()?.split("-").pop(),
       slugId: post.url.split("/").pop()
     } as Post
-  }).filter(post => post.published);
+  });
 }
 
 const getPost = async (slugId: string): Promise<PostContent> => {
