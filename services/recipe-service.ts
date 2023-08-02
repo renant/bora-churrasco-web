@@ -33,14 +33,14 @@ const getRecipes = async (queryParam: GetRecipesQuery = {}): Promise<Recipe[]> =
     if (queryParam.limitSize != undefined)
         q = query(q, limit(queryParam.limitSize));
 
-    if (queryParam.afterId != undefined)  {
+    if (queryParam.afterId != undefined) {
         const lastQuery = query(recipesRef, where("id", "==", queryParam.afterId), limit(1));
         const lastSnapshot = await getDocs(lastQuery);
         const last = lastSnapshot.docs[0];
 
         q = query(q, startAfter(last));
     }
-    
+
     const snapshot = await getDocs(q);
 
     const recipes: any[] = [];
@@ -50,7 +50,7 @@ const getRecipes = async (queryParam: GetRecipesQuery = {}): Promise<Recipe[]> =
             id: data.id,
             name: data.name,
             imagePath: data.imagePath,
-            createdAt:  data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
+            createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
             active: data.active,
             createdBy: data.createdBy,
         });
@@ -58,9 +58,66 @@ const getRecipes = async (queryParam: GetRecipesQuery = {}): Promise<Recipe[]> =
     return recipes;
 }
 
+const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
+    const recipesRef = collection(db, "recipes");
+
+    const recipes: any[] = [];
 
 
-const getRecipeById = async (id: string): Promise<Recipe | null>  => {
+        const q = query(recipesRef, where("id", ">=", id), where("id", "!=", id), orderBy("id"), limit(5));
+        const snapshot = await getDocs(q);
+
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            recipes.push(new Recipe(
+                data.id,
+                data.name,
+                data.imagePath,
+                data.ingredients,
+                data.steps,
+                data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
+                data.active,
+                data.createdBy
+            ));
+        });
+
+        if(recipes.length < 5) {
+            const q = query(recipesRef, where("id", "<=", id), where("id", "!=", id), orderBy("id"), limit(5 - recipes.length));
+            const snapshot = await getDocs(q);
+    
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                recipes.push(new Recipe(
+                    data.id,
+                    data.name,
+                    data.imagePath,
+                    data.ingredients,
+                    data.steps,
+                    data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
+                    data.active,
+                    data.createdBy
+                ));
+            });
+        }
+    
+
+    return recipes;
+}
+
+const AUTO_ID_LENGTH = 20;
+const AUTO_ID_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+const getRandomGeneratedId = () => {
+    const maxRandom = AUTO_ID_ALPHABET.length;
+    let id = '';
+    for (let i = 0; i < AUTO_ID_LENGTH; i++) {
+        id = id + AUTO_ID_ALPHABET[Math.floor(Math.random() * maxRandom)];
+    }
+    return id;
+}
+
+
+const getRecipeById = async (id: string): Promise<Recipe | null> => {
     const recipesRef = collection(db, "recipes");
 
     const q = query(recipesRef, where("id", "==", id), limit(1));
@@ -80,8 +137,8 @@ const getRecipeById = async (id: string): Promise<Recipe | null>  => {
             data.createdBy
         );
     });
-    
+
     return recipe;
 }
 
-export { addRecipe, getRecipeById, getRecipes };
+export { addRecipe, getRecipeById, getRecipes, getRecipesExceptCurrent };

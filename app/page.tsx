@@ -17,7 +17,7 @@ export default function Home() {
                 <h1 className="text-3xl md:text-5xl text-orange-300 tracking-loose hidden md:block">Bora Churrasco</h1>
                 <h2 className="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2 mt-8 md:mt-0">Seu app Android para calcular churrasco
                 </h2>
-                <p className="text-sm md:text-base text-gray-50 mb-4">Churrascômetro, uma calculadora ideal para para não deixa que seu churrasco falte nada.</p>
+                <p className="text-sm md:text-base text-gray-50 mb-4">Churrascômetro "Calculadora de Churrasco", uma calculadora ideal para para não deixa que seu churrasco falte nada.</p>
                 <div className="flex flex-col md:flex-row justify-center content-center">
                   <div className="flex flex-col justify-center pr-4 min-w-[144px] w-[144px]">
                     <Link href="/participantes"
@@ -45,7 +45,11 @@ export default function Home() {
       <div className="container mx-auto mb-20 grid grid-cols-1 gap-2 md:gap-8">
         <div className="prose max-w-none prose-orange">
           <p>
-            Bora Churrasco é uma ferramenta incrível no estilo churrascômetro, uma calculadora perfeita para garantir o sucesso absoluto do seu churrasco, sem deixar faltar absolutamente nada.
+            Bora Churrasco é uma ferramenta incrível no estilo churrascômetro "Calculadora de Churrasco", uma calculadora perfeita para garantir o sucesso absoluto do seu churrasco, sem deixar faltar absolutamente nada.
+          </p>
+
+          <p>
+            A Calculadora de Churrasco é uma poderosa aliada para garantir o sucesso do seu evento, pois fornece informações precisas e detalhadas, permitindo que você faça ajustes de acordo com as particularidades do seu churrasco.
           </p>
 
           <p>

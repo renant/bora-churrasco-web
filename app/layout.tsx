@@ -10,7 +10,7 @@ const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Bora Churrasco - O Melhor App para Churrascos Incríveis!',
-  description: 'Descubra o aplicativo definitivo para churrasqueiros apaixonados! O Bora Churrasco é a ferramenta perfeita para calcular o seu churrasco. Tenha uma experiência única de churrasco com recursos incríveis e uma interface intuitiva. Baixe agora e torne-se um mestre do churrasco!',
+  description: 'Descubra o aplicativo definitivo para churrasqueiros apaixonados! O Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco. Tenha uma experiência única de churrasco com recursos incríveis e uma interface intuitiva. Baixe agora e torne-se um mestre do churrasco!',
   manifest: 'https://www.borachurrasco.app/manifest.json',
 }
 

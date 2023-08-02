@@ -1,5 +1,6 @@
-import { getRecipeById, getRecipes } from "@/services/recipe-service";
+import { getRecipeById, getRecipes, getRecipesExceptCurrent } from "@/services/recipe-service";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -28,16 +29,17 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 export default async function RecipePage({ params }: { params: { id: string } }) {
   const recipe = await getRecipeById(params.id);
+  const otherRecipes = await getRecipesExceptCurrent(params.id);
 
   if (!recipe) {
     return notFound();
   }
 
   return (
-    <main className="flex min-h-screen md:container md:mx-auto md:pt-40">
+    <main className="flex min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl">
 
       <div className=' md:w-full'>
-        <div className='flex flex-col md:flex-row  md:p-6 bg-white md:rounded-3xl shadow-xl overflow-hidden'>
+        <div className='flex flex-col md:flex-row  md:p-6'>
           <div className="md:w-1/2">
             <Image className="shadow-xl overflow-hidden md:rounded-3xl " src={recipe.imagePath} alt={`Foto da receita: ${recipe.name}`} width={512} height={512} />
           </div>
@@ -64,6 +66,19 @@ export default async function RecipePage({ params }: { params: { id: string } })
 
           </div>
 
+        </div>
+        <div className="p-6">
+          <h2 className="py-2 text-orange-400 font-semibold text-center">Confira outras receitas:</h2>
+          <div className="flex flex-row flex-wrap gap-2 justify-center">
+            {otherRecipes.map((recipe) => (
+              <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
+                <div className="relative text-center">
+                  <Image className="shadow-xl overflow-hidden rounded-3xl opacity-70" src={recipe.imagePath} alt={`Foto da receita: ${recipe.name}`} width={200} height={200} />
+                  <h3 className="custom-centered font-extrabold text-lg text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">{recipe.name}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 
