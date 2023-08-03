@@ -1,4 +1,5 @@
 import { getPost, getPosts } from "@/services/notion-blog-service";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -35,8 +36,8 @@ export default async function PostPage({ params }: { params: { slug: string } })
 
   return (
     <main className="min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl px-9 lg:px-64">
-      <div className="flex justify-center items-center w-full h-64 z-0 overflow-hidden rounded-md">
-        <img src={post.coverImage} className=" object-cover flex-shrink-0 min-h-full min-w-full" alt={`Image do post ${post.title}`} />
+      <div className="relative w-full h-64 z-0">
+        <Image fill={true} className="rounded-md object-cover" src={post.coverImage} alt={`Image do post ${post.title}`} />
       </div>
       <article className="prose md:prose-lg max-w-none prose-sm prose-headings:my-4 prose-p:my-2 prose-h2:my-4 pb-44 prose-a:text-blue-700">
 

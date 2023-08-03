@@ -6,6 +6,7 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { getPosts } from "@/services/notion-blog-service";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function PostsPage() {
@@ -22,8 +23,8 @@ export default async function PostsPage() {
                 <CardDescription>{post.resume}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex justify-center items-center w-full h-64 z-0 overflow-hidden rounded-md">
-                  <img src={post.coverImage} className=" object-cover flex-shrink-0 min-h-full min-w-full" alt={`Image do post ${post.title}`} />
+                <div className="relative w-full h-64 z-0">
+                  <Image fill={true} className="rounded-md object-cover" src={post.coverImage} alt={`Image do post ${post.title}`} />
                 </div>
               </CardContent>
             </Card>
