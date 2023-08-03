@@ -1,4 +1,5 @@
-import { getRecipeById, getRecipes, getRecipesExceptCurrent } from "@/services/recipe-service";
+import Recipe from "@/models/recipe";
+import { getRecipeById, getRecipes } from "@/services/recipe-service";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -28,8 +29,11 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function RecipePage({ params }: { params: { id: string } }) {
-  const recipe = await getRecipeById(params.id);
-  const otherRecipes = await getRecipesExceptCurrent(params.id);
+  const response = await fetch(`${process.env.URL}/api/recipes/${params.id}`);
+  const recipe = await response.json() as Recipe | null;
+
+  const responseOthers = await fetch(`${process.env.URL}/api/recipes/others/${params.id}`);
+  const otherRecipes = await responseOthers.json() as Recipe[];
 
   if (!recipe) {
     return notFound();

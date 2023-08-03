@@ -1,14 +1,16 @@
-import { getRecipeById } from "@/services/recipe-service";
+import { getPost } from "@/services/notion-blog-service";
 import { NextRequest, NextResponse } from "next/server";
 
+
 export async function GET(request: NextRequest) {
+
   const { pathname } = new URL(request.url)
   
   const id = pathname.split("/").pop() ?? "";
 
-  const recipe = await getRecipeById(id);
+  const post = await getPost(id);
 
-  return NextResponse.json(recipe, {
+  return NextResponse.json(post, {
     status: 200,
   });
 }

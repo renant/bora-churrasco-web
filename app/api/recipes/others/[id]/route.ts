@@ -1,4 +1,4 @@
-import { getRecipeById } from "@/services/recipe-service";
+import { getRecipesExceptCurrent } from "@/services/recipe-service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   
   const id = pathname.split("/").pop() ?? "";
 
-  const recipe = await getRecipeById(id);
+  const recipe = await getRecipesExceptCurrent(id);
 
   return NextResponse.json(recipe, {
     status: 200,

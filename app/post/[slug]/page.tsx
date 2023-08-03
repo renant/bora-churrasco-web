@@ -1,5 +1,4 @@
-import { getPost, getPosts } from "@/services/notion-blog-service";
-import Image from "next/image";
+import { PostContent, getPost, getPosts } from "@/services/notion-blog-service";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -10,7 +9,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+  const response = await fetch(`${process.env.URL}/api/posts/${params.slug}`);
+  const post = await response.json() as PostContent;
 
   if (!post) {
     return {
@@ -25,6 +25,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
+
+
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
 
@@ -34,8 +36,8 @@ export default async function PostPage({ params }: { params: { slug: string } })
 
   return (
     <main className="min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl px-9 lg:px-64">
-      <div className="relative w-full h-64 z-0">
-        <Image src={post.coverImage} fill={true} objectFit="cover" alt={`Image do post ${post.title}`} />
+      <div className="flex justify-center items-center w-full h-64 z-0 overflow-hidden rounded-md">
+        <img src={post.coverImage} className=" object-cover flex-shrink-0 min-h-full min-w-full" alt={`Image do post ${post.title}`} />
       </div>
       <article className="prose md:prose-lg max-w-none prose-sm prose-headings:my-4 prose-p:my-2 prose-h2:my-4 pb-44 prose-a:text-blue-700">
 

@@ -5,12 +5,12 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { getPosts } from "@/services/notion-blog-service";
-import Image from "next/image";
+import { Post } from "@/services/notion-blog-service";
 import Link from "next/link";
 
 export default async function PostsPage() {
-  const posts = await getPosts();
+  const response = await fetch(`${process.env.URL}/api/posts`);
+  const posts = await response.json() as Array<Post>;
 
   return (
     <main className="min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl px-9">
@@ -23,8 +23,8 @@ export default async function PostsPage() {
                 <CardDescription>{post.resume}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="relative w-full h-64 z-0">
-                  <Image className="rounded-md" src={post.coverImage} fill={true} objectFit="cover" alt={`Image do post ${post.title}`} />
+                <div className="flex justify-center items-center w-full h-64 z-0 overflow-hidden rounded-md">
+                  <img src={post.coverImage} className=" object-cover flex-shrink-0 min-h-full min-w-full" alt={`Image do post ${post.title}`} />
                 </div>
               </CardContent>
             </Card>
