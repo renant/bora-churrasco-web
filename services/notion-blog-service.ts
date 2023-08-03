@@ -83,7 +83,12 @@ const getPost = async (slugId: string): Promise<PostContent> => {
     .use(html)
     .process(matterResult.content);
 
-  const content = processedContent.value.toString().replace(/(?:\r\n|\r|\n)/g, '').replace(/"/g, "'");
+  const content = processedContent.value
+                      .toString()
+                      .replace(/(?:\r\n|\r|\n)/g, '')
+                      .replace(/"/g, "'")
+                      .replace("|startVideoEmbeded|", "<iframe width='560' height='315' src='")
+                      .replace("|endVideoEmbeded|", "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>");
 
 
   var headers = new Headers();
