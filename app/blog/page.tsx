@@ -5,12 +5,11 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { Post } from "@/services/notion-blog-service";
+import { getPosts } from "@/services/notion-blog-service";
 import Link from "next/link";
 
 export default async function PostsPage() {
-  const response = await fetch(`${process.env.URL}/api/posts`);
-  const posts = await response.json() as Array<Post>;
+  const posts = await getPosts();
 
   return (
     <main className="min-h-screen md:container md:mx-auto md:pt-20 bg-white shadow-xl px-9">
