@@ -1,4 +1,4 @@
-import { PostContent, getPost, getPosts } from "@/services/notion-blog-service";
+import { getPost, getPosts } from "@/services/notion-blog-service";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -9,8 +9,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const response = await fetch(`${process.env.URL}/api/posts/${params.slug}`);
-  const post = await response.json() as PostContent;
+  const post = await getPost(params.slug);
 
   if (!post) {
     return {
