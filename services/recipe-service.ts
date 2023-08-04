@@ -1,144 +1,174 @@
-import { db } from "@/lib/firebase";
-import Recipe from "@/models/recipe";
-import { Timestamp, addDoc, collection, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
+import { db } from '@/lib/firebase'
+import Recipe from '@/models/recipe'
+import {
+    Timestamp,
+    addDoc,
+    collection,
+    getDocs,
+    limit,
+    orderBy,
+    query,
+    startAfter,
+    where,
+} from 'firebase/firestore'
+import { v4 as uuidv4 } from 'uuid'
 
 const addRecipe = async (recipe: Recipe) => {
-    recipe.id = uuidv4();
+  recipe.id = uuidv4()
 
-    await addDoc(collection(db, "recipes"), {
-        id: recipe.id,
-        name: recipe.name,
-        imagePath: recipe.imagePath,
-        ingredients: recipe.ingredients,
-        steps: recipe.steps,
-        active: recipe.active,
-        createdAt: Timestamp.fromDate(recipe.createdAt),
-        createdBy: recipe.createdBy,
-    });
+  await addDoc(collection(db, 'recipes'), {
+    id: recipe.id,
+    name: recipe.name,
+    imagePath: recipe.imagePath,
+    ingredients: recipe.ingredients,
+    steps: recipe.steps,
+    active: recipe.active,
+    createdAt: Timestamp.fromDate(recipe.createdAt),
+    createdBy: recipe.createdBy,
+  })
 
-    return recipe;
-};
-
-export type GetRecipesQuery = {
-    limitSize?: number;
-    afterId?: string;
+  return recipe
 }
 
-const getRecipes = async (queryParam: GetRecipesQuery = {}): Promise<Recipe[]> => {
-    const recipesRef = collection(db, "recipes");
+export type GetRecipesQuery = {
+  limitSize?: number
+  afterId?: string
+}
 
-    let q = query(recipesRef, where("active", "==", true), orderBy("createdAt", "desc"));
+const getRecipes = async (
+  queryParam: GetRecipesQuery = {},
+): Promise<Recipe[]> => {
+  const recipesRef = collection(db, 'recipes')
 
-    if (queryParam.limitSize != undefined)
-        q = query(q, limit(queryParam.limitSize));
+  let q = query(
+    recipesRef,
+    where('active', '==', true),
+    orderBy('createdAt', 'desc'),
+  )
 
-    if (queryParam.afterId != undefined) {
-        const lastQuery = query(recipesRef, where("id", "==", queryParam.afterId), limit(1));
-        const lastSnapshot = await getDocs(lastQuery);
-        const last = lastSnapshot.docs[0];
+  if (queryParam.limitSize !== undefined)
+    q = query(q, limit(queryParam.limitSize))
 
-        q = query(q, startAfter(last));
-    }
+  if (queryParam.afterId !== undefined) {
+    const lastQuery = query(
+      recipesRef,
+      where('id', '==', queryParam.afterId),
+      limit(1),
+    )
+    const lastSnapshot = await getDocs(lastQuery)
+    const last = lastSnapshot.docs[0]
 
-    const snapshot = await getDocs(q);
+    q = query(q, startAfter(last))
+  }
 
-    const recipes: any[] = [];
-    snapshot.forEach((doc) => {
-        const data = doc.data();
-        recipes.push({
-            id: data.id,
-            name: data.name,
-            imagePath: data.imagePath,
-            createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
-            active: data.active,
-            createdBy: data.createdBy,
-        });
-    });
-    return recipes;
+  const snapshot = await getDocs(q)
+
+  const recipes: any[] = []
+  snapshot.forEach((doc) => {
+    const data = doc.data()
+    recipes.push({
+      id: data.id,
+      name: data.name,
+      imagePath: data.imagePath,
+      createdAt:
+        data.createdAt instanceof Timestamp
+          ? data.createdAt.toDate()
+          : data.createdAt,
+      active: data.active,
+      createdBy: data.createdBy,
+    })
+  })
+  return recipes
 }
 
 const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
-    const recipesRef = collection(db, "recipes");
+  const recipesRef = collection(db, 'recipes')
 
-    const recipes: any[] = [];
+  const recipes: any[] = []
 
+  const q = query(
+    recipesRef,
+    where('id', '>=', id),
+    where('id', '!=', id),
+    orderBy('id'),
+    limit(5),
+  )
+  const snapshot = await getDocs(q)
 
-        const q = query(recipesRef, where("id", ">=", id), where("id", "!=", id), orderBy("id"), limit(5));
-        const snapshot = await getDocs(q);
+  snapshot.forEach((doc) => {
+    const data = doc.data()
+    recipes.push(
+      new Recipe(
+        data.id,
+        data.name,
+        data.imagePath,
+        data.ingredients,
+        data.steps,
+        data.createdAt instanceof Timestamp
+          ? data.createdAt.toDate()
+          : data.createdAt,
+        data.active,
+        data.createdBy,
+      ),
+    )
+  })
 
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            recipes.push(new Recipe(
-                data.id,
-                data.name,
-                data.imagePath,
-                data.ingredients,
-                data.steps,
-                data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
-                data.active,
-                data.createdBy
-            ));
-        });
+  if (recipes.length < 5) {
+    const q = query(
+      recipesRef,
+      where('id', '<=', id),
+      where('id', '!=', id),
+      orderBy('id'),
+      limit(5 - recipes.length),
+    )
+    const snapshot = await getDocs(q)
 
-        if(recipes.length < 5) {
-            const q = query(recipesRef, where("id", "<=", id), where("id", "!=", id), orderBy("id"), limit(5 - recipes.length));
-            const snapshot = await getDocs(q);
-    
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                recipes.push(new Recipe(
-                    data.id,
-                    data.name,
-                    data.imagePath,
-                    data.ingredients,
-                    data.steps,
-                    data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
-                    data.active,
-                    data.createdBy
-                ));
-            });
-        }
-    
+    snapshot.forEach((doc) => {
+      const data = doc.data()
+      recipes.push(
+        new Recipe(
+          data.id,
+          data.name,
+          data.imagePath,
+          data.ingredients,
+          data.steps,
+          data.createdAt instanceof Timestamp
+            ? data.createdAt.toDate()
+            : data.createdAt,
+          data.active,
+          data.createdBy,
+        ),
+      )
+    })
+  }
 
-    return recipes;
+  return recipes
 }
-
-const AUTO_ID_LENGTH = 20;
-const AUTO_ID_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-const getRandomGeneratedId = () => {
-    const maxRandom = AUTO_ID_ALPHABET.length;
-    let id = '';
-    for (let i = 0; i < AUTO_ID_LENGTH; i++) {
-        id = id + AUTO_ID_ALPHABET[Math.floor(Math.random() * maxRandom)];
-    }
-    return id;
-}
-
 
 const getRecipeById = async (id: string): Promise<Recipe | null> => {
-    const recipesRef = collection(db, "recipes");
+  const recipesRef = collection(db, 'recipes')
 
-    const q = query(recipesRef, where("id", "==", id), limit(1));
-    const snapshot = await getDocs(q);
+  const q = query(recipesRef, where('id', '==', id), limit(1))
+  const snapshot = await getDocs(q)
 
-    let recipe: Recipe | null = null;
-    snapshot.forEach((doc) => {
-        const data = doc.data();
-        recipe = new Recipe(
-            data.id,
-            data.name,
-            data.imagePath,
-            data.ingredients,
-            data.steps,
-            data.createdAt instanceof Timestamp ? data.createdAt.toDate() : data.createdAt,
-            data.active,
-            data.createdBy
-        );
-    });
+  let recipe: Recipe | null = null
+  snapshot.forEach((doc) => {
+    const data = doc.data()
+    recipe = new Recipe(
+      data.id,
+      data.name,
+      data.imagePath,
+      data.ingredients,
+      data.steps,
+      data.createdAt instanceof Timestamp
+        ? data.createdAt.toDate()
+        : data.createdAt,
+      data.active,
+      data.createdBy,
+    )
+  })
 
-    return recipe;
+  return recipe
 }
 
-export { addRecipe, getRecipeById, getRecipes, getRecipesExceptCurrent };
+export { addRecipe, getRecipeById, getRecipes, getRecipesExceptCurrent }

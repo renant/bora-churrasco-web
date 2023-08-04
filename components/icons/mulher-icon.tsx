@@ -1,14 +1,25 @@
-import React from 'react';
+import React from 'react'
 
 interface MulherIconProps {
-  size?: number;
-  color?: string;
-  className?: string;
+  size?: number
+  color?: string
+  className?: string
 }
 
-const MulherIcon: React.FC<MulherIconProps> = ({ size = 60, color = 'orange', className = "" }) => {
+const MulherIcon: React.FC<MulherIconProps> = ({
+  size = 60,
+  color = 'orange',
+  className = '',
+}) => {
   return (
-    <svg className={className} width={size} height={size} viewBox="0 0 480.063 480.063" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 480.063 480.063"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g id="XMLID_20_">
         <g id="XMLID_31_">
           <g id="XMLID_32_">
@@ -33,7 +44,7 @@ const MulherIcon: React.FC<MulherIconProps> = ({ size = 60, color = 'orange', cl
         </g>
       </g>
     </svg>
-  );
-};
+  )
+}
 
-export default MulherIcon;
+export default MulherIcon

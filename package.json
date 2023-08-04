@@ -23,7 +23,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "compressorjs": "^1.2.1",
-    "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
     "firebase": "^10.1.0",
     "gray-matter": "^4.0.3",
@@ -45,6 +44,9 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.9"
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@tailwindcss/typography": "^0.5.9",
+    "eslint": "^8.46.0",
+    "prettier-plugin-tailwindcss": "^0.4.1"
   }
 }
