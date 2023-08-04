@@ -9,6 +9,8 @@ import { getPosts } from "@/services/notion-blog-service";
 import Image from "next/image";
 import Link from "next/link";
 
+export const revalidate = 900;
+
 export default async function PostsPage() {
   const posts = await getPosts();
 
