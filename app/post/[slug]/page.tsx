@@ -9,6 +9,8 @@ export async function generateStaticParams() {
   }))
 }
 
+export const revalidate = 900;
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
 
