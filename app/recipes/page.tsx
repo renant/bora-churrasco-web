@@ -9,7 +9,7 @@ export default async function RecipesPage() {
   const recipes = await getRecipes()
 
   return (
-    <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20">
+    <main className="min-h-screen bg-white px-9 pt-14 shadow-xl md:container md:mx-auto md:pt-40">
       <div className="grid grid-cols-1  gap-4 md:grid-cols-2 xl:grid-cols-3">
         {recipes.map((recipe) => (
           <Link key={recipe.id} href={`/recipes/${recipe.id}`}>

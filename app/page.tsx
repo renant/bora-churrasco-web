@@ -8,7 +8,7 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <>
-      <main className="container relative mx-auto mb-20 min-h-screen md:pt-40">
+      <main className="container relative mx-auto mb-20 min-h-screen pt-8 md:pt-40">
         <section>
           <div className="text-white">
             <div className="container mx-auto flex flex-col items-center lg:flex-row">
