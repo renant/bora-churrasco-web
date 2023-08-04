@@ -12,7 +12,7 @@ export function Header() {
               className="flex items-center  text-gray-700 hover:text-gray-900"
             >
               <BovinaIcon className="pr-2" size={30} />
-              <span className="text-xl font-bold text-orange-400 hover:text-orange-600">
+              <span className="text-md font-bold text-orange-400 hover:text-orange-600 md:text-xl">
                 Bora Churrasco
               </span>
             </Link>
