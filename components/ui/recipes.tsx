@@ -1,6 +1,6 @@
 import { getRecipes } from '@/services/recipe-service'
-import Image from 'next/image'
 import Link from 'next/link'
+import { CardRecipe } from './card-recipe'
 
 export async function Recipes() {
   const limitSize = 6
@@ -14,20 +14,7 @@ export async function Recipes() {
       </div>
       <div className="flex flex-row flex-wrap  justify-center gap-1 md:justify-start md:gap-2">
         {recipes.map((recipe) => (
-          <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
-            <div className="relative w-32 text-center md:w-full">
-              <Image
-                className="overflow-hidden rounded-3xl opacity-70 shadow-xl"
-                src={recipe.imagePath}
-                alt={`Foto da receita: ${recipe.name}`}
-                width={200}
-                height={200}
-              />
-              <h3 className="custom-centered text-sm font-extrabold text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] md:text-lg">
-                {recipe.name}
-              </h3>
-            </div>
-          </Link>
+          <CardRecipe key={recipe.id} recipe={recipe} />
         ))}
       </div>
 
