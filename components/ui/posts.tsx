@@ -2,8 +2,6 @@ import { getPosts } from '@/services/notion-blog-service'
 import Link from 'next/link'
 import { CardPost } from './card-post'
 
-export const revalidate = 900
-
 export async function Posts() {
   const limitSize = 4
   const result = await getPosts()
