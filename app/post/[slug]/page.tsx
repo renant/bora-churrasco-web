@@ -48,7 +48,7 @@ export default async function PostPage({
         <Image
           fill={true}
           className="rounded-md object-cover"
-          src={post.coverImage}
+          src={post.firebaseCoverImageUrl}
           alt={`Image do post ${post.title}`}
         />
       </div>

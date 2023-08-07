@@ -28,7 +28,7 @@ export async function CardPost({ post }: CardPostProps) {
             <Image
               fill={true}
               className="rounded-md object-cover"
-              src={post.coverImage}
+              src={post.firebaseCoverImageUrl}
               alt={`Image do post ${post.title}`}
             />
           </div>

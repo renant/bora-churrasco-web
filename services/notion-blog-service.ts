@@ -1,16 +1,21 @@
+import { storage } from '@/lib/firebase'
 import {
   PostsNotionDatabaseResult,
   Result,
 } from '@/models/notion-models/database-notion'
 import { Client } from '@notionhq/client'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import matter from 'gray-matter'
 import { NotionToMarkdown } from 'notion-to-md'
 import { remark } from 'remark'
 import html from 'remark-html'
+import sharp from 'sharp'
+import { v4 as uuidv4 } from 'uuid'
 
 export interface Post {
   title: string
   slug: string
+  firebaseCoverImageUrl: string
   published: boolean
   date: Date
   coverImage: string
@@ -33,6 +38,7 @@ const getPosts = async (): Promise<Post[]> => {
   const response = await fetch(
     'https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query',
     {
+      cache: 'no-store',
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -52,10 +58,14 @@ const getPosts = async (): Promise<Post[]> => {
     },
   )
 
-  const postsDatabase = (await response.json()) as PostsNotionDatabaseResult
+  const json = await response.json()
 
-  return postsDatabase.results.map((post) => {
-    return {
+  const postsDatabase = json as PostsNotionDatabaseResult
+
+  const posts: Post[] = []
+
+  postsDatabase.results.forEach(async (post) => {
+    const postResult = {
       title: post.properties.Page.title[0].plain_text,
       slug:
         post.properties.Slug.rich_text.length > 0
@@ -69,20 +79,31 @@ const getPosts = async (): Promise<Post[]> => {
         post.properties['Cover image'].files.length > 0
           ? post.properties['Cover image'].files[0].file.url
           : '',
+      firebaseCoverImageUrl:
+        post.properties.FirebaseCoverImageUrl &&
+        post.properties.FirebaseCoverImageUrl.rich_text[0]
+          ? post.properties.FirebaseCoverImageUrl.rich_text[0].plain_text
+          : null,
       resume: post.properties.Resume.rich_text[0].plain_text,
       url: post.url,
       id: post.url.split('/').pop()?.split('-').pop(),
       slugId: post.url.split('/').pop(),
-    } as Post
+    } as PostContent
+
+    const postContent = await updateImageToFirebaseCoverImage(postResult)
+
+    posts.push(postContent)
   })
+
+  return posts
 }
+
+const notion = new Client({
+  auth: process.env.NOTION_API_KEY,
+})
 
 const getPost = async (slugId: string): Promise<PostContent> => {
   const id = slugId.split('-').pop()
-
-  const notion = new Client({
-    auth: process.env.NOTION_API_KEY,
-  })
 
   const n2m = new NotionToMarkdown({ notionClient: notion })
 
@@ -117,7 +138,7 @@ const getPost = async (slugId: string): Promise<PostContent> => {
 
   const post = (await response.json()) as Result
 
-  return {
+  let postContent = {
     title: post.properties.Page.title[0].plain_text,
     slug: post.properties.Slug.rich_text[0].plain_text,
     published: post.properties.Published.checkbox,
@@ -126,12 +147,67 @@ const getPost = async (slugId: string): Promise<PostContent> => {
       post.properties['Cover image'].files.length > 0
         ? post.properties['Cover image'].files[0].file.url
         : '',
+    firebaseCoverImageUrl: post.properties.FirebaseCoverImageUrl
+      ? post.properties.FirebaseCoverImageUrl.rich_text[0].plain_text
+      : null,
     resume: post.properties.Resume.rich_text[0].plain_text,
     url: post.url,
     id: post.url.split('/').pop()?.split('-').pop(),
     slugId: post.url.split('/').pop(),
     content,
   } as PostContent
+
+  postContent = await updateImageToFirebaseCoverImage(postContent)
+
+  return postContent
+}
+
+const updateImageToFirebaseCoverImage = async (
+  postContent: PostContent,
+): Promise<PostContent> => {
+  if (postContent.firebaseCoverImageUrl) {
+    return postContent as PostContent
+  }
+
+  const responseUrl = await fetch(postContent.coverImage)
+  const blob = await responseUrl.blob()
+
+  if (blob instanceof Blob) {
+    const imageName = uuidv4()
+    const imageStorage = ref(storage, 'images-notion/')
+    const imageRef = ref(imageStorage, imageName)
+
+    const metadata = {
+      contentType: blob.type,
+    }
+
+    const compressedImage = await sharp(await blob.arrayBuffer())
+      .resize({ width: 800 })
+      .jpeg({ quality: 60 })
+      .toBuffer()
+
+    await uploadBytesResumable(imageRef, compressedImage, metadata)
+
+    postContent.firebaseCoverImageUrl = await getDownloadURL(imageRef)
+
+    await notion.pages.update({
+      page_id: postContent.id,
+      properties: {
+        FirebaseCoverImageUrl: {
+          rich_text: [
+            {
+              type: 'text',
+              text: {
+                content: postContent.firebaseCoverImageUrl,
+              },
+            },
+          ],
+        },
+      },
+    })
+  }
+
+  return postContent
 }
 
 export { getPost, getPosts }
