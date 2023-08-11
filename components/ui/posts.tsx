@@ -4,9 +4,7 @@ import { CardPost } from './card-post'
 
 export async function Posts() {
   const limitSize = 4
-  const result = await getPosts()
-
-  const posts = result.slice(0, limitSize)
+  const result = await getPosts({ limitSize })
 
   return (
     <div>
@@ -15,7 +13,7 @@ export async function Posts() {
       </div>
 
       <div className="grid grid-cols-1  gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {posts.map((post) => (
+        {result.posts.map((post) => (
           <CardPost key={post.id} post={post} />
         ))}
       </div>

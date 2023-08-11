@@ -4,7 +4,7 @@ import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const recipes = await getRecipes({})
-  const posts = await getPosts()
+  const result = await getPosts()
 
   const recipesRoutes = recipes.map((recipe) => {
     return {
@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  const postsRoutes = posts.map((post) => {
+  const postsRoutes = result.posts.map((post) => {
     return {
       url: post.slugId
         ? `https://www.borachurrasco.app/blog/${post.slugId}`

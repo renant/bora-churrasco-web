@@ -105,7 +105,7 @@ export interface Result {
 export interface PostsNotionDatabaseResult {
   object: string
   results: Result[]
-  next_cursor: null
+  next_cursor: string
   has_more: boolean
   type: string
   developer_survey: string

@@ -1,15 +1,15 @@
 import { db } from '@/lib/firebase'
 import Recipe from '@/models/recipe'
 import {
-    Timestamp,
-    addDoc,
-    collection,
-    getDocs,
-    limit,
-    orderBy,
-    query,
-    startAfter,
-    where,
+  Timestamp,
+  addDoc,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+  where,
 } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 

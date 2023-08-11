@@ -29,11 +29,47 @@ export interface PostContent extends Post {
   content: string
 }
 
-const getPosts = async (): Promise<Post[]> => {
+export interface PostsResult {
+  next_cursor: string
+  has_more: boolean
+  posts: Post[]
+}
+
+export type GetPostsQuery = {
+  limitSize?: number
+  start_cursor?: string
+}
+
+const getPosts = async (
+  queryParam: GetPostsQuery = {},
+): Promise<PostsResult> => {
   const headers = new Headers()
   headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`)
   headers.append('Notion-Version', `${process.env.NOTION_VERSION}`)
   headers.append('Content-Type', 'application/json')
+
+  const parameters: any = {
+    filter: {
+      property: 'Published',
+      checkbox: {
+        equals: true,
+      },
+    },
+    sorts: [
+      {
+        property: 'Date',
+        direction: 'descending',
+      },
+    ],
+  }
+
+  if (queryParam.limitSize !== undefined) {
+    parameters.page_size = queryParam.limitSize
+  }
+
+  if (queryParam.start_cursor !== undefined) {
+    parameters.start_cursor = queryParam.start_cursor
+  }
 
   const response = await fetch(
     'https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query',
@@ -41,20 +77,7 @@ const getPosts = async (): Promise<Post[]> => {
       cache: 'no-store',
       method: 'POST',
       headers,
-      body: JSON.stringify({
-        filter: {
-          property: 'Published',
-          checkbox: {
-            equals: true,
-          },
-        },
-        sorts: [
-          {
-            property: 'Date',
-            direction: 'descending',
-          },
-        ],
-      }),
+      body: JSON.stringify(parameters),
     },
   )
 
@@ -95,7 +118,11 @@ const getPosts = async (): Promise<Post[]> => {
     posts.push(postContent)
   })
 
-  return posts
+  return {
+    next_cursor: postsDatabase.next_cursor,
+    has_more: postsDatabase.has_more,
+    posts,
+  }
 }
 
 const notion = new Client({
