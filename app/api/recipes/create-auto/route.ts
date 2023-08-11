@@ -1,7 +1,4 @@
-import {
-  createNewRecipe,
-  createRecipeImage,
-} from '@/services/recipe-ai-service'
+import { createNewRecipe } from '@/services/recipe-ai-service'
 import { addRecipe } from '@/services/recipe-service'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -19,9 +16,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
 
     const recipe = await createNewRecipe(body.recipeTitle)
-    const imagePath = await createRecipeImage(recipe)
 
-    recipe.imagePath = imagePath
+    recipe.imagePath = body.imagePath
 
     const recipeWithImage = await addRecipe(recipe)
 
