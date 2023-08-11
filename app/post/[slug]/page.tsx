@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
-  const posts = await getPosts()
-  return posts.map((post) => ({
+  const result = await getPosts()
+  return result.posts.map((post) => ({
     postId: post.slugId,
   }))
 }
