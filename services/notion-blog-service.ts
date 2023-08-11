@@ -74,7 +74,7 @@ const getPosts = async (
   const response = await fetch(
     'https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query',
     {
-      // cache: 'no-store',
+      cache: 'no-store',
       method: 'POST',
       headers,
       body: JSON.stringify(parameters),
