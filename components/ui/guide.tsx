@@ -3,6 +3,26 @@ export function Guide() {
     <div className="prose prose-orange max-w-none">
       <h1>Guia do bom Churrasco!</h1>
 
+      <h2></h2>
+
+      <p>
+        Com o aplicativo Bora Churrasco, entendemos que o cálculo preciso é
+        fundamental para um churrasco bem-sucedido. É por isso que desenvolvemos
+        a nossa calculadora de churrasco, uma ferramenta indispensável para
+        ajudá-lo a planejar todos os detalhes. Ao utilizar a calculadora, você
+        poderá determinar a quantidade ideal de carne, acompanhamentos, bebidas
+        e suprimentos com base no número de convidados e suas preferências.
+      </p>
+
+      <p>
+        Após preencher todos os detalhes, nossa calculadora de churrasco
+        fornecerá um resultado instantâneo, indicando a quantidade exata de
+        carne, acompanhamentos e bebidas necessárias para o seu evento. No
+        entanto, se você decidir ajustar o número de convidados ou as escolhas
+        dos cortes, não se preocupe! Nosso recurso de recálculo facilita a
+        adaptação das quantidades de acordo com as suas mudanças.
+      </p>
+
       <h2>Os Cortes de Carne Ideais</h2>
       <p>
         Um churrasco brasileiro é conhecido pela variedade de cortes de carne
