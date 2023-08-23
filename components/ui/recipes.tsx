@@ -10,7 +10,7 @@ export async function Recipes() {
     <div className="">
       <div className="mt-2 border-b border-orange-400"></div>
       <div className="prose prose-orange mb-4 mt-2 max-w-none">
-        <h1 className="pt-4">Receitas</h1>
+        <h2 className="pt-4">Receitas</h2>
       </div>
       <div className="flex flex-row flex-wrap  justify-center gap-1 md:justify-start md:gap-2">
         {recipes.map((recipe) => (

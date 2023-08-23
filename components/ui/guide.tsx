@@ -1,9 +1,7 @@
 export function Guide() {
   return (
     <div className="prose prose-orange max-w-none">
-      <h1>Guia do bom Churrasco!</h1>
-
-      <h2></h2>
+      <h2>Guia do bom Churrasco!</h2>
 
       <p>
         Com o aplicativo Bora Churrasco, entendemos que o cálculo preciso é
@@ -23,7 +21,7 @@ export function Guide() {
         adaptação das quantidades de acordo com as suas mudanças.
       </p>
 
-      <h2>Os Cortes de Carne Ideais</h2>
+      <h3>Os Cortes de Carne Ideais</h3>
       <p>
         Um churrasco brasileiro é conhecido pela variedade de cortes de carne
         suculentos e saborosos. Para garantir uma experiência verdadeiramente
@@ -33,7 +31,7 @@ export function Guide() {
         satisfazer até os paladares mais exigentes.
       </p>
 
-      <h2>Preparação com Temperos</h2>
+      <h3>Preparação com Temperos</h3>
       <p>
         Uma das etapas mais importantes para um churrasco perfeito é a
         preparação prévia da carne com temperos. Uma marinada bem feita pode
@@ -44,7 +42,7 @@ export function Guide() {
         nas fibras da carne.
       </p>
 
-      <h2>O Controle do Fogo</h2>
+      <h3>O Controle do Fogo</h3>
       <p>
         No churrasco brasileiro tradicional, a churrasqueira é o coração de todo
         o processo. Dominar o controle do fogo é essencial para garantir um
@@ -55,7 +53,7 @@ export function Guide() {
         por dentro.
       </p>
 
-      <h2>Utilizando os Utensílios Adequados</h2>
+      <h3>Utilizando os Utensílios Adequados</h3>
       <p>
         Para garantir um churrasco impecável, é importante utilizar os
         utensílios corretos. Invista em espetos de boa qualidade para espetar
@@ -66,7 +64,7 @@ export function Guide() {
         carne e fazer com que os sucos e sabores se percam.
       </p>
 
-      <h2>Ponto da Carne</h2>
+      <h3>Ponto da Carne</h3>
       <p>
         Cada tipo de carne possui um ponto ideal de cocção para realçar seus
         sabores e texturas únicas. Na hora de preparar um churrasco, é
@@ -77,7 +75,7 @@ export function Guide() {
         corte para garantir a melhor experiência para seus convidados.
       </p>
 
-      <h2>Acompanhamentos e Bebidas Refrescantes</h2>
+      <h3>Acompanhamentos e Bebidas Refrescantes</h3>
       <p>
         Um churrasco brasileiro não é apenas sobre carne; os acompanhamentos
         também têm um papel importante. Prepare deliciosas opções de
@@ -93,7 +91,7 @@ export function Guide() {
         o churrasco.
       </p>
 
-      <h2>Higiene e Segurança</h2>
+      <h3>Higiene e Segurança</h3>
       <p>
         Prezar pela higiene e segurança durante o churrasco é essencial para
         garantir que todos aproveitem o evento sem preocupações. Lave bem as
@@ -102,7 +100,7 @@ export function Guide() {
         mantendo carnes cruas separadas de outros alimentos.
       </p>
 
-      <h2>O Aspecto Social do Churrasco</h2>
+      <h3>O Aspecto Social do Churrasco</h3>
       <p>
         O churrasco brasileiro é muito mais do que apenas uma refeição; é um
         momento para socializar, compartilhar histórias e fortalecer laços.
@@ -112,7 +110,7 @@ export function Guide() {
         todos.
       </p>
 
-      <h2>Incentivo à Experimentação</h2>
+      <h3>Incentivo à Experimentação</h3>
       <p>
         Por fim, encoraje a experimentação com diferentes cortes de carne e
         marinadas. O churrasco é uma arte que pode ser aprimorada e
@@ -121,7 +119,7 @@ export function Guide() {
         churrasco uma experiência única e memorável.
       </p>
 
-      <h2>Conclusão</h2>
+      <h3>Conclusão</h3>
       <p>
         Em resumo, o segredo para um churrasco brasileiro de sucesso está em
         selecionar os cortes de carne ideais, prepará-los com temperos

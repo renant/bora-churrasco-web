@@ -16,11 +16,11 @@ export default function Home() {
             <div className="container mx-auto flex flex-col items-center lg:flex-row">
               <div className="flex w-full flex-col items-start justify-center p-4 md:p-8 lg:w-1/3">
                 <h1 className="tracking-loose hidden text-3xl text-orange-300 md:block md:text-5xl">
-                  Bora Churrasco
+                  Bora Churrasco - Calculadora de Churrasco
                 </h1>
-                <h2 className="mb-2 mt-8 text-3xl leading-relaxed md:mt-0 md:text-5xl md:leading-snug">
+                <h3 className="mb-2 mt-8 text-3xl leading-relaxed md:mt-0 md:text-5xl md:leading-snug">
                   Seu app Android para calcular churrasco
-                </h2>
+                </h3>
                 <p className="mb-4 text-sm text-gray-50 md:text-base">
                   Churrascômetro (Calculadora de Churrasco), uma calculadora
                   ideal para para não deixa que seu churrasco falte nada.
