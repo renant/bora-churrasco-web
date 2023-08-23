@@ -9,7 +9,7 @@ export async function Posts() {
   return (
     <div>
       <div className="prose prose-orange mb-4 mt-2 max-w-none">
-        <h1 className="pt-4">Blog</h1>
+        <h2 className="pt-4">Blog</h2>
       </div>
 
       <div className="grid grid-cols-1  gap-4 md:grid-cols-2 xl:grid-cols-4">

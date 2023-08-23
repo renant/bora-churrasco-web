@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   }
 
   return {
-    title: `${recipe.name} - Bora Churrasco`,
+    title: `${recipe.name}`,
     description: `Receita de ${recipe.name}`,
   }
 }
