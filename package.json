@@ -27,6 +27,7 @@
     "firebase": "^10.1.0",
     "gray-matter": "^4.0.3",
     "next": "13.4.12",
+    "nextjs-google-analytics": "^2.3.3",
     "node-fetch": "^3.3.2",
     "notion-to-md": "^3.1.1",
     "openai": "^3.3.0",

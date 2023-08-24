@@ -210,7 +210,10 @@ export default function Resultado() {
               Gostou ? Considere me ajudar com um cafézinho
             </h2>
             <a href="https://www.buymeacoffee.com/renanteixeira">
-              <img src="https://img.buymeacoffee.com/button-api/?text=Cafezinho&emoji=&slug=renanteixeira&button_colour=FF5F5F&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00" />
+              <img
+                alt="Link para ajudar no desenvolvimento com uma contribuição no buymeacoffee"
+                src="https://img.buymeacoffee.com/button-api/?text=Cafezinho&emoji=&slug=renanteixeira&button_colour=FF5F5F&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00"
+              />
             </a>
           </div>
         </div>
