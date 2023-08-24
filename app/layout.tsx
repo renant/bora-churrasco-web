@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Oxygen } from 'next/font/google'
 import Script from 'next/script'
+import { GoogleAnalytics } from 'nextjs-google-analytics'
 import './globals.css'
 
 const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
@@ -29,6 +30,7 @@ export default async function RootLayout({
         </ScrollArea>
         <Analytics />
         <Script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510" />
+        <GoogleAnalytics trackPageViews />
       </body>
     </html>
   )
