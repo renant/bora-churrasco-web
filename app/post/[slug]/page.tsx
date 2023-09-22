@@ -28,6 +28,23 @@ export async function generateMetadata({
   return {
     title: `${post.title}`,
     description: `${post.resume}`,
+    keywords: post.tags,
+    images: [
+      {
+        url: post.firebaseCoverImageUrl,
+      },
+    ],
+    openGraph: {
+      title: `${post.title}`,
+      description: `${post.resume}`,
+      images: [
+        {
+          url: post.firebaseCoverImageUrl,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
   }
 }
 

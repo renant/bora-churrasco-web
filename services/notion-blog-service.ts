@@ -23,6 +23,7 @@ export interface Post {
   url: string
   id: string
   slugId: string
+  tags: string[]
 }
 
 export interface PostContent extends Post {
@@ -102,6 +103,7 @@ const getPosts = async (
         post.properties['Cover image'].files.length > 0
           ? post.properties['Cover image'].files[0].file.url
           : '',
+      tags: post.properties.tags.multi_select.map((tag) => tag.name),
       firebaseCoverImageUrl:
         post.properties.FirebaseCoverImageUrl &&
         post.properties.FirebaseCoverImageUrl.rich_text[0]
