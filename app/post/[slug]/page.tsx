@@ -37,12 +37,13 @@ export async function generateMetadata({
     openGraph: {
       title: `${post.title}`,
       description: `${post.resume}`,
+      url: `https://www.borachurrasco.app/post/${post.slugId}`,
       images: [
         {
           url: post.firebaseCoverImageUrl,
         },
       ],
-      locale: 'en_US',
+      locale: 'pt_BR',
       type: 'website',
     },
   }

@@ -14,6 +14,20 @@ export const metadata: Metadata = {
   description:
     'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
   manifest: 'https://www.borachurrasco.app/manifest.json',
+  keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
+  openGraph: {
+    title: 'Bora Churrasco! ("Calculadora de Churrasco")',
+    description:
+      'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
+    url: `https://www.borachurrasco.app`,
+    images: [
+      {
+        url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+      },
+    ],
+    locale: 'pt_BR',
+    type: 'website',
+  },
 }
 
 export default async function RootLayout({

@@ -28,6 +28,23 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return {
     title: `${recipe.name}`,
     description: `Receita de ${recipe.name}`,
+    images: [
+      {
+        url: recipe.imagePath,
+      },
+    ],
+    openGraph: {
+      title: `${recipe.name}`,
+      description: `Receita de ${recipe.name}`,
+      url: `https://www.borachurrasco.app/recipes/${recipe.id}`,
+      images: [
+        {
+          url: recipe.imagePath,
+        },
+      ],
+      locale: 'pt_BR',
+      type: 'website',
+    },
   }
 }
 
