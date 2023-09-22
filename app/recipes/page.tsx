@@ -3,7 +3,7 @@ import { getRecipes } from '@/services/recipe-service'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const revalidate = 900
+export const revalidate = 3600
 
 export default async function RecipesPage() {
   const recipes = await getRecipes()
