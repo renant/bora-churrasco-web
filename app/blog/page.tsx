@@ -1,7 +1,7 @@
 import { CardPost } from '@/components/ui/card-post'
 import { getPosts } from '@/services/notion-blog-service'
 
-export const revalidate = 900
+export const revalidate = 3600
 
 export default async function PostsPage() {
   const result = await getPosts()

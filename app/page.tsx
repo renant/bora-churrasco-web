@@ -5,7 +5,7 @@ import { Recipes } from '@/components/ui/recipes'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const revalidate = 900
+export const revalidate = 3600
 
 export default function Home() {
   return (
