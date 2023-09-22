@@ -75,6 +75,18 @@ export interface Resume {
   rich_text: RichText[]
 }
 
+export interface MultiSelect {
+  id: string
+  name: string
+  color: string
+}
+
+export interface Tags {
+  id: string
+  type: string
+  multi_select: MultiSelect[]
+}
+
 export interface Properties1 {
   Slug: Slug
   FirebaseCoverImageUrl: Slug
@@ -83,6 +95,7 @@ export interface Properties1 {
   'Cover image': CoverImage
   Resume: Resume
   Page: Page
+  tags: Tags
 }
 
 export interface Properties2 {
