@@ -1,13 +1,15 @@
 import Faq from '@/components/ui/faq'
 import { Guide } from '@/components/ui/guide'
+import LoadingSpinner from '@/components/ui/loading-spinner'
 import { Posts } from '@/components/ui/posts'
 import { Recipes } from '@/components/ui/recipes'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 export const revalidate = 3600
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <main className="container relative mx-auto mb-20 min-h-screen pt-8 md:pt-40">
@@ -115,8 +117,13 @@ export default function Home() {
         </div>
 
         <div id="receitas"></div>
-        <Recipes />
-        <Posts />
+        <Suspense fallback={<LoadingSpinner />}>
+          <Recipes />
+        </Suspense>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Posts />
+        </Suspense>
+
         <Guide />
         <Faq />
       </div>
