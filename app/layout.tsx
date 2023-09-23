@@ -43,7 +43,10 @@ export default async function RootLayout({
           {children}
         </ScrollArea>
         <Analytics />
-        <Script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510" />
+        <Script
+          strategy="lazyOnload"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
+        />
         <GoogleAnalytics
           GA_TRACKING_ID={process.env.GA_TRACKING_ID as string}
         />
