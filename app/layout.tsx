@@ -44,7 +44,7 @@ export default async function RootLayout({
         </ScrollArea>
         <Analytics />
         <Script
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
         />
         <GoogleAnalytics
