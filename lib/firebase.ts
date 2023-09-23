@@ -14,11 +14,10 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-let analytics = null
 
 isSupported().then((result) => {
   if (result) {
-    analytics = getAnalytics(app)
+    getAnalytics(app)
   }
 })
 

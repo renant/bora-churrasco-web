@@ -53,6 +53,8 @@ export default async function Home() {
                   <Image
                     className="inline-block w-full p-8 md:mt-0 md:p-0 lg:w-1/2 xl:w-2/3"
                     src="/app-sample.png"
+                    placeholder="blur"
+                    blurDataURL="/blur-image.png"
                     alt="Foto do aplicativo"
                     width={300}
                     height={200}

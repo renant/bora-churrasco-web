@@ -14,7 +14,6 @@ const CheckButton = ({
   onClick,
 }: CheckButtonProps) => {
   const backgroundColor = isChecked ? 'rgba(255, 165, 0, 0.5)' : 'transparent'
-  const lineColor = isChecked ? '#ff4500' : '#ffa500'
 
   return (
     <div
