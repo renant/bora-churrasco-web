@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  const routes = [''].map((route) => {
+  const routes = ['', 'recipes', 'blog'].map((route) => {
     return {
       url: `https://www.borachurrasco.app/${route}`,
       lastModified: new Date(),
