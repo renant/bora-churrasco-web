@@ -1,6 +1,12 @@
 import { getPost, getPosts } from '@/services/notion-blog-service'
+import { unstable_cache as unstableCache } from 'next/cache'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+
+const getCachedPost = unstableCache(
+  async (slug) => getPost(slug),
+  ['cache-post'],
+)
 
 export async function generateStaticParams() {
   const result = await getPosts()
@@ -9,14 +15,12 @@ export async function generateStaticParams() {
   }))
 }
 
-export const revalidate = 3600
-
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string }
 }) {
-  const post = await getPost(params.slug)
+  const post = await getCachedPost(params.slug)
 
   if (!post) {
     return {
@@ -54,7 +58,7 @@ export default async function PostPage({
 }: {
   params: { slug: string }
 }) {
-  const post = await getPost(params.slug)
+  const post = await getCachedPost(params.slug)
 
   if (!post) {
     return notFound()

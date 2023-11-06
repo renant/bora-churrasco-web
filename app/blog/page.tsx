@@ -1,10 +1,11 @@
 import { CardPost } from '@/components/ui/card-post'
 import { getPosts } from '@/services/notion-blog-service'
+import { unstable_cache as unstableCache } from 'next/cache'
 
-export const revalidate = 3600
+const getCachedPosts = unstableCache(async () => getPosts(), ['cache-posts'])
 
 export default async function PostsPage() {
-  const result = await getPosts()
+  const result = await getCachedPosts()
 
   return (
     <main className="min-h-screen bg-white px-9  pt-8 shadow-xl md:container md:mx-auto md:pt-40">

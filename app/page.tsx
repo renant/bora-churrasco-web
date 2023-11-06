@@ -1,13 +1,7 @@
 import Faq from '@/components/ui/faq'
 import { Guide } from '@/components/ui/guide'
-import LoadingSpinner from '@/components/ui/loading-spinner'
-import { Posts } from '@/components/ui/posts'
-import { Recipes } from '@/components/ui/recipes'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense } from 'react'
-
-export const revalidate = 3600
 
 export default async function Home() {
   return (
@@ -117,14 +111,6 @@ export default async function Home() {
             personalizar a lista de compras com as quantidades desejadas.
           </p>
         </div>
-
-        <div id="receitas"></div>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Recipes />
-        </Suspense>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Posts />
-        </Suspense>
 
         <Guide />
         <Faq />
