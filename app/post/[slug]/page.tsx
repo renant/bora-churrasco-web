@@ -93,9 +93,11 @@ export default async function PostPage({
               {ads.description}
             </p>
           </div>
-          <button className="flex w-full justify-center bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500">
-            Adquira já
-          </button>
+          <a href={ads.link} target="_blanck">
+            <button className="flex w-full justify-center bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500">
+              Adquira já
+            </button>
+          </a>
         </div>
         {/* <a href={ads.link} target="_blank" rel="noreferrer">
           <section className="flex flex-row items-center justify-center">
