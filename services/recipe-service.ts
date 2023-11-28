@@ -24,7 +24,6 @@ const addRecipe = async (recipe: Recipe) => {
     steps: recipe.steps,
     active: recipe.active,
     createdAt: Timestamp.fromDate(recipe.createdAt),
-    createdBy: recipe.createdBy,
   })
 
   return recipe
