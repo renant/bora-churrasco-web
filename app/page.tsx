@@ -61,7 +61,7 @@ export default async function Home() {
         <div className="absolute bottom-0 left-0 w-full pb-8">
           <Link
             className="flex flex-col items-center justify-center font-bold text-orange-400"
-            href="#receitas"
+            href="#content"
           >
             <p>Confira nossos conteúdos</p>
             <svg
@@ -82,7 +82,7 @@ export default async function Home() {
         </div>
       </main>
       <div className="container mx-auto mb-20 grid grid-cols-1 gap-2 md:gap-8">
-        <div className="prose prose-orange max-w-none">
+        <div className="prose prose-orange max-w-none" id="content">
           <p>
             Bora Churrasco é uma ferramenta incrível no estilo churrascômetro
             (Calculadora de Churrasco), uma calculadora perfeita para garantir o
