@@ -66,6 +66,8 @@ type ChurrascoStore = {
   changeAgua: () => void
   changeSuco: () => void
 
+  createDefaultResult: (participantes: number) => void
+
   setTempo: (tempo: Tempo) => void
 
   getTempo: () => string
@@ -180,6 +182,23 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
   changeSuco: () => set(() => ({ suco: !get().suco })),
 
   setTempo: (tempo: Tempo) => set(() => ({ tempo })),
+
+  createDefaultResult: (participantes: number) => {
+    set(() => ({
+      homens: participantes,
+      bovina: true,
+      suina: true,
+      linguica: true,
+      frango: true,
+      queijo: true,
+      paoDeAlho: true,
+      cerveja: true,
+      refrigerante: true,
+      agua: true,
+      suco: true,
+      tempo: Tempo.quatroHoras,
+    }))
+  },
 
   resetState: () => {
     set(() => ({ ...initState }))
