@@ -1,6 +1,6 @@
-import GoogleAnalytics from '@/components/google-analytics'
 import { Header } from '@/components/ui/header'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { GoogleTagManager } from '@next/third-parties/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
@@ -48,9 +48,7 @@ export default async function RootLayout({
           strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
         />
-        <GoogleAnalytics
-          GA_TRACKING_ID={process.env.GA_TRACKING_ID as string}
-        />
+        <GoogleTagManager gtmId="G-3DLL7GKQ7W" />
         <SpeedInsights />
       </body>
     </html>
