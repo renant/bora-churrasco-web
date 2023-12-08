@@ -48,7 +48,7 @@ export default async function RootLayout({
           strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
         />
-        <GoogleTagManager gtmId="G-3DLL7GKQ7W" />
+        <GoogleTagManager gtmId={process.env.GA_TRACKING_ID as string} />
         <SpeedInsights />
       </body>
     </html>
