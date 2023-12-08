@@ -2,6 +2,7 @@ import GoogleAnalytics from '@/components/google-analytics'
 import { Header } from '@/components/ui/header'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { Oxygen } from 'next/font/google'
 import Script from 'next/script'
@@ -50,6 +51,7 @@ export default async function RootLayout({
         <GoogleAnalytics
           GA_TRACKING_ID={process.env.GA_TRACKING_ID as string}
         />
+        <SpeedInsights />
       </body>
     </html>
   )
