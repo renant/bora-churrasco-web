@@ -68,7 +68,7 @@ export default async function PostPage({
 
   return (
     <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
-      <div className="relative z-0 h-64 w-full">
+      <div className="relative z-0 h-60 w-full lg:h-[450px]">
         <Image
           fill={true}
           className="rounded-md object-cover"
