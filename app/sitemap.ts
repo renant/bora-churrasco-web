@@ -17,8 +17,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const postsRoutes = result.posts.map((post) => {
     return {
-      url: post.slugId
-        ? `https://www.borachurrasco.app/post/${post.slugId}`
+      url: post.slug
+        ? `https://www.borachurrasco.app/post/${post.slug}`
         : '',
       lastModified: post.date,
     }

@@ -106,13 +106,15 @@ const getPosts = async (
       tags: post.properties.tags.multi_select.map((tag) => tag.name),
       firebaseCoverImageUrl:
         post.properties.FirebaseCoverImageUrl &&
-        post.properties.FirebaseCoverImageUrl.rich_text[0]
+          post.properties.FirebaseCoverImageUrl.rich_text[0]
           ? post.properties.FirebaseCoverImageUrl.rich_text[0].plain_text
           : null,
       resume: post.properties.Resume.rich_text[0].plain_text,
       url: post.url,
       id: post.url.split('/').pop()?.split('-').pop(),
-      slugId: post.url.split('/').pop(),
+      slugId: post.properties.Slug.rich_text.length > 0
+        ? post.properties.Slug.rich_text[0].plain_text
+        : '',
     } as PostContent
 
     const postContent = await updateImageToFirebaseCoverImage(postResult)
@@ -199,7 +201,9 @@ const getPost = async (slug: string): Promise<PostContent> => {
     resume: post.properties.Resume.rich_text[0].plain_text,
     url: post.url,
     id: post.url.split('/').pop()?.split('-').pop(),
-    slugId: post.url.split('/').pop(),
+    slugId: post.properties.Slug.rich_text.length > 0
+    ? post.properties.Slug.rich_text[0].plain_text
+    : '',
     content,
   } as PostContent
 
