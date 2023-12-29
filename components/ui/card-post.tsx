@@ -17,7 +17,7 @@ export async function CardPost({ post }: CardPostProps) {
   if (!post) return null
 
   return (
-    <Link href={`post/${post.slugId}`}>
+    <Link href={`post/${post.slug}`}>
       <Card>
         <CardHeader>
           <CardTitle>{post.title}</CardTitle>
