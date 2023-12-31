@@ -12,7 +12,7 @@ const getCachedPost = unstableCache(
 export async function generateStaticParams() {
   const result = await getPosts()
   return result.posts.map((post) => ({
-    postId: post.slugId,
+    postId: post.slug,
   }))
 }
 
@@ -42,7 +42,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${post.title}`,
       description: `${post.resume}`,
-      url: `https://www.borachurrasco.app/post/${post.slugId}`,
+      url: `https://www.borachurrasco.app/post/${post.slug}`,
       images: [
         {
           url: post.firebaseCoverImageUrl,

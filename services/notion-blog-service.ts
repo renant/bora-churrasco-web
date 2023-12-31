@@ -106,13 +106,15 @@ const getPosts = async (
       tags: post.properties.tags.multi_select.map((tag) => tag.name),
       firebaseCoverImageUrl:
         post.properties.FirebaseCoverImageUrl &&
-        post.properties.FirebaseCoverImageUrl.rich_text[0]
+          post.properties.FirebaseCoverImageUrl.rich_text[0]
           ? post.properties.FirebaseCoverImageUrl.rich_text[0].plain_text
           : null,
       resume: post.properties.Resume.rich_text[0].plain_text,
       url: post.url,
       id: post.url.split('/').pop()?.split('-').pop(),
-      slugId: post.url.split('/').pop(),
+      slugId: post.properties.Slug.rich_text.length > 0
+        ? post.properties.Slug.rich_text[0].plain_text
+        : '',
     } as PostContent
 
     const postContent = await updateImageToFirebaseCoverImage(postResult)
@@ -131,12 +133,40 @@ const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 })
 
-const getPost = async (slugId: string): Promise<PostContent> => {
-  const id = slugId.split('-').pop()
+const getPost = async (slug: string): Promise<PostContent> => {
+  const headers = new Headers()
+  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`)
+  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`)
+  headers.append('Content-Type', 'application/json')
+
+  const parameters: any = {
+    filter: {
+      property: 'Slug',
+      rich_text: {
+        equals: slug,
+      },
+    },
+  }
+
+  const response = await fetch(
+    'https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query',
+    {
+      cache: 'no-store',
+      method: 'POST',
+      headers,
+      body: JSON.stringify(parameters),
+    },
+  )
+
+  const json = await response.json()
+
+  const postsDatabase = json as PostsNotionDatabaseResult
+
+  const post = (postsDatabase.results[0] ?? null) as Result;
 
   const n2m = new NotionToMarkdown({ notionClient: notion })
 
-  const mdblocks = await n2m.pageToMarkdown(id ?? '')
+  const mdblocks = await n2m.pageToMarkdown(post.id ?? '')
   const mdString = n2m.toMarkdownString(mdblocks)
 
   const matterResult = matter(mdString.parent)
@@ -155,17 +185,6 @@ const getPost = async (slugId: string): Promise<PostContent> => {
       "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>",
     )
 
-  const headers = new Headers()
-  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`)
-  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`)
-  headers.append('Content-Type', 'application/json')
-
-  const response = await fetch(`https://api.notion.com/v1/pages/${id}`, {
-    method: 'GET',
-    headers,
-  })
-
-  const post = (await response.json()) as Result
 
   let postContent = {
     title: post.properties.Page.title[0].plain_text,
@@ -182,7 +201,9 @@ const getPost = async (slugId: string): Promise<PostContent> => {
     resume: post.properties.Resume.rich_text[0].plain_text,
     url: post.url,
     id: post.url.split('/').pop()?.split('-').pop(),
-    slugId: post.url.split('/').pop(),
+    slugId: post.properties.Slug.rich_text.length > 0
+    ? post.properties.Slug.rich_text[0].plain_text
+    : '',
     content,
   } as PostContent
 
