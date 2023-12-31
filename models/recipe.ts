@@ -9,6 +9,8 @@ class Recipe {
         public createdAt: Date,
         public active: boolean,
         public createdBy: string,
+        public content: string,
+        public slug: string,
     ) {}
 }
 
