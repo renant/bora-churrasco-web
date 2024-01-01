@@ -1,12 +1,11 @@
-import { getPosts } from '@/services/notion-blog-service'
-import { getRecipes } from '@/services/recipe-service'
+import { getPosts, getRecipes } from '@/services/notion-blog-service'
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const recipes = await getRecipes({})
+  const recipeResults = await getRecipes({})
   const result = await getPosts()
 
-  const recipesRoutes = recipes.map((recipe) => {
+  const recipesRoutes = recipeResults.recipes.map((recipe) => {
     return {
       url: recipe.id
         ? `https://www.borachurrasco.app/recipes/${recipe.id}`
