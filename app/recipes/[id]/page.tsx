@@ -1,13 +1,7 @@
-import { getRecipe, getRecipes } from '@/services/notion-blog-service'
+import { getRandomAdsContent } from '@/services/ad-service'
+import { getRecipe } from '@/services/notion-blog-service'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-
-export async function generateStaticParams() {
-  const result = await getRecipes({})
-  return result.recipes.map((recipe) => ({
-    id: recipe.id,
-  }))
-}
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = params
@@ -49,6 +43,7 @@ export default async function RecipePage({
   params: { id: string }
 }) {
   const recipe = await getRecipe(params.id)
+  const ads = await getRandomAdsContent()
 
   if (!recipe) {
     return notFound()
@@ -67,6 +62,25 @@ export default async function RecipePage({
       <article className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700">
         <h1>{recipe.name}</h1>
         <section dangerouslySetInnerHTML={{ __html: recipe.content }} />
+
+        <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
+          <div>
+            <Image src={ads.image} height={400} width={400} alt={ads.alt} />
+          </div>
+          <div className="p-3">
+            <h3 className="text-md m-0 font-semibold text-gray-700">
+              {ads.alt}
+            </h3>
+            <p className="leading-sm text-sm text-gray-900">
+              {ads.description}
+            </p>
+          </div>
+          <a href={ads.link} target="_blanck" className="no-underline">
+            <button className="flex w-full justify-center bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500">
+              Adquira já
+            </button>
+          </a>
+        </div>
       </article>
     </main>
   )
