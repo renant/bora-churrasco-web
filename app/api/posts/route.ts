@@ -1,4 +1,4 @@
-import { GetPostsQuery, getPosts } from '@/services/notion-blog-service'
+import { GetQuery, getPosts } from '@/services/notion-blog-service'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const query: GetPostsQuery = {
+    const query: GetQuery = {
       limitSize: body.limitSize,
       start_cursor: body.start_cursor,
     }
