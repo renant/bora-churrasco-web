@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const recipesRoutes = recipeResults.recipes.map((recipe) => {
     return {
       url: recipe.id
-        ? `https://www.borachurrasco.app/recipes/${recipe.id}`
+        ? `https://www.borachurrasco.app/recipes/${recipe.slug}`
         : '',
       lastModified: recipe.createdAt,
     }
