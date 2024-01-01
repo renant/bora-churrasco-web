@@ -279,6 +279,72 @@ const getRecipes = async (queryParam: GetQuery = {},) => {
   }
 }
 
+const getRecipe = async (slug: string): Promise<Recipe> => {
+  const headers = new Headers()
+  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`)
+  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`)
+  headers.append('Content-Type', 'application/json')
+
+  const parameters: any = {
+    filter: {
+      property: 'slug',
+      rich_text: {
+        equals: slug,
+      },
+    },
+  }
+
+  const response = await fetch(
+    'https://api.notion.com/v1/databases/036b43302a46488882d0c4f5cd8872dc/query',
+    {
+      cache: 'no-store',
+      method: 'POST',
+      headers,
+      body: JSON.stringify(parameters),
+    },
+  )
+
+  const json = await response.json()
+
+  const recipeResult = json.results[0] ?? null;
+
+  const n2m = new NotionToMarkdown({ notionClient: notion })
+
+  const mdblocks = await n2m.pageToMarkdown(recipeResult.id ?? '')
+  const mdString = n2m.toMarkdownString(mdblocks)
+
+  const matterResult = matter(mdString.parent)
+
+  const processedContent = await remark()
+    .use(html)
+    .process(matterResult.content)
+
+  const content = processedContent.value
+    .toString()
+    .replace(/(?:\r\n|\r|\n)/g, '')
+    .replace(/"/g, "'")
+    .replace('|startVideoEmbeded|', "<iframe width='560' height='315' src='")
+    .replace(
+      '|endVideoEmbeded|',
+      "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>",
+    )
+
+  let recipe = {
+    name: recipeResult.properties.Recipe.title[0].plain_text,
+    slug:
+    recipeResult.properties.slug.rich_text.length > 0
+        ? recipeResult.properties.slug.rich_text[0].plain_text
+        : '',
+    imagePath: recipeResult.properties.imageUrl &&
+      recipeResult.properties.imageUrl.rich_text[0]
+      ? recipeResult.properties.imageUrl.rich_text[0].plain_text
+      : null,
+    content,
+  } as Recipe
+
+  return recipe
+}
+
 const updateImageToFirebaseCoverImage = async (
   postContent: PostContent,
 ): Promise<PostContent> => {
@@ -327,121 +393,5 @@ const updateImageToFirebaseCoverImage = async (
   return postContent
 }
 
-// const migrateRecipes = async (recipes: Recipe[]) => {
-//   for (const recipe of recipes) {
-//     await addRecipe(recipe)
-//   }
-// }
+export { getPost, getPosts, getRecipe, getRecipes }
 
-// const addRecipe = async (recipe: Recipe) => {
-//   var notionRecipe = {
-//     parent: {
-//       database_id: "036b43302a46488882d0c4f5cd8872dc"
-//     },
-//     properties: {
-//       title: [
-//         {
-//           text: {
-//             content: recipe.name
-//           }
-//         }
-//       ],
-//       slug: [
-//         {
-//           "text": {
-//             "content": recipe.name.toLocaleLowerCase().replace(/ /g, '-')
-//           }
-//         }
-//       ],
-//       imageUrl: [
-//         {
-//           "text": {
-//             "content": recipe.imagePath
-//           }
-//         }
-//       ]
-//     },
-//     children: [
-//       {
-//         object: "block",
-//         type: "heading_2",
-//         heading_2: {
-//           rich_text: [
-//             {
-//               type: "text",
-//               text: {
-//                 content: "Ingredientes:"
-//               }
-//             }
-//           ]
-//         }
-//       },
-//       ...recipe.ingredients.map((ingredient) => {
-//         return {
-//           object: "block",
-//           type: "bulleted_list_item",
-//           bulleted_list_item: {
-//             rich_text: [
-//               {
-//                 type: "text",
-//                 text: {
-//                   content: ingredient
-//                 }
-//               }
-//             ]
-//           }
-//         }
-//       }),
-//       {
-//         object: "block",
-//         type: "heading_2",
-//         heading_2: {
-//           rich_text: [
-//             {
-//               type: "text",
-//               text: {
-//                 content: "Passos:"
-//               }
-//             }
-//           ]
-//         }
-//       },
-//       ...recipe.steps.map((step) => {
-//         return {
-//           object: "block",
-//           type: "bulleted_list_item",
-//           bulleted_list_item: {
-//             rich_text: [
-//               {
-//                 type: "text",
-//                 text: {
-//                   content: step
-//                 }
-//               }
-//             ]
-//           }
-//         }
-//       }),
-//     ]
-//   };
-
-//   const headers = new Headers()
-//   headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`)
-//   headers.append('Notion-Version', `${process.env.NOTION_VERSION}`)
-//   headers.append('Content-Type', 'application/json')
-
-//   const response = await fetch(
-//     'https://api.notion.com/v1/pages',
-//     {
-//       cache: 'no-store',
-//       method: 'POST',
-//       headers,
-//       body: JSON.stringify(notionRecipe),
-//     },
-//   )
-
-//   const json = await response.json()
-//   var t = json;
-// }
-
-export { getPost, getPosts, getRecipes }
