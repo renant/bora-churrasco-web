@@ -2,12 +2,12 @@ import { getPosts, getRecipes } from '@/services/notion-blog-service'
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const recipeResults = await getRecipes({})
+  const recipeResults = await getRecipes()
   const result = await getPosts()
 
   const recipesRoutes = recipeResults.recipes.map((recipe) => {
     return {
-      url: recipe.id
+      url: recipe.slug
         ? `https://www.borachurrasco.app/recipes/${recipe.slug}`
         : '',
       lastModified: recipe.createdAt,

@@ -256,7 +256,7 @@ const getRecipes = async (queryParam: GetQuery = {},) => {
 
   const recipes: Recipe[] = [];
 
-  json.results.forEach( (recipe: any) => {
+  json.results.forEach((recipe: any) => {
     const recipeResult = {
       name: recipe.properties.Recipe.title[0].plain_text,
       slug:
@@ -267,6 +267,7 @@ const getRecipes = async (queryParam: GetQuery = {},) => {
         recipe.properties.imageUrl.rich_text[0]
         ? recipe.properties.imageUrl.rich_text[0].plain_text
         : null,
+      createdAt: recipe.properties.Date.date.start,
     } as Recipe
 
     recipes.push(recipeResult);
@@ -332,13 +333,14 @@ const getRecipe = async (slug: string): Promise<Recipe> => {
   let recipe = {
     name: recipeResult.properties.Recipe.title[0].plain_text,
     slug:
-    recipeResult.properties.slug.rich_text.length > 0
+      recipeResult.properties.slug.rich_text.length > 0
         ? recipeResult.properties.slug.rich_text[0].plain_text
         : '',
     imagePath: recipeResult.properties.imageUrl &&
       recipeResult.properties.imageUrl.rich_text[0]
       ? recipeResult.properties.imageUrl.rich_text[0].plain_text
       : null,
+      createdAt: recipeResult.properties.Date.date.start,
     content,
   } as Recipe
 
