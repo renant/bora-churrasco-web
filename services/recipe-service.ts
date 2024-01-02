@@ -108,6 +108,8 @@ const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
           : data.createdAt,
         data.active,
         data.createdBy,
+        "",
+        ""
       ),
     )
   })
@@ -136,6 +138,8 @@ const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
             : data.createdAt,
           data.active,
           data.createdBy,
+          "",
+          ""
         ),
       )
     })
@@ -164,6 +168,8 @@ const getRecipeById = async (id: string): Promise<Recipe | null> => {
         : data.createdAt,
       data.active,
       data.createdBy,
+      "",
+      ""
     )
   })
 
