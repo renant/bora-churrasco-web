@@ -1,7 +1,7 @@
-import { getRecipes } from '@/services/notion-blog-service'
+import { GetQuery, getRecipes } from '@/services/notion-blog-service'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   if (request.headers.get('x-api-key') !== process.env.API_KEY) {
     return NextResponse.json(
       { message: 'unauthorized' },
@@ -11,9 +11,34 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  const recipes = await getRecipes()
+  try {
+    const body = await request.json()
 
-  return NextResponse.json(recipes, {
-    status: 200,
-  })
+    if (body.limitSize === undefined) {
+      return NextResponse.json(
+        { message: 'limitSize is required' },
+        {
+          status: 400,
+        },
+      )
+    }
+
+    const query: GetQuery = {
+      limitSize: body.limitSize,
+      start_cursor: body.start_cursor,
+    }
+
+    const recipes = await getRecipes(query)
+
+    return NextResponse.json(recipes, {
+      status: 200,
+    })
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'error on get recipes' },
+      {
+        status: 400,
+      },
+    )
+  }
 }
