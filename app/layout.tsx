@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   title: 'Bora Churrasco! ("Calculadora de Churrasco")',
   description:
     'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
+  alternates: {
+    canonical: `https://www.borachurrasco.app`,
+  },
   manifest: 'https://www.borachurrasco.app/manifest.json',
   keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
   openGraph: {

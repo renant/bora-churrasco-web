@@ -1,10 +1,33 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getRecipes } from '@/services/notion-blog-service'
+import { Metadata } from 'next'
 
 import Image from 'next/image'
 import Link from 'next/link'
 
 export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'Bora Churrasco: Receitas',
+  description: 'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!',
+  alternates: {
+    canonical: `https://www.borachurrasco.app/recipes`,
+  },
+  manifest: 'https://www.borachurrasco.app/manifest.json',
+  keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
+  openGraph: {
+    title: 'Bora Churrasco: Receitas',
+    description: 'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!',
+    url: `https://www.borachurrasco.app/recipes`,
+    images: [
+      {
+        url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+      },
+    ],
+    locale: 'pt_BR',
+    type: 'website',
+  },
+}
 
 export default async function RecipesPage() {
   const result = await getRecipes()

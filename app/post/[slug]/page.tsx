@@ -30,9 +30,14 @@ export async function generateMetadata({
     }
   }
 
+  const url = `https://www.borachurrasco.app/post/${post.slug}`;
+
   return {
     title: `${post.title}`,
     description: `${post.resume}`,
+    alternates: {
+      canonical: url,
+    },
     keywords: post.tags,
     images: [
       {
@@ -42,7 +47,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${post.title}`,
       description: `${post.resume}`,
-      url: `https://www.borachurrasco.app/post/${post.slug}`,
+      url: url,
       images: [
         {
           url: post.firebaseCoverImageUrl,

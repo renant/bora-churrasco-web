@@ -14,9 +14,14 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     }
   }
 
+  const url = `https://www.borachurrasco.app/recipes/${recipe.slug}`;
+
   return {
     title: `${recipe.name}`,
     description: `Receita de ${recipe.name}`,
+    alternates: {
+      canonical: url,
+    },
     images: [
       {
         url: recipe.imagePath,
@@ -25,7 +30,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     openGraph: {
       title: `${recipe.name}`,
       description: `Receita de ${recipe.name}`,
-      url: `https://www.borachurrasco.app/recipes/${recipe.id}`,
+      url: url,
       images: [
         {
           url: recipe.imagePath,

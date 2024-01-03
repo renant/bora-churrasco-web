@@ -1,13 +1,19 @@
-import Result from '@/components/ui/result'
-import { getRandomAdsContent } from '@/services/ad-service'
-import Image from 'next/image'
+import Result from '@/components/ui/result';
+import { getRandomAdsContent } from '@/services/ad-service';
+import Image from 'next/image';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const participante = parseInt(params.id)
 
+  const url = `https://www.borachurrasco.app/resultado/${participante}`;
+
+
   return {
     title: `Cálculo De Churrasco Para ${participante} Pessoas`,
     description: `Lista de compras e calculo estimado para um churrasco de ${participante} pessoas`,
+    alternates: {
+      canonical: url,
+    },
     keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
     images: [
       {
@@ -17,7 +23,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     openGraph: {
       title: `Cálculo De Churrasco Para ${participante} Pessoas`,
       description: `Lista de compras e calculo estimado para um churrasco de ${participante} pessoas`,
-      url: `https://www.borachurrasco.app/resultado/${participante}`,
+      url: url,
       images: [
         {
           url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
