@@ -45,7 +45,18 @@ export async function generateStaticParams() {
     { id: '30' },
     { id: '35' },
     { id: '40' },
+    { id: '45' },
     { id: '50' },
+    { id: '55' },
+    { id: '60' },
+    { id: '65' },
+    { id: '70' },
+    { id: '75' },
+    { id: '80' },
+    { id: '85' },
+    { id: '90' },
+    { id: '95' },
+    { id: '100' },
   ]
 }
 

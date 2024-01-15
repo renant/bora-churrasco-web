@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  const routesResults = [5, 10, 15, 20, 25, 30, 35, 40, 50].map((route) => {
+  const routesResults = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100].map((route) => {
     return {
       url: `https://www.borachurrasco.app/resultado/${route}`,
       lastModified: new Date(),
