@@ -10,14 +10,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: recipe.slug
         ? `https://www.borachurrasco.app/recipes/${recipe.slug}`
         : '',
-      lastModified: recipe.createdAt,
+      lastModified: new Date(),
     }
   })
 
   const postsRoutes = result.posts.map((post) => {
     return {
       url: `https://www.borachurrasco.app/post/${post.slug}`,
-      lastModified: post.date,
+      lastModified: new Date(),
     }
   })
 
