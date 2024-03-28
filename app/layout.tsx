@@ -11,7 +11,7 @@ import './globals.css'
 const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Bora Churrasco! ("Calculadora de Churrasco")',
+  title: 'Calculadora de Churrasco - Bora Churrasco!',
   description:
     'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
   alternates: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   manifest: 'https://www.borachurrasco.app/manifest.json',
   keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
   openGraph: {
-    title: 'Bora Churrasco! ("Calculadora de Churrasco")',
+    title: 'Calculadora de Churrasco - Bora Churrasco!',
     description:
       'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
     url: `https://www.borachurrasco.app`,

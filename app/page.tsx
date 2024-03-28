@@ -5,21 +5,20 @@ import Link from 'next/link'
 
 export default async function Home() {
   return (
-    <>
-      <main className="container relative mx-auto mb-20 min-h-screen pt-8 md:pt-40">
+    <main>
+      <div className="container relative mx-auto mb-20 min-h-screen pt-8 md:pt-40">
         <section>
           <div className="text-white">
             <div className="container mx-auto flex flex-col items-center lg:flex-row">
               <div className="flex w-full flex-col items-start justify-center p-4 md:p-8 lg:w-1/3">
                 <h1 className="tracking-loose hidden text-xl text-orange-300 md:block md:text-xl">
-                  Bora Churrasco - Calculadora de Churrasco
+                  Calculadora de Churrasco - Bora Churrasco
                 </h1>
                 <h3 className="mb-2 mt-8 text-3xl leading-relaxed md:mt-0 md:text-5xl md:leading-snug">
                   Seu app Android para calcular churrasco
                 </h3>
                 <p className="mb-4 text-sm text-gray-50 md:text-base">
-                  calculadora ideal para para não deixa que seu churrasco falte
-                  nada.
+                  calculadora ideal para não deixar que falte nada no seu churrasco
                 </p>
                 <div className="flex flex-col content-center justify-center md:flex-row">
                   <div className="flex w-[144px] min-w-[144px] flex-col justify-center pr-4">
@@ -49,7 +48,7 @@ export default async function Home() {
                     src="/app-sample.png"
                     placeholder="blur"
                     blurDataURL="/blur-image.png"
-                    alt="Foto do aplicativo"
+                    alt="Calculadora de Churrasco do Bora Churrasco"
                     width={300}
                     height={200}
                   />
@@ -80,41 +79,69 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-      </main>
+      </div>
       <div className="container mx-auto mb-20 grid grid-cols-1 gap-2 md:gap-8">
         <div className="prose prose-orange max-w-none" id="content">
+          <h2>Calculadora de Churrasco: Planeje Seu Evento com a Ferramenta do Bora Churrasco</h2>
+
           <p>
-            Bora Churrasco é uma ferramenta incrível no estilo churrascômetro
-            (Calculadora de Churrasco), uma calculadora perfeita para garantir o
-            sucesso absoluto do seu churrasco, sem deixar faltar absolutamente
-            nada.
+            Descobrir a quantidade certa de comida e bebida para um churrasco pode ser um verdadeiro desafio. Com a exclusiva <strong className='text-orange-400'>Calculadora de Churrasco do Bora Churrasco</strong>, nunca foi tão fácil acertar em cheio no cálculo e garantir que todos os seus convidados saiam satisfeitos. Acompanhe a seguir como nossa ferramenta inovadora em cinco passos pode revolucionar a maneira como você planeja seu churrasco:
+          </p>
+
+          <h3>
+            Número de Participantes
+          </h3>
+
+          <p>O primeiro passo para um planejamento perfeito começa com o número exato de participantes. Nossa calculadora ajusta as proporções garantindo que haja abundância sem desperdícios.</p>
+
+          <h3>
+            Escolha de Carnes e Assados
+          </h3>
+
+          <p>
+            No segundo passo, apresentamos uma variedade rica de carnes e assados, permitindo que você customise seu evento com opções que vão agradar a todos os gostos, desde os apreciadores dos cortes tradicionais até os amantes de novidades no mundo do churrasco.
+          </p>
+
+          <h3>
+            Seleção de Bebidas
+          </h3>
+
+          <p>
+            Um bom churrasco também pede uma seleção adequada de bebidas. Dependendo do perfil dos seus convidados e do tempo estimado do evento, ajudamos você a calcular tanto as opções alcoólicas quanto as não alcoólicas.
+          </p>
+
+          <h3>
+            Tempo Estimado de Churrasco
+          </h3>
+
+          <p>
+            Ajustar a quantidade de comida e bebida também depende do tempo que você planeja para o seu evento. Nosso sistema considera o tempo estimado do churrasco para garantir que todos estejam bem servidos do início ao fim com a ajuda da <strong className='text-orange-400'>calculadora de churrasco.</strong>
+          </p>
+
+          <h3>
+            Resultado com Lista de Compras Compartilhável
+          </h3>
+
+          <p>
+            Por fim, após inserir as informações necessárias, nossa calculadora gera uma lista de compras detalhada, incluindo tudo o que você precisará para o seu evento. O mais incrível? Você pode compartilhá-la facilmente com quem estiver ajudando nos preparativos, seja por e-mail ou aplicativos de mensagens.
           </p>
 
           <p>
-            A Calculadora de Churrasco é uma poderosa aliada para garantir o
-            sucesso do seu evento, pois fornece informações precisas e
-            detalhadas para calculadora churrasco por pessoa, permitindo que
-            você faça ajustes de acordo com as particularidades do seu
-            churrasco.
+            Com a <strong className='text-orange-400'>Calculadora de Churrasco do Bora Churrasco</strong>, o planejamento do seu evento fica mais simples e eficiente. Nossa ferramenta foi pensada para os entusiastas do churrasco que não querem se preocupar com complexos cálculos e preferem focar no que realmente importa: desfrutar de bons momentos ao lado de amigos e familiares.
           </p>
 
           <p>
-            Aqui está como funciona: você fornece o número de participantes do
-            seu churrasco, seleciona os pratos e bebidas desejados, e pronto!
-            Você receberá uma lista de compras completa e detalhada, que pode
-            facilmente ser compartilhada com seus convidados ou usada para uma
-            nova análise, se necessário.
+            <strong className='text-orange-400'>Bora Churrasco</strong> não é apenas o destino para quem quer acertar no churrasco; é o começo de uma experiência inesquecível que começa com o planejamento. Explore agora nossa <a href='https://www.borachurrasco.app'>Calculadora de Churrasco</a> e faça do seu próximo evento um sucesso absoluto!
           </p>
 
           <p>
-            O aplicativo também possui uma seção de receitas e a capacidade de
-            personalizar a lista de compras com as quantidades desejadas.
+            <strong className='text-orange-400'>Importante:</strong> Diversos fatores podem impactar o consumo estimado para o seu evento, incluindo o horário da realização, condições climáticas e outros aspectos relevantes.
           </p>
         </div>
 
         <Guide />
         <Faq />
       </div>
-    </>
+    </main>
   )
 }
