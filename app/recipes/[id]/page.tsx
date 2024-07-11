@@ -1,3 +1,4 @@
+import JsonLd from '@/components/JsonLd'
 import { getRandomAdsContent } from '@/services/ad-service'
 import { getRecipe } from '@/services/notion-blog-service'
 import Image from 'next/image'
@@ -87,6 +88,30 @@ export default async function RecipePage({
           </a>
         </div>
       </article>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": recipe.name,
+        "description": `Receita de ${recipe.name}`,
+        "datePublished": new Date(recipe.createdAt).toISOString(),
+        "author": {
+          "@type": "Person",
+          "name": "Bora Churrasco"
+        },
+        "image": [recipe.imagePath],
+        "publisher": {
+          "@type": "Organization",
+          "name": "Bora Churrasco",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.borachurrasco.app/images/ms-icon-310x310.png"
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://www.borachurrasco.app/recipes/${params.id}`
+        }
+      }} />
     </main>
   )
 }

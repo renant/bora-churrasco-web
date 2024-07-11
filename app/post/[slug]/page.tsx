@@ -84,7 +84,7 @@ export default async function PostPage({
       </div>
       <article className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700">
         <h1>{post.title}</h1>
-        <p>{new Date(post.date).toLocaleDateString('pt-BR')}</p>
+        <p>{new Date(post.date).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</p>
         <section dangerouslySetInnerHTML={{ __html: post.content }} />
 
         <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
@@ -124,7 +124,7 @@ export default async function PostPage({
         "@type": "BlogPosting",
         "headline": post.title,
         "description": post.resume,
-        "datePublished": post.date,
+        "datePublished": new Date(post.date).toISOString(),
         "author": {
           "@type": "Person",
           "name": "Bora Churrasco"
