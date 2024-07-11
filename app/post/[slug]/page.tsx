@@ -1,3 +1,4 @@
+import JsonLd from '@/components/JsonLd'
 import { getRandomAdsContent } from '@/services/ad-service'
 import { getPost, getPosts } from '@/services/notion-blog-service'
 import { unstable_cache as unstableCache } from 'next/cache'
@@ -118,6 +119,30 @@ export default async function PostPage({
           </section>
         </a> */}
       </article>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.resume,
+        "datePublished": post.date,
+        "author": {
+          "@type": "Person",
+          "name": "Bora Churrasco"
+        },
+        "image": [post.firebaseCoverImageUrl],
+        "publisher": {
+          "@type": "Organization",
+          "name": "Bora Churrasco",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.borachurrasco.app/images/ms-icon-310x310.png"
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://www.borachurrasco.app/post/${post.slug}`
+        }
+      }} />
     </main>
   )
 }
