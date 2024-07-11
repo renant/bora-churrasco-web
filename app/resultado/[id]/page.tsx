@@ -181,15 +181,6 @@ export default async function Resultado({
           }
         }} />
 
-        <JsonLd data={{
-          "@context": "https://schema.org",
-          "@type": "Question",
-          "name": `Qual a quantidade de carne para um churrasco com ${participante} pessoas?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `A quantidade de carne para um churrasco com ${participante} pessoas é de aproximadamente 400 gramas por homem, 300 gramas por mulher e 200 gramas por criança.`
-          }
-        }} />
       </main>
 
     </>

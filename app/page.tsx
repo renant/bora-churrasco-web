@@ -1,3 +1,4 @@
+import JsonLd from '@/components/JsonLd'
 import Faq from '@/components/ui/faq'
 import { Guide } from '@/components/ui/guide'
 import Image from 'next/image'
@@ -141,6 +142,30 @@ export default async function Home() {
 
         <Guide />
         <Faq />
+
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity":
+            [
+              {
+                "@type": "Question",
+                "name": "Qual a quantidade de carne para um churrasco?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A quantidade de carne para um churrasco varia conforme o perfil dos convidados e o tempo estimado do evento. Em média, considera-se 400 gramas por homem e 300 gramas por mulher. Para crianças, a quantidade é de 200 gramas."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Como calcular a quantidade de carvão para um churrasco?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Uma boa regra é usar 1,5 kg de carvão para cada kg de carne. Isso pode variar conforme o tipo de churrasqueira e a duração do churrasco."
+                }
+              },
+            ]
+        }} />
       </div>
     </main>
   )
