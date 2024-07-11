@@ -1,3 +1,4 @@
+import JsonLd from '@/components/JsonLd';
 import Result from '@/components/ui/result';
 import { getRandomAdsContent } from '@/services/ad-service';
 import Image from 'next/image';
@@ -154,6 +155,31 @@ export default async function Resultado({
           <h4>E as bebidas, como calcular?</h4>
           <p>Considere uma média de 1,5 a 2 litros de bebida por pessoa para um churrasco de longa duração. Isso inclui água, refrigerante e álcool.</p>
         </div>
+
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": `Cálculo De Churrasco Para ${participante} Pessoas`,
+          "description": `Lista de compras e calculo estimado para um churrasco de ${participante} pessoas`,
+          "datePublished": new Date().toISOString(),
+          "author": {
+            "@type": "Person",
+            "name": "Bora Churrasco"
+          },
+          "image": ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
+          "publisher": {
+            "@type": "Organization",
+            "name": "Bora Churrasco",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.borachurrasco.app/images/ms-icon-310x310.png"
+            }
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://www.borachurrasco.app/resultado/${participante}`
+          }
+        }} />
       </main>
 
     </>
