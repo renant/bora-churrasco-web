@@ -368,7 +368,7 @@ const updateImageToFirebaseCoverImage = async (
 
     const compressedImage = await sharp(await blob.arrayBuffer())
       .resize({ width: 800 })
-      .jpeg({ quality: 60 })
+      .avif({ quality: 60 })
       .toBuffer()
 
     await uploadBytesResumable(imageRef, compressedImage, metadata)
