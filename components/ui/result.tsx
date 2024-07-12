@@ -3,6 +3,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import churrascoStore from '@/lib/churrascoStore'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
+import { Skeleton } from './skeleton'
 
 enum TipoMedida {
   peso,
@@ -68,11 +69,13 @@ export default function Result({ participantes }: ResultProps) {
   }, [resetState, router])
 
   if (!temParticipantes()) {
-    return <></>
+    return <div>
+      <Skeleton className="md:w-96 md:h-[610px] h-[669px] rounded-xl" />
+    </div>
   }
 
   return (
-    <>
+    <div className='md:w-96 md:h-[610px] h-full'>
       <div className="flex flex-col">
         <h2 className="mb-2 text-center text-lg leading-relaxed text-orange-300 sm:text-4xl md:leading-snug">
           Lista de Compras!
@@ -212,6 +215,6 @@ export default function Result({ participantes }: ResultProps) {
             : 'Calcular novamente'}
         </Button>
       </div>
-    </>
+    </div>
   )
 }

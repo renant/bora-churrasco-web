@@ -1,13 +1,14 @@
 import JsonLd from '@/components/JsonLd'
 import Faq from '@/components/ui/faq'
 import { Guide } from '@/components/ui/guide'
+import appSampleImg from '@/public/app-sample.avif'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function Home() {
   return (
     <main>
-      <div className="container relative mx-auto mb-20 min-h-screen pt-8 md:pt-40">
+      <div className="container relative mx-auto mb-10 min-h-screen pt-8 md:pt-40">
         <section>
           <div className="text-white">
             <div className="container mx-auto flex flex-col items-center lg:flex-row">
@@ -15,9 +16,9 @@ export default async function Home() {
                 <h1 className="tracking-loose hidden text-xl text-orange-300 md:block md:text-xl">
                   Calculadora de Churrasco - Bora Churrasco
                 </h1>
-                <h3 className="mb-2 mt-8 text-3xl leading-relaxed md:mt-0 md:text-5xl md:leading-snug">
+                <h2 className="mb-2 mt-8 text-3xl leading-relaxed md:mt-0 md:text-5xl md:leading-snug">
                   Seu app Android para calcular churrasco
-                </h3>
+                </h2>
                 <p className="mb-4 text-sm text-gray-50 md:text-base">
                   calculadora ideal para não deixar que falte nada no seu churrasco
                 </p>
@@ -36,55 +37,28 @@ export default async function Home() {
                         width={150}
                         height={150}
                         alt="Disponível no Google Play"
-                        src="/google-play-badge.png"
+                        src="/google-play-badge.avif"
+                        priority
                       />
                     </a>
                   </div>
                 </div>
               </div>
-              <div className="mb-6 ml-0  flex w-full justify-center p-8 md:mb-0 md:ml-12 md:mt-0 md:w-1/2  lg:w-2/3">
-                <div>
-                  <Image
-                    className="inline-block w-full p-8 md:mt-0 md:p-0 lg:w-1/2 xl:w-2/3"
-                    src="/app-sample.png"
-                    placeholder="blur"
-                    blurDataURL="/blur-image.png"
-                    alt="Calculadora de Churrasco do Bora Churrasco"
-                    width={300}
-                    height={200}
-                  />
-                </div>
+              <div className="md:ml-32 inline-block w-full p-8 md:mt-0 md:p-0 lg:w-1/2 xl:w-2/3 max-w-xs">
+                <Image
+                  src={appSampleImg}
+                  alt="Calculadora de Churrasco do Bora Churrasco"
+                  priority
+                />
               </div>
             </div>
           </div>
         </section>
-        <div className="absolute bottom-0 left-0 w-full pb-8">
-          <Link
-            className="flex flex-col items-center justify-center font-bold text-orange-400"
-            href="#content"
-          >
-            <p>Confira nossos conteúdos</p>
-            <svg
-              width="30"
-              height="30"
-              viewBox="0 0 15 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z"
-                fill="currentColor"
-                fillRule="evenodd"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </Link>
-        </div>
+
       </div>
       <div className="container mx-auto mb-20 grid grid-cols-1 gap-2 md:gap-8">
         <div className="prose prose-orange max-w-none" id="content">
           <h2>Calculadora de Churrasco: Planeje Seu Evento com a Ferramenta do Bora Churrasco</h2>
-
           <p>
             Descobrir a quantidade certa de comida e bebida para um churrasco pode ser um verdadeiro desafio. Com a exclusiva <strong className='text-orange-400'>Calculadora de Churrasco do Bora Churrasco</strong>, nunca foi tão fácil acertar em cheio no cálculo e garantir que todos os seus convidados saiam satisfeitos. Acompanhe a seguir como nossa ferramenta inovadora em cinco passos pode revolucionar a maneira como você planeja seu churrasco:
           </p>

@@ -76,13 +76,13 @@ export default async function Resultado({
         <h1 className="mb-3 text-center text-lg leading-relaxed text-orange-300 sm:text-4xl md:leading-snug">
           Cálculo De Churrasco Para {participante} Pessoas
         </h1>
-        <div className="flex flex-col  md:flex-row">
+        <div className="flex flex-col  md:flex-row min-w-full items-center justify-center">
           <div className="flex flex-col pr-8">
             <Result participantes={participante} />
           </div>
           <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
             <div>
-              <Image src={ads.image} height={400} width={400} alt={ads.alt} />
+              <Image src={ads.image} height={400} width={400} alt={ads.alt} priority />
             </div>
             <div className="p-3">
               <h3 className="text-md m-0 font-semibold text-gray-700">
