@@ -1,7 +1,6 @@
 import { getPosts, getRecipes } from '@/services/notion-blog-service'
-import { MetadataRoute } from 'next'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default async function sitemap() {
   const recipeResults = await getRecipes()
   const result = await getPosts()
 
@@ -11,6 +10,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ? `https://www.borachurrasco.app/recipes/${recipe.slug}`
         : '',
       lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
     }
   })
 
@@ -18,6 +19,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `https://www.borachurrasco.app/post/${post.slug}`,
       lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     }
   })
 
@@ -25,6 +28,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `https://www.borachurrasco.app/${route}`,
       lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
     }
   })
 
@@ -32,6 +37,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `https://www.borachurrasco.app/resultado/${route}`,
       lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 1,
     }
   })
 
