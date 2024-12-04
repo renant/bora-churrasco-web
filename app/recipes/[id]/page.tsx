@@ -18,10 +18,16 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const url = `https://www.borachurrasco.app/recipes/${recipe.slug}`;
 
   return {
-    title: `${recipe.name}`,
-    description: `Receita de ${recipe.name}`,
+    title: `${recipe.name} - Receita | Bora Churrasco`,
+    description: `Aprenda a fazer ${recipe.name}. Receita completa com ingredientes e modo de preparo passo a passo.`,
     alternates: {
       canonical: url,
+    },
+    keywords: ['receita', 'churrasco', 'como fazer', recipe.name],
+    authors: [{ name: 'Bora Churrasco' }],
+    robots: {
+      index: true,
+      follow: true,
     },
     images: [
       {
@@ -57,17 +63,21 @@ export default async function RecipePage({
 
   return (
     <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
-      <div className="relative z-0 h-60 w-full lg:h-[450px]">
-        <Image
-          fill={true}
-          className="rounded-md object-cover"
-          src={recipe.imagePath}
-          alt={`Image do post ${recipe.name}`}
-        />
-      </div>
-      <article className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700">
-        <h1>{recipe.name}</h1>
-        <section dangerouslySetInnerHTML={{ __html: recipe.content }} />
+      <article itemScope itemType="https://schema.org/Recipe" className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700">
+        <meta itemProp="datePublished" content={new Date(recipe.createdAt).toISOString()} />
+        <div className="relative z-0 h-60 w-full lg:h-[450px]">
+          <Image
+            fill={true}
+            className="rounded-md object-cover"
+            src={recipe.imagePath}
+            alt={`Foto da receita: ${recipe.name}`}
+            itemProp="image"
+          />
+        </div>
+        <h1 itemProp="name" className="!mt-10">{recipe.name}</h1>
+        <div itemProp="articleBody">
+          <section dangerouslySetInnerHTML={{ __html: recipe.content }} />
+        </div>
 
         <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
           <div>
@@ -90,13 +100,14 @@ export default async function RecipePage({
       </article>
       <JsonLd data={{
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": recipe.name,
+        "@type": "Recipe",
+        "name": recipe.name,
         "description": `Receita de ${recipe.name}`,
         "datePublished": new Date(recipe.createdAt).toISOString(),
         "author": {
-          "@type": "Person",
-          "name": "Bora Churrasco"
+          "@type": "Organization",
+          "name": "Bora Churrasco",
+          "url": "https://www.borachurrasco.app"
         },
         "image": [recipe.imagePath],
         "publisher": {
@@ -110,7 +121,9 @@ export default async function RecipePage({
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": `https://www.borachurrasco.app/recipes/${params.id}`
-        }
+        },
+        "isAccessibleForFree": "True",
+        "inLanguage": "pt-BR"
       }} />
     </main>
   )

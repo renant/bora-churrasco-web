@@ -5,34 +5,59 @@ import Image from 'next/image';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const participante = parseInt(params.id)
-
   const url = `https://www.borachurrasco.app/resultado/${participante}`;
 
-
   return {
-    title: `Cálculo De Churrasco Para ${participante} Pessoas`,
-    description: `Lista de compras e calculo estimado para um churrasco de ${participante} pessoas`,
+    title: `Calculadora de Churrasco: Quantidade Para ${participante} Pessoas | Bora Churrasco`,
+    description: `Descubra a quantidade exata de carne e acompanhamentos para um churrasco de ${participante} pessoas. Cálculo preciso de carnes, acompanhamentos e bebidas para seu evento.`,
     alternates: {
       canonical: url,
     },
-    keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
+    keywords: [
+      'Calculadora de Churrasco',
+      'Churrasco para Grupos',
+      'Quantidade de Carne por Pessoa',
+      'Planejamento de Churrasco',
+      `Churrasco ${participante} pessoas`,
+      'Cálculo de Carne',
+      'Organização de Churrasco',
+      'Dicas de Churrasco'
+    ],
     images: [
       {
         url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+        width: 310,
+        height: 310,
+        alt: 'Bora Churrasco - Calculadora de Churrasco'
       },
     ],
     openGraph: {
-      title: `Cálculo De Churrasco Para ${participante} Pessoas`,
-      description: `Lista de compras e calculo estimado para um churrasco de ${participante} pessoas`,
+      title: `Calculadora de Churrasco: Quantidade Para ${participante} Pessoas | Bora Churrasco`,
+      description: `Descubra a quantidade exata de carne e acompanhamentos para um churrasco de ${participante} pessoas. Cálculo preciso de carnes, acompanhamentos e bebidas para seu evento.`,
       url: url,
       images: [
         {
           url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+          width: 310,
+          height: 310,
+          alt: 'Bora Churrasco - Calculadora de Churrasco'
         },
       ],
       locale: 'pt_BR',
-      type: 'website',
+      type: 'article',
+      siteName: 'Bora Churrasco',
+      article: {
+        publishedTime: new Date().toISOString(),
+        authors: ['Bora Churrasco'],
+        tags: ['Churrasco', 'Calculadora', 'Planejamento', 'Carnes']
+      }
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Calculadora de Churrasco: Quantidade Para ${participante} Pessoas`,
+      description: `Descubra a quantidade exata de carne e acompanhamentos para um churrasco de ${participante} pessoas`,
+      images: ['https://www.borachurrasco.app/images/ms-icon-310x310.png'],
+    }
   }
 }
 
@@ -158,15 +183,22 @@ export default async function Resultado({
 
         <JsonLd data={{
           "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          "@type": "Article",
           "headline": `Cálculo De Churrasco Para ${participante} Pessoas`,
-          "description": `Lista de compras e calculo estimado para um churrasco de ${participante} pessoas`,
+          "description": `Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas.`,
           "datePublished": new Date().toISOString(),
+          "dateModified": new Date().toISOString(),
           "author": {
-            "@type": "Person",
-            "name": "Bora Churrasco"
+            "@type": "Organization",
+            "name": "Bora Churrasco",
+            "url": "https://www.borachurrasco.app"
           },
-          "image": ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+            "width": 310,
+            "height": 310
+          },
           "publisher": {
             "@type": "Organization",
             "name": "Bora Churrasco",
@@ -178,7 +210,10 @@ export default async function Resultado({
           "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": `https://www.borachurrasco.app/resultado/${participante}`
-          }
+          },
+          "keywords": "Calculadora de Churrasco, Quantidade de Carne, Churrasco para Grupos, Planejamento de Churrasco",
+          "articleSection": "Calculadora",
+          "wordCount": "1000"
         }} />
 
       </main>

@@ -2,6 +2,7 @@ import { CardPost } from '@/components/ui/card-post'
 import { getPosts } from '@/services/notion-blog-service'
 import { Metadata } from 'next'
 import { unstable_cache as unstableCache } from 'next/cache'
+import Script from 'next/script'
 
 const getCachedPosts = unstableCache(async () => getPosts(), ['cache-posts'])
 
@@ -27,18 +28,66 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     type: 'website',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador',
+    description: 'Descubra os segredos do churrasco perfeito com nosso blog de churrasco.',
+    images: ['https://www.borachurrasco.app/images/ms-icon-310x310.png'],
+  },
 }
 
 export default async function PostsPage() {
   const result = await getCachedPosts()
+  
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    headline: 'Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador',
+    image: ['https://www.borachurrasco.app/images/ms-icon-310x310.png'],
+    datePublished: result.posts[0]?.date,
+    author: {
+      '@type': 'Organization',
+      name: 'Bora Churrasco'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bora Churrasco',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png'
+      }
+    },
+    description: metadata.description
+  }
 
   return (
-    <main className="min-h-screen bg-white px-9  pt-8 shadow-xl md:container md:mx-auto md:pt-40">
-      <div className="grid grid-cols-1  gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {result.posts.map((post) => (
-          <CardPost key={post.slug} post={post} />
-        ))}
-      </div>
-    </main>
+    <>
+      <Script
+        id="blog-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="min-h-screen bg-white px-9 pt-8 shadow-xl md:container md:mx-auto md:pt-40">
+        <h1 className="mt-2 mb-8 text-3xl font-bold">Blog Bora Churrasco</h1>
+        <section aria-label="Posts do Blog">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {result.posts.map((post) => (
+              <CardPost key={post.slug} post={post} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </>
   )
 }

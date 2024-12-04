@@ -120,25 +120,57 @@ export default async function Home() {
         <JsonLd data={{
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          "mainEntity":
-            [
-              {
-                "@type": "Question",
-                "name": "Qual a quantidade de carne para um churrasco?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "A quantidade de carne para um churrasco varia conforme o perfil dos convidados e o tempo estimado do evento. Em média, considera-se 400 gramas por homem e 300 gramas por mulher. Para crianças, a quantidade é de 200 gramas."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Como calcular a quantidade de carvão para um churrasco?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Uma boa regra é usar 1,5 kg de carvão para cada kg de carne. Isso pode variar conforme o tipo de churrasqueira e a duração do churrasco."
-                }
-              },
-            ]
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Qual a quantidade de carne para um churrasco?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A quantidade de carne para um churrasco varia conforme o perfil dos convidados e o tempo estimado do evento. Em média, considera-se 400 gramas por homem e 300 gramas por mulher. Para crianças, a quantidade é de 200 gramas."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Como calcular a quantidade de carvão para um churrasco?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Uma boa regra é usar 1,5 kg de carvão para cada kg de carne. Isso pode variar conforme o tipo de churrasqueira e a duração do churrasco."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quanto de acompanhamento calcular por pessoa no churrasco?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Recomenda-se calcular cerca de 150g de arroz, 150g de farofa e 100g de pão por pessoa. Para saladas, considere 100g por pessoa."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Como calcular bebidas para churrasco?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Calcule 1 litro de cerveja por hora por pessoa que bebe, 500ml de refrigerante por pessoa e 400ml de água por pessoa. Para um churrasco de 4 horas, multiplique esses valores."
+              }
+            }
+          ]
+        }} />
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Bora Churrasco - Calculadora de Churrasco",
+          "operatingSystem": "Android",
+          "applicationCategory": "UtilitiesApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "486"
+          }
         }} />
       </div>
     </main>
