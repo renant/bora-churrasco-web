@@ -11,18 +11,27 @@ import './globals.css'
 const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Calculadora de Churrasco - Bora Churrasco!',
+  title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
   description:
-    'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
+    'Calcule a quantidade exata de carne, acompanhamentos e bebidas para seu churrasco. Ferramenta gratuita para planejar churrasco com precisão. Evite desperdícios!',
   alternates: {
     canonical: `https://www.borachurrasco.app`,
   },
   manifest: 'https://www.borachurrasco.app/manifest.json',
-  keywords: ['Calculadora de Churraso', 'Churrasco', 'Calculadora'],
+  keywords: [
+    'Calculadora de Churrasco',
+    'Churrasco',
+    'Quantidade de Carne por Pessoa',
+    'Como Calcular Churrasco',
+    'Planejamento de Churrasco',
+    'Churrasco para Grupos',
+    'Lista de Compras Churrasco',
+    'App Churrasco'
+  ],
   openGraph: {
-    title: 'Calculadora de Churrasco - Bora Churrasco!',
+    title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
     description:
-      'Bora Churrasco é a ferramenta perfeita ("Calculadora de Churrasco") para calcular o seu churrasco.',
+      'Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos. Ferramenta gratuita para organizar churrascos sem desperdício.',
     url: `https://www.borachurrasco.app`,
     images: [
       {

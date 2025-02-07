@@ -1,6 +1,7 @@
 import JsonLd from '@/components/JsonLd'
 import { getRandomAdsContent } from '@/services/ad-service'
 import { getPost, getPosts } from '@/services/notion-blog-service'
+import { estimateReadingTime } from '@/utils/text-utils'; // Add this utility
 import { unstable_cache as unstableCache } from 'next/cache'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -32,9 +33,10 @@ export async function generateMetadata({
   }
 
   const url = `https://www.borachurrasco.app/post/${post.slug}`;
+  const readingTime = estimateReadingTime(post.content);
 
   return {
-    title: `${post.title}`,
+    title: `${post.title} | Bora Churrasco`,
     description: `${post.resume}`,
     alternates: {
       canonical: url,
@@ -46,16 +48,30 @@ export async function generateMetadata({
       },
     ],
     openGraph: {
-      title: `${post.title}`,
+      title: `${post.title} | Bora Churrasco`,
       description: `${post.resume}`,
       url: url,
       images: [
         {
           url: post.firebaseCoverImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
         },
       ],
       locale: 'pt_BR',
-      type: 'website',
+      type: 'article',
+      article: {
+        publishedTime: new Date(post.date).toISOString(),
+        authors: ['Bora Churrasco'],
+        tags: post.tags,
+      },
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} | Bora Churrasco`,
+      description: `${post.resume}`,
+      images: [post.firebaseCoverImageUrl],
     },
   }
 }
@@ -72,6 +88,8 @@ export default async function PostPage({
     return notFound()
   }
 
+  const readingTime = estimateReadingTime(post.content);
+
   return (
     <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
       <div className="relative z-0 h-60 w-full lg:h-[450px]">
@@ -82,10 +100,22 @@ export default async function PostPage({
           alt={`Image do post ${post.title}`}
         />
       </div>
-      <article className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700">
-        <h1>{post.title}</h1>
-        <p>{new Date(post.date).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</p>
-        <section dangerouslySetInnerHTML={{ __html: post.content }} />
+      <article 
+        className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700"
+        itemScope 
+        itemType="https://schema.org/Article"
+      >
+        <meta itemProp="datePublished" content={new Date(post.date).toISOString()} />
+
+        <h1 itemProp="headline">{post.title}</h1>
+        <div className="flex items-center gap-4 text-sm text-gray-600">
+          <time dateTime={new Date(post.date).toISOString()}>
+            {new Date(post.date).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+          </time>
+          <span>·</span>
+          <span>{readingTime} min de leitura</span>
+        </div>
+        <section itemProp="articleBody" dangerouslySetInnerHTML={{ __html: post.content }} />
 
         <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
           <div>
@@ -141,7 +171,11 @@ export default async function PostPage({
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": `https://www.borachurrasco.app/post/${post.slug}`
-        }
+        },
+        "wordCount": post.content.split(/\s+/).length,
+        "timeRequired": `PT${Math.ceil(readingTime)}M`,
+        "articleSection": post.tags?.[0],
+        "keywords": post.tags?.join(", ")
       }} />
     </main>
   )
