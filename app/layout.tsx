@@ -57,7 +57,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={'' + oxygen.className}>
-        <ScrollArea className="absolute h-screen  bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-red-600 via-red-900 to-amber-900">
+        <ScrollArea className="absolute h-screen  bg-gradient-to-r from-20% from-red-900 via-54% via-red-900 to-amber-900 to-90%">
           <Header />
           {children}
         </ScrollArea>

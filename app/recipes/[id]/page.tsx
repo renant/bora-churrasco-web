@@ -77,7 +77,7 @@ export default async function RecipePage({
             itemProp="image"
           />
         </div>
-        <h1 itemProp="name" className="!mt-10">{recipe.name}</h1>
+        <h1 itemProp="name" className="mt-10!">{recipe.name}</h1>
         <div itemProp="articleBody">
           <section dangerouslySetInnerHTML={{ __html: recipe.content }} />
         </div>
