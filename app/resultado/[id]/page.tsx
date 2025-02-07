@@ -3,8 +3,11 @@ import ResultDefault from '@/components/ui/resultDefault';
 import { getRandomAdsContent } from '@/services/ad-service';
 import Image from 'next/image';
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const participante = parseInt(params.id)
+type Params = Promise<{ id: string }>
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { id } = await params
+  const participante = parseInt(id)
   const url = `https://www.borachurrasco.app/resultado/${participante}`;
 
   return {
@@ -89,9 +92,10 @@ export async function generateStaticParams() {
 export default async function Resultado({
   params,
 }: {
-  params: { id: string }
+  params: Params
 }) {
-  const participante = parseInt(params.id)
+  const { id } = await params
+  const participante = parseInt(id)
 
   const ads = await getRandomAdsContent()
 

@@ -1,39 +1,41 @@
-import JsonLd from '@/components/JsonLd'
-import { getRandomAdsContent } from '@/services/ad-service'
-import { getPost, getPosts } from '@/services/notion-blog-service'
-import { estimateReadingTime } from '@/utils/text-utils'; // Add this utility
-import { unstable_cache as unstableCache } from 'next/cache'
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
+import JsonLd from "@/components/JsonLd";
+import { getRandomAdsContent } from "@/services/ad-service";
+import { getPost, getPosts } from "@/services/notion-blog-service";
+import { estimateReadingTime } from "@/utils/text-utils"; // Add this utility
+import { unstable_cache as unstableCache } from "next/cache";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+
+type Params = Promise<{ slug: string }>
 
 const getCachedPost = unstableCache(
-  async (slug) => getPost(slug),
-  ['cache-post'],
-)
+  async (slug) => await getPost(slug),
+  ["cache-post"],
+);
 
 export async function generateStaticParams() {
-  const result = await getPosts()
+  const result = await getPosts();
   return result.posts.map((post) => ({
     postId: post.slug,
-  }))
+  }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: Params;
 }) {
-  const post = await getCachedPost(params.slug)
+  const { slug } = await params;
+  const post = await getCachedPost(slug);
 
   if (!post) {
     return {
-      title: 'Bora Churrasco! - Post não encontrado',
-      description: 'Post não encontrado',
-    }
+      title: "Bora Churrasco! - Post não encontrado",
+      description: "Post não encontrado",
+    };
   }
 
   const url = `https://www.borachurrasco.app/post/${post.slug}`;
-  const readingTime = estimateReadingTime(post.content);
 
   return {
     title: `${post.title} | Bora Churrasco`,
@@ -59,33 +61,35 @@ export async function generateMetadata({
           alt: post.title,
         },
       ],
-      locale: 'pt_BR',
-      type: 'article',
+      locale: "pt_BR",
+      type: "article",
       article: {
         publishedTime: new Date(post.date).toISOString(),
-        authors: ['Bora Churrasco'],
+        authors: ["Bora Churrasco"],
         tags: post.tags,
       },
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${post.title} | Bora Churrasco`,
       description: `${post.resume}`,
       images: [post.firebaseCoverImageUrl],
     },
-  }
+  };
 }
 
 export default async function PostPage({
   params,
 }: {
-  params: { slug: string }
+  params: Params;
 }) {
-  const post = await getCachedPost(params.slug)
-  const ads = await getRandomAdsContent()
+  const { slug } = await params;
+
+  const post = await getCachedPost(slug);
+  const ads = await getRandomAdsContent();
 
   if (!post) {
-    return notFound()
+    return notFound();
   }
 
   const readingTime = estimateReadingTime(post.content);
@@ -100,22 +104,30 @@ export default async function PostPage({
           alt={`Image do post ${post.title}`}
         />
       </div>
-      <article 
+      <article
         className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700"
-        itemScope 
+        itemScope
         itemType="https://schema.org/Article"
       >
-        <meta itemProp="datePublished" content={new Date(post.date).toISOString()} />
+        <meta
+          itemProp="datePublished"
+          content={new Date(post.date).toISOString()}
+        />
 
         <h1 itemProp="headline">{post.title}</h1>
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <time dateTime={new Date(post.date).toISOString()}>
-            {new Date(post.date).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+            {new Date(post.date).toLocaleDateString("pt-BR", {
+              timeZone: "America/Sao_Paulo",
+            })}
           </time>
           <span>·</span>
           <span>{readingTime} min de leitura</span>
         </div>
-        <section itemProp="articleBody" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <section
+          itemProp="articleBody"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
         <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
           <div>
@@ -135,48 +147,37 @@ export default async function PostPage({
             </button>
           </a>
         </div>
-        {/* <a href={ads.link} target="_blank" rel="noreferrer">
-          <section className="flex flex-row items-center justify-center">
-            <div className="w-[270px] min-w-[270px]">
-              <Image
-                alt={ads.alt ?? ''}
-                src={ads.image}
-                height={300}
-                width={300}
-              ></Image>
-            </div>
-            <p className="text-md ml-4">{ads.description}</p>
-          </section>
-        </a> */}
       </article>
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": post.title,
-        "description": post.resume,
-        "datePublished": new Date(post.date).toISOString(),
-        "author": {
-          "@type": "Person",
-          "name": "Bora Churrasco"
-        },
-        "image": [post.firebaseCoverImageUrl],
-        "publisher": {
-          "@type": "Organization",
-          "name": "Bora Churrasco",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://www.borachurrasco.app/images/ms-icon-310x310.png"
-          }
-        },
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://www.borachurrasco.app/post/${post.slug}`
-        },
-        "wordCount": post.content.split(/\s+/).length,
-        "timeRequired": `PT${Math.ceil(readingTime)}M`,
-        "articleSection": post.tags?.[0],
-        "keywords": post.tags?.join(", ")
-      }} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.resume,
+          datePublished: new Date(post.date).toISOString(),
+          author: {
+            "@type": "Person",
+            name: "Bora Churrasco",
+          },
+          image: [post.firebaseCoverImageUrl],
+          publisher: {
+            "@type": "Organization",
+            name: "Bora Churrasco",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+            },
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://www.borachurrasco.app/post/${post.slug}`,
+          },
+          wordCount: post.content.split(/\s+/).length,
+          timeRequired: `PT${Math.ceil(readingTime)}M`,
+          articleSection: post.tags?.[0],
+          keywords: post.tags?.join(", "),
+        }}
+      />
     </main>
-  )
+  );
 }

@@ -4,8 +4,10 @@ import { getRecipe } from '@/services/notion-blog-service'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const { id } = params
+type Params = Promise<{ id: string }>
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { id } = await params
   const recipe = await getRecipe(id)
 
   if (!recipe) {
@@ -52,9 +54,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function RecipePage({
   params,
 }: {
-  params: { id: string }
+  params: Params
 }) {
-  const recipe = await getRecipe(params.id)
+  const { id } = await params;
+  const recipe = await getRecipe(id)
   const ads = await getRandomAdsContent()
 
   if (!recipe) {
@@ -120,7 +123,7 @@ export default async function RecipePage({
         },
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `https://www.borachurrasco.app/recipes/${params.id}`
+          "@id": `https://www.borachurrasco.app/recipes/${id}`
         },
         "isAccessibleForFree": "True",
         "inLanguage": "pt-BR"
