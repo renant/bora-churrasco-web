@@ -8,7 +8,13 @@ import { Oxygen } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
-const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
+const oxygen = Oxygen({ 
+  weight: ['300', '400', '700'], 
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true
+})
 
 export const metadata: Metadata = {
   title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',

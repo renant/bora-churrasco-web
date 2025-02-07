@@ -1,5 +1,5 @@
 import JsonLd from '@/components/JsonLd';
-import Result from '@/components/ui/result';
+import ResultDefault from '@/components/ui/resultDefault';
 import { getRandomAdsContent } from '@/services/ad-service';
 import Image from 'next/image';
 
@@ -103,11 +103,11 @@ export default async function Resultado({
         </h1>
         <div className="flex flex-col  md:flex-row min-w-full items-center justify-center">
           <div className="flex flex-col pr-8">
-            <Result participantes={participante} />
+            <ResultDefault participantes={participante} />
           </div>
           <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
             <div>
-              <Image src={ads.image} height={400} width={400} alt={ads.alt} priority />
+              <Image src={ads.image} height={300} width={300} alt={ads.alt} priority quality={85} />
             </div>
             <div className="p-3">
               <h3 className="text-md m-0 font-semibold text-gray-700">

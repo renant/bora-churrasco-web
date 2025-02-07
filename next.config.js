@@ -16,6 +16,18 @@ const nextConfig = {
       },
     ],
   },
+  // Optimize JavaScript bundles
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['@mui/icons-material', '@mui/material'],
+  },
+  // Configure script loading
+  scripts: {
+    strategy: 'lazyOnload',
+  },
 }
 
 module.exports = nextConfig

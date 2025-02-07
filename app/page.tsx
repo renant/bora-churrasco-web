@@ -49,6 +49,11 @@ export default async function Home() {
                   src={appSampleImg}
                   alt="Calculadora de Churrasco do Bora Churrasco"
                   priority
+                  width={600}
+                  height={900}
+                  quality={85}
+                  className="w-full h-auto"
+                  loading="eager"
                 />
               </div>
             </div>
