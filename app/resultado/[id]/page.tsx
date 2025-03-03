@@ -101,7 +101,7 @@ export default async function Resultado({
 
   return (
     <>
-      <main className="flex  flex-col items-center justify-between p-16">
+      <main className="flex  flex-col items-center justify-between md:p-16 p-4">
         <h1 className="mb-3 text-center text-lg leading-relaxed text-orange-300 sm:text-4xl md:leading-snug">
           Cálculo De Churrasco Para {participante} Pessoas
         </h1>
@@ -109,9 +109,16 @@ export default async function Resultado({
           <div className="flex flex-col pr-8">
             <ResultDefault participantes={participante} />
           </div>
-          <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
-            <div>
-              <Image src={ads.image} height={300} width={300} alt={ads.alt} priority quality={85} />
+          <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50 shadow-lg">
+            <div className="relative h-[300px] w-[300px]">
+              <Image 
+                src={ads.image} 
+                fill
+                style={{ objectFit: 'cover' }}
+                alt={ads.alt} 
+                priority 
+                quality={85} 
+              />
             </div>
             <div className="p-3">
               <h3 className="text-md m-0 font-semibold text-gray-700">

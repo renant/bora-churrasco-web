@@ -96,12 +96,15 @@ export default async function PostPage({
 
   return (
     <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
-      <div className="relative z-0 h-60 w-full lg:h-[450px]">
+      <div className="relative aspect-[16/9] w-full">
         <Image
+          priority
           fill={true}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw"
           className="rounded-md object-cover"
           src={post.firebaseCoverImageUrl}
           alt={`Image do post ${post.title}`}
+          quality={90}
         />
       </div>
       <article
@@ -129,9 +132,16 @@ export default async function PostPage({
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
-        <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
-          <div>
-            <Image src={ads.image} height={400} width={400} alt={ads.alt} />
+        <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50 shadow-lg">
+          <div className="relative aspect-[4/3] w-full">
+            <Image 
+              src={ads.image} 
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-cover"
+              alt={ads.alt}
+              loading="lazy"
+            />
           </div>
           <div className="p-3">
             <h3 className="text-md m-0 font-semibold text-gray-700">
@@ -159,7 +169,7 @@ export default async function PostPage({
             "@type": "Person",
             name: "Bora Churrasco",
           },
-          image: [post.firebaseCoverImageUrl],
+          image: post.firebaseCoverImageUrl,
           publisher: {
             "@type": "Organization",
             name: "Bora Churrasco",
