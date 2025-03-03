@@ -8,7 +8,13 @@ import { Oxygen } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
-const oxygen = Oxygen({ weight: ['300', '400', '700'], subsets: ['latin'] })
+const oxygen = Oxygen({ 
+  weight: ['300', '400', '700'], 
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true
+})
 
 export const metadata: Metadata = {
   title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
@@ -51,7 +57,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={'' + oxygen.className}>
-        <ScrollArea className="absolute h-screen  bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-red-600 via-red-900 to-amber-900">
+        <ScrollArea className="absolute h-screen  bg-gradient-to-r from-20% from-red-900 via-54% via-red-900 to-amber-900 to-90%">
           <Header />
           {children}
         </ScrollArea>

@@ -1,10 +1,13 @@
 import JsonLd from '@/components/JsonLd';
-import Result from '@/components/ui/result';
+import ResultDefault from '@/components/ui/resultDefault';
 import { getRandomAdsContent } from '@/services/ad-service';
 import Image from 'next/image';
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const participante = parseInt(params.id)
+type Params = Promise<{ id: string }>
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { id } = await params
+  const participante = parseInt(id)
   const url = `https://www.borachurrasco.app/resultado/${participante}`;
 
   return {
@@ -89,25 +92,33 @@ export async function generateStaticParams() {
 export default async function Resultado({
   params,
 }: {
-  params: { id: string }
+  params: Params
 }) {
-  const participante = parseInt(params.id)
+  const { id } = await params
+  const participante = parseInt(id)
 
   const ads = await getRandomAdsContent()
 
   return (
     <>
-      <main className="flex  flex-col items-center justify-between p-16">
+      <main className="flex  flex-col items-center justify-between md:p-16 p-4">
         <h1 className="mb-3 text-center text-lg leading-relaxed text-orange-300 sm:text-4xl md:leading-snug">
           Cálculo De Churrasco Para {participante} Pessoas
         </h1>
         <div className="flex flex-col  md:flex-row min-w-full items-center justify-center">
           <div className="flex flex-col pr-8">
-            <Result participantes={participante} />
+            <ResultDefault participantes={participante} />
           </div>
-          <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
-            <div>
-              <Image src={ads.image} height={400} width={400} alt={ads.alt} priority />
+          <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50 shadow-lg">
+            <div className="relative h-[300px] w-[300px]">
+              <Image 
+                src={ads.image} 
+                fill
+                style={{ objectFit: 'cover' }}
+                alt={ads.alt} 
+                priority 
+                quality={85} 
+              />
             </div>
             <div className="p-3">
               <h3 className="text-md m-0 font-semibold text-gray-700">

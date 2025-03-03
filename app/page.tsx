@@ -26,7 +26,7 @@ export default async function Home() {
                   <div className="flex w-[144px] min-w-[144px] flex-col justify-center pr-4">
                     <Link
                       href="/participantes"
-                      className="rounded border border-orange-300 bg-transparent px-4 py-2 text-orange-300 shadow hover:border-transparent hover:bg-orange-300 hover:text-black hover:shadow-lg"
+                      className="rounded border border-orange-300 bg-transparent px-4 py-2 text-orange-300 shadow-sm hover:border-transparent hover:bg-orange-300 hover:text-black hover:shadow-lg"
                     >
                       Teste online
                     </Link>
@@ -49,6 +49,11 @@ export default async function Home() {
                   src={appSampleImg}
                   alt="Calculadora de Churrasco do Bora Churrasco"
                   priority
+                  width={600}
+                  height={900}
+                  quality={85}
+                  className="w-full h-auto"
+                  loading="eager"
                 />
               </div>
             </div>
