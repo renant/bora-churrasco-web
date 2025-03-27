@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
     "eslint": "^8.46.0",
     "prettier-plugin-tailwindcss": "^0.4.1"

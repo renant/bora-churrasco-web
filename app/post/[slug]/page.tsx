@@ -1,10 +1,11 @@
 import JsonLd from "@/components/JsonLd";
 import { getRandomAdsContent } from "@/services/ad-service";
 import { getPost, getPosts } from "@/services/notion-blog-service";
-import { estimateReadingTime } from "@/utils/text-utils"; // Add this utility
+import { estimateReadingTime } from "@/utils/text-utils";
 import { unstable_cache as unstableCache } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Params = Promise<{ slug: string }>
 
@@ -95,69 +96,102 @@ export default async function PostPage({
   const readingTime = estimateReadingTime(post.content);
 
   return (
-    <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
-      <div className="relative aspect-[16/9] w-full">
-        <Image
-          priority
-          fill={true}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw"
-          className="rounded-md object-cover"
-          src={post.firebaseCoverImageUrl}
-          alt={`Image do post ${post.title}`}
-          quality={90}
-        />
-      </div>
-      <article
-        className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700"
-        itemScope
-        itemType="https://schema.org/Article"
-      >
-        <meta
-          itemProp="datePublished"
-          content={new Date(post.date).toISOString()}
-        />
-
-        <h1 itemProp="headline">{post.title}</h1>
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <time dateTime={new Date(post.date).toISOString()}>
-            {new Date(post.date).toLocaleDateString("pt-BR", {
-              timeZone: "America/Sao_Paulo",
-            })}
-          </time>
-          <span>·</span>
-          <span>{readingTime} min de leitura</span>
+    <main className="min-h-screen bg-white px-4 shadow-xl md:container md:mx-auto md:px-9 md:pt-20 lg:px-64">
+      <div className="space-y-6">
+        <div 
+          className="relative w-full overflow-hidden rounded-lg bg-gray-100" 
+          style={{ 
+            aspectRatio: "16/9",
+            contain: "layout paint" 
+          }}
+        >
+          <Image
+            priority
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+            className="object-cover"
+            src={post.firebaseCoverImageUrl}
+            alt={`Image do post ${post.title}`}
+            quality={85}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQrJyEwPENDPzE2O0FBNi5QWUE5SDQ7UFk2WEFHYV1ATl9hZ2hjPk1KWGX/2wBDARUXFyAeIR4eIWRCOzJkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGX/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+          />
         </div>
-        <section
-          itemProp="articleBody"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
 
-        <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50 shadow-lg">
-          <div className="relative aspect-[4/3] w-full">
-            <Image 
-              src={ads.image} 
-              fill
-              sizes="(max-width: 768px) 100vw, 400px"
-              className="object-cover"
-              alt={ads.alt}
-              loading="lazy"
+        <article
+          className="prose prose-sm max-w-none space-y-4 pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700"
+          itemScope
+          itemType="https://schema.org/Article"
+        >
+          <meta
+            itemProp="datePublished"
+            content={new Date(post.date).toISOString()}
+          />
+
+          <h1 itemProp="headline" className="mb-4 mt-0">{post.title}</h1>
+          
+          <div className="flex items-center gap-4 text-sm text-gray-600">
+            <time dateTime={new Date(post.date).toISOString()}>
+              {new Date(post.date).toLocaleDateString("pt-BR", {
+                timeZone: "America/Sao_Paulo",
+              })}
+            </time>
+            <span aria-hidden="true">·</span>
+            <span>{readingTime} min de leitura</span>
+          </div>
+
+          <Suspense fallback={
+            <div className="animate-pulse space-y-4">
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 rounded"></div>
+              <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+            </div>
+          }>
+            <section
+              itemProp="articleBody"
+              dangerouslySetInnerHTML={{ __html: post.content }}
             />
+          </Suspense>
+
+          <div className="not-prose my-8">
+            <div className="max-w-sm overflow-hidden rounded-lg bg-gray-50 shadow-lg">
+              <div 
+                className="relative w-full bg-gray-100" 
+                style={{ 
+                  aspectRatio: "4/3",
+                  contain: "layout paint"
+                }}
+              >
+                <Image 
+                  src={ads.image} 
+                  fill
+                  sizes="(max-width: 640px) 100vw, 400px"
+                  className="object-cover"
+                  alt={ads.alt}
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="m-0 text-lg font-semibold text-gray-700">
+                  {ads.alt}
+                </h3>
+                <p className="mt-2 text-sm text-gray-900">
+                  {ads.description}
+                </p>
+                <a 
+                  href={ads.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="mt-4 block w-full rounded bg-red-600 px-4 py-2 text-center font-semibold text-white transition duration-300 hover:bg-red-500"
+                >
+                  Adquira já
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="p-3">
-            <h3 className="text-md m-0 font-semibold text-gray-700">
-              {ads.alt}
-            </h3>
-            <p className="leading-sm text-sm text-gray-900">
-              {ads.description}
-            </p>
-          </div>
-          <a href={ads.link} target="_blanck" className="no-underline">
-            <button className="flex w-full justify-center bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500">
-              Adquira já
-            </button>
-          </a>
-        </div>
-      </article>
+        </article>
+      </div>
+
       <JsonLd
         data={{
           "@context": "https://schema.org",

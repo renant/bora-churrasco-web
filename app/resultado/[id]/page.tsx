@@ -101,41 +101,46 @@ export default async function Resultado({
 
   return (
     <>
-      <main className="flex  flex-col items-center justify-between md:p-16 p-4">
+      <main className="flex flex-col items-center justify-between w-full max-w-7xl mx-auto md:p-16 p-4">
         <h1 className="mb-3 text-center text-lg leading-relaxed text-orange-300 sm:text-4xl md:leading-snug">
           Cálculo De Churrasco Para {participante} Pessoas
         </h1>
-        <div className="flex flex-col  md:flex-row min-w-full items-center justify-center">
-          <div className="flex flex-col pr-8">
+        <div className="flex flex-col md:flex-row items-center justify-center w-full gap-8">
+          <div className="w-full max-w-xl">
             <ResultDefault participantes={participante} />
           </div>
-          <div className="wrapper max-w-[300px] overflow-hidden rounded-b-md bg-gray-50 shadow-lg">
-            <div className="relative h-[300px] w-[300px]">
-              <Image 
-                src={ads.image} 
-                fill
-                style={{ objectFit: 'cover' }}
-                alt={ads.alt} 
-                priority 
-                quality={85} 
-              />
+          <div className="w-full max-w-[300px] flex-shrink-0">
+            <div className="overflow-hidden rounded-md bg-gray-50 shadow-lg">
+              <div className="aspect-w-1 aspect-h-1 relative">
+                <div className="absolute inset-0">
+                  <Image 
+                    src={ads.image} 
+                    fill
+                    sizes="(max-width: 768px) 300px, 300px"
+                    style={{ objectFit: 'cover' }}
+                    alt={ads.alt} 
+                    priority 
+                    quality={85}
+                  />
+                </div>
+              </div>
+              <div className="p-3">
+                <h3 className="text-md m-0 font-semibold text-gray-700">
+                  {ads.alt}
+                </h3>
+                <p className="leading-sm text-sm text-gray-900">
+                  {ads.description}
+                </p>
+              </div>
+              <a href={ads.link} target="_blank" rel="noopener noreferrer" className="no-underline block">
+                <button className="w-full bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500">
+                  Adquira já
+                </button>
+              </a>
             </div>
-            <div className="p-3">
-              <h3 className="text-md m-0 font-semibold text-gray-700">
-                {ads.alt}
-              </h3>
-              <p className="leading-sm text-sm text-gray-900">
-                {ads.description}
-              </p>
-            </div>
-            <a href={ads.link} target="_blanck" className="no-underline">
-              <button className="flex w-full justify-center bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500">
-                Adquira já
-              </button>
-            </a>
           </div>
         </div>
-        <div className='prose prose-orange mt-4'>
+        <div className="prose prose-orange mt-8 w-full max-w-3xl">
           <h2>Como Calcular a Quantidade de Carne para o Churrasco Perfeito</h2>
           <p>Churrasco é sinônimo de alegria, confraternização e claro, de uma boa carne assada. Mas, quantas vezes você já se pegou na dúvida sobre a quantidade de carne a comprar para seu churrasco? Faltou carne ou sobrou muito, e agora? Não se preocupe! Este artigo é o seu guia definitivo para nunca mais errar na quantidade de carne para churrasco. Preparado? Então, vamos nessa!</p>
           <h3>1. Entendendo o Básico: A Regra dos 400g</h3>
