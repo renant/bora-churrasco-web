@@ -77,14 +77,14 @@ export default function Result({ participantes }: ResultProps) {
   return (
     <div className='md:w-96 md:h-[610px] h-full'>
       <div className="flex flex-col">
-        <h2 className="mb-2 text-center text-lg leading-relaxed text-orange-300 sm:text-4xl md:leading-snug">
+        <h2 className="mb-2 text-center text-lg leading-relaxed text-red-500 sm:text-4xl md:leading-snug">
           Lista de Compras!
         </h2>
-        <h3 className="text-md mb-2 text-center leading-relaxed text-orange-300 md:text-lg md:leading-snug">
+        <h3 className="text-md mb-2 text-center leading-relaxed text-black md:text-lg md:leading-snug">
           Lembrando que o resultado é estimado para até {getTempo()} de comes e
           bebes
         </h3>
-        <h4 className="md:text-md mb-2 text-center text-sm font-thin text-orange-300 md:leading-snug">
+        <h4 className="md:text-md mb-2 text-center text-sm font-thin text-black md:leading-snug">
           (Isso é uma estimativa a quantidade pode variar, conheça seus
           convidados)
         </h4>
@@ -92,42 +92,42 @@ export default function Result({ participantes }: ResultProps) {
         <div className="mt-4 flex flex-col items-start">
           {assadosCalculados && (
             <div>
-              <h5 className="text-md my-2 leading-relaxed text-orange-300 md:text-lg md:leading-snug">
+              <h5 className="text-md my-2 leading-relaxed text-black md:text-lg md:leading-snug">
                 Assados
               </h5>
               <ul className="list-disc pl-8">
                 {bovina && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Bovina:{' '}
                     {getMedida(assadosCalculados!.bovina, TipoMedida.peso)}
                   </li>
                 )}
                 {suina && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Suina:{' '}
                     {getMedida(assadosCalculados!.suina, TipoMedida.peso)}
                   </li>
                 )}
                 {linguica && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Linguiça:{' '}
                     {getMedida(assadosCalculados!.linguica, TipoMedida.peso)}
                   </li>
                 )}
                 {frango && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Frango:{' '}
                     {getMedida(assadosCalculados!.frango, TipoMedida.peso)}
                   </li>
                 )}
                 {queijo && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Queijo:{' '}
                     {getMedida(assadosCalculados!.queijo, TipoMedida.peso)}
                   </li>
                 )}
                 {paoDeAlho && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Pão de Alho:{' '}
                     {getMedida(assadosCalculados!.paoAlho, TipoMedida.peso)}
                   </li>
@@ -138,18 +138,18 @@ export default function Result({ participantes }: ResultProps) {
 
           {temBebidas() && bebidasCalculadas && (
             <div>
-              <h5 className="text-md my-2 leading-relaxed text-orange-300 md:text-lg md:leading-snug">
+              <h5 className="text-md my-2 leading-relaxed text-black md:text-lg md:leading-snug">
                 Bebidas
               </h5>
               <ul className="list-disc pl-8">
                 {cerveja && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Cerveja:{' '}
                     {getMedida(bebidasCalculadas!.cerveja, TipoMedida.liquido)}
                   </li>
                 )}
                 {refrigerante && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Refrigerante:{' '}
                     {getMedida(
                       bebidasCalculadas!.refrigerante,
@@ -158,13 +158,13 @@ export default function Result({ participantes }: ResultProps) {
                   </li>
                 )}
                 {agua && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Água:{' '}
                     {getMedida(bebidasCalculadas!.agua, TipoMedida.liquido)}
                   </li>
                 )}
                 {suco && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Suco:{' '}
                     {getMedida(bebidasCalculadas!.suco, TipoMedida.liquido)}
                   </li>
@@ -175,12 +175,12 @@ export default function Result({ participantes }: ResultProps) {
 
           {(temAssados() || temBebidas()) && essenciaisCalculados && (
             <div>
-              <h5 className="text-md my-2 leading-relaxed text-orange-300 md:text-lg md:leading-snug">
+              <h5 className="text-md my-2 leading-relaxed text-black md:text-lg md:leading-snug">
                 Essenciais
               </h5>
               <ul className="list-disc pl-8">
                 {temAssados() && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Sal Grosso:{' '}
                     {getMedida(
                       essenciaisCalculados!.salGrosso,
@@ -189,13 +189,13 @@ export default function Result({ participantes }: ResultProps) {
                   </li>
                 )}
                 {temAssados() && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Carvão:{' '}
                     {getMedida(essenciaisCalculados!.carvao, TipoMedida.peso)}
                   </li>
                 )}
                 {temBebidas() && (
-                  <li className="md:text-md text-sm leading-relaxed text-orange-300 md:leading-snug">
+                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Gelo:{' '}
                     {getMedida(essenciaisCalculados!.gelo, TipoMedida.peso)}
                   </li>

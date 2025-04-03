@@ -8,7 +8,7 @@ interface FrangoIconProps {
 
 const FrangoIcon: React.FC<FrangoIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

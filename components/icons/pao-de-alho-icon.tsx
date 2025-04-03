@@ -8,7 +8,7 @@ interface PaoDeAlhoIconProps {
 
 const PaoDeAlhoIcon: React.FC<PaoDeAlhoIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

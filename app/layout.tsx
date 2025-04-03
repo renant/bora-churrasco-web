@@ -1,5 +1,4 @@
 import { Header } from '@/components/ui/header'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { GoogleTagManager } from '@next/third-parties/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -56,11 +55,11 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={'' + oxygen.className}>
-        <ScrollArea className="absolute h-screen  bg-gradient-to-r from-20% from-red-900 via-54% via-red-900 to-amber-900 to-90%">
+      <body className={'bg-gradient-to-b from-amber-50 to-orange-100' + oxygen.className}>
+        
           <Header />
           {children}
-        </ScrollArea>
+        
         <Analytics />
         <Script
           strategy="afterInteractive"

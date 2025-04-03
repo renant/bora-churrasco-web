@@ -65,16 +65,19 @@ export default async function RecipePage({
   }
 
   return (
-    <main className="min-h-screen bg-white px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
+    <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
       <article itemScope itemType="https://schema.org/Recipe" className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700">
         <meta itemProp="datePublished" content={new Date(recipe.createdAt).toISOString()} />
         <div className="relative z-0 h-60 w-full lg:h-[450px]">
           <Image
             fill={true}
+            priority={true}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
             className="rounded-md object-cover"
             src={recipe.imagePath}
             alt={`Foto da receita: ${recipe.name}`}
             itemProp="image"
+            quality={85}
           />
         </div>
         <h1 itemProp="name" className="mt-10!">{recipe.name}</h1>

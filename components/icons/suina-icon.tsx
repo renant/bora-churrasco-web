@@ -8,7 +8,7 @@ interface SuinaIconProps {
 
 const SuinaIcon: React.FC<SuinaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

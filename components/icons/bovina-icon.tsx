@@ -8,7 +8,7 @@ interface BovinaIconProps {
 
 const BovinaIcon: React.FC<BovinaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

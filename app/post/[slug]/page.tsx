@@ -96,7 +96,7 @@ export default async function PostPage({
   const readingTime = estimateReadingTime(post.content);
 
   return (
-    <main className="min-h-screen bg-white px-4 shadow-xl md:container md:mx-auto md:px-9 md:pt-20 lg:px-64">
+    <main className="min-h-screen bg-transparent px-4 shadow-xl md:container md:mx-auto md:px-9 md:pt-20 lg:px-64">
       <div className="space-y-6">
         <div 
           className="relative w-full overflow-hidden rounded-lg bg-gray-100" 

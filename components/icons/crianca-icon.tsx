@@ -8,7 +8,7 @@ interface CriancaIconProps {
 
 const CriancaIcon: React.FC<CriancaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

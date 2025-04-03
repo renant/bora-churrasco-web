@@ -7,15 +7,15 @@ import {
 
 export default function Faq() {
   return (
-    <div className="prose prose-orange max-w-none">
-      <h4 className="text-3xl font-extrabold text-orange-400">FAQ</h4>
+    <div className="prose prose-base mx-auto mt-10">
+      <h4 className="text-3xl font-extrabold text-red-500">FAQ</h4>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger>
             Porque não calcular também o preço estimado?
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 gap-2 text-justify font-light text-orange-400">
+            <div className="grid grid-cols-1 gap-2 text-justify font-light text-black">
               <p>
                 Porque o preço varia muito de região para região, e também
                 depende muito da qualidade dos produtos escolhidos. Por isso,
@@ -33,7 +33,7 @@ export default function Faq() {
             Alguma previsão para o lancamento para IOS?
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 gap-2 text-justify font-light text-orange-400">
+            <div className="grid grid-cols-1 gap-2 text-justify font-light text-black">
               <p>
                 No momento não temos uma previsão para o lançamento para IOS,
                 mas estamos trabalhando para que isso aconteça o mais breve
@@ -45,7 +45,7 @@ export default function Faq() {
         <AccordionItem value="item-3">
           <AccordionTrigger>Como funciona o calculo?</AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 gap-2 text-justify font-light text-orange-400">
+            <div className="grid grid-cols-1 gap-2 text-justify font-light text-black">
               <p>
                 O cálculo é fundamentado em uma média de consumo de cada
                 participante. Por exemplo, um homem costuma consumir em média

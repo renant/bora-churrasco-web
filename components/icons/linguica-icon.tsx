@@ -8,7 +8,7 @@ interface LinguicaIconProps {
 
 const LinguicaIcon: React.FC<LinguicaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

@@ -78,8 +78,7 @@ export default async function PostsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-white px-9 pt-8 shadow-xl md:container md:mx-auto md:pt-40">
-        <h1 className="mt-2 mb-8 text-3xl font-bold">Blog Bora Churrasco</h1>
+      <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-10">
         <section aria-label="Posts do Blog">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {result.posts.map((post) => (

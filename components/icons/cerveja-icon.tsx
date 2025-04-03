@@ -8,7 +8,7 @@ interface CervejaIconProps {
 
 const CervejaIcon: React.FC<CervejaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

@@ -70,8 +70,7 @@ export default async function RecipesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-white px-9 pt-14 shadow-xl md:container md:mx-auto md:pt-40">
-        <h1 className="text-3xl font-bold mb-8 text-center">Receitas de Churrasco</h1>
+      <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-10">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {result.recipes.map((recipe) => (
             <Link 

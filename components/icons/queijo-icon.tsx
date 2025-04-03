@@ -8,7 +8,7 @@ interface QueijoIconProps {
 
 const QueijoIcon: React.FC<QueijoIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

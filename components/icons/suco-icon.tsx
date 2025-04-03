@@ -8,7 +8,7 @@ interface SucoIconProps {
 
 const SucoIcon: React.FC<SucoIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (

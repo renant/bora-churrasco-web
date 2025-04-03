@@ -8,7 +8,7 @@ interface AguaIconProps {
 
 const AguaIcon: React.FC<AguaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (
