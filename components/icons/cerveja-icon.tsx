@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react';
 
 interface CervejaIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const CervejaIcon: React.FC<CervejaIconProps> = ({
@@ -13,6 +13,7 @@ const CervejaIcon: React.FC<CervejaIconProps> = ({
 }) => {
   return (
     <svg
+      role="img"
       className={className}
       width={size}
       height={size}
@@ -20,6 +21,7 @@ const CervejaIcon: React.FC<CervejaIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Cerveja</title>
       <g>
         <g>
           <path
@@ -76,23 +78,23 @@ const CervejaIcon: React.FC<CervejaIconProps> = ({
           />
         </g>
       </g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
     </svg>
-  )
-}
+  );
+};
 
-export default CervejaIcon
+export default CervejaIcon;

@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react';
 
 interface CriancaIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const CriancaIcon: React.FC<CriancaIconProps> = ({
@@ -20,6 +20,7 @@ const CriancaIcon: React.FC<CriancaIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Criança</title>
       <g>
         <path
           fill={color}
@@ -51,7 +52,7 @@ const CriancaIcon: React.FC<CriancaIconProps> = ({
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
-export default CriancaIcon
+export default CriancaIcon;

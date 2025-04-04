@@ -1,32 +1,32 @@
-import { Header } from '@/components/ui/header'
-import { GoogleTagManager } from '@next/third-parties/google'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import type { Metadata, Viewport } from 'next'
-import { Oxygen } from 'next/font/google'
-import Script from 'next/script'
-import './globals.css'
+import { Header } from '@/components/ui/header';
+import { GoogleTagManager } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata, Viewport } from 'next';
+import { Oxygen } from 'next/font/google';
+import Script from 'next/script';
+import './globals.css';
 
-const oxygen = Oxygen({ 
-  weight: ['300', '400', '700'], 
+const oxygen = Oxygen({
+  weight: ['300', '400', '700'],
   subsets: ['latin'],
   display: 'swap',
   preload: true,
-  adjustFontFallback: true
-})
+  adjustFontFallback: true,
+});
 
 export const viewport: Viewport = {
   themeColor: '#FEF3C7',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-}
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.borachurrasco.app'),
   title: {
     default: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
-    template: '%s | Bora Churrasco'
+    template: '%s | Bora Churrasco',
   },
   description:
     'Calcule a quantidade exata de carne, acompanhamentos e bebidas para seu churrasco. Ferramenta gratuita para planejar churrasco com precisão. Evite desperdícios!',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     'Planejamento de Churrasco',
     'Churrasco para Grupos',
     'Lista de Compras Churrasco',
-    'App Churrasco'
+    'App Churrasco',
   ],
   openGraph: {
     title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
@@ -64,7 +64,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
-    description: 'Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos.',
+    description:
+      'Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos.',
     images: ['/images/ms-icon-310x310.png'],
   },
   robots: {
@@ -81,13 +82,14 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
   },
-}
+};
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Bora Churrasco',
-  description: 'Calculadora de Churrasco Online Grátis - Planeje seu churrasco com precisão',
+  description:
+    'Calculadora de Churrasco Online Grátis - Planeje seu churrasco com precisão',
   url: 'https://www.borachurrasco.app',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'All',
@@ -106,20 +108,25 @@ const jsonLd = {
     '@type': 'UseAction',
     target: 'https://www.borachurrasco.app/participantes',
   },
-}
+};
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="pt-BR" className={oxygen.className}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
@@ -138,5 +145,5 @@ export default async function RootLayout({
         <SpeedInsights />
       </body>
     </html>
-  )
+  );
 }

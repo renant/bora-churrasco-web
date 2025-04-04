@@ -1,43 +1,43 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import CheckButton from '@/components/ui/check-button'
-import Tempo from '@/enum/tempo-enum'
-import churrascoStore from '@/lib/churrascoStore'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import CheckButton from '@/components/ui/check-button';
+import Tempo from '@/enum/tempo-enum';
+import churrascoStore from '@/lib/churrascoStore';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-}
+  show: { opacity: 1, y: 0 },
+};
 
 export default function TempoPage() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { tempo, setTempo, temParticipantes } = churrascoStore()
+  const { tempo, setTempo, temParticipantes } = churrascoStore();
 
   useEffect(() => {
     if (!temParticipantes()) {
-      router.push('/')
+      router.push('/');
     }
-  }, [temParticipantes, router])
+  }, [temParticipantes, router]);
 
   if (!temParticipantes()) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -92,10 +92,7 @@ export default function TempoPage() {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={item}
-              className="flex justify-center pt-6"
-            >
+            <motion.div variants={item} className="flex justify-center pt-6">
               <Link href="/resultado">
                 <Button
                   variant="outline"
@@ -111,5 +108,5 @@ export default function TempoPage() {
         </Card>
       </motion.div>
     </main>
-  )
+  );
 }

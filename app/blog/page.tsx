@@ -1,25 +1,34 @@
-import { CardPost } from '@/components/ui/card-post'
-import { getPosts } from '@/services/notion-blog-service'
-import { Metadata } from 'next'
-import { unstable_cache as unstableCache } from 'next/cache'
-import Script from 'next/script'
+import { CardPost } from '@/components/ui/card-post';
+import { getPosts } from '@/services/notion-blog-service';
+import type { Metadata } from 'next';
+import { unstable_cache as unstableCache } from 'next/cache';
+import Script from 'next/script';
 
-const getCachedPosts = unstableCache(async () => getPosts(), ['cache-posts'])
+const getCachedPosts = unstableCache(async () => getPosts(), ['cache-posts']);
 
 export const metadata: Metadata = {
   title: 'Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador',
-  description: 'Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis. Clique agora e leve suas habilidades à brasa a um novo nível!',
+  description:
+    'Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis. Clique agora e leve suas habilidades à brasa a um novo nível!',
   alternates: {
-    canonical: `https://www.borachurrasco.app/blog`,
+    canonical: 'https://www.borachurrasco.app/blog',
   },
   manifest: 'https://www.borachurrasco.app/manifest.json',
   keywords: [
-    'Churrasco', 'Receitas de Churrasco', 'Como Fazer Churrasco', 'Dicas de Assado', 'Mestre Assador', 'Churrasqueira', 'Carne para Churrasco', 'Blog de Churrasco'
+    'Churrasco',
+    'Receitas de Churrasco',
+    'Como Fazer Churrasco',
+    'Dicas de Assado',
+    'Mestre Assador',
+    'Churrasqueira',
+    'Carne para Churrasco',
+    'Blog de Churrasco',
   ],
   openGraph: {
     title: 'Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador',
-    description: 'Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis. Clique agora e leve suas habilidades à brasa a um novo nível!',
-    url: `https://www.borachurrasco.app/blog`,
+    description:
+      'Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis. Clique agora e leve suas habilidades à brasa a um novo nível!',
+    url: 'https://www.borachurrasco.app/blog',
     images: [
       {
         url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
@@ -42,14 +51,15 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador',
-    description: 'Descubra os segredos do churrasco perfeito com nosso blog de churrasco.',
+    description:
+      'Descubra os segredos do churrasco perfeito com nosso blog de churrasco.',
     images: ['https://www.borachurrasco.app/images/ms-icon-310x310.png'],
   },
-}
+};
 
 export default async function PostsPage() {
-  const result = await getCachedPosts()
-  
+  const result = await getCachedPosts();
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
@@ -58,24 +68,25 @@ export default async function PostsPage() {
     datePublished: result.posts[0]?.date,
     author: {
       '@type': 'Organization',
-      name: 'Bora Churrasco'
+      name: 'Bora Churrasco',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Bora Churrasco',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png'
-      }
+        url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+      },
     },
-    description: metadata.description
-  }
+    description: metadata.description,
+  };
 
   return (
     <>
       <Script
         id="blog-jsonld"
         type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-10">
@@ -88,5 +99,5 @@ export default async function PostsPage() {
         </section>
       </main>
     </>
-  )
+  );
 }

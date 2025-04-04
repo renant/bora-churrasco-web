@@ -1,17 +1,17 @@
-import JsonLd from "@/components/JsonLd";
-import { getRandomAdsContent } from "@/services/ad-service";
-import { getPost, getPosts } from "@/services/notion-blog-service";
-import { estimateReadingTime } from "@/utils/text-utils";
-import { unstable_cache as unstableCache } from "next/cache";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import JsonLd from '@/components/JsonLd';
+import { getRandomAdsContent } from '@/services/ad-service';
+import { getPost, getPosts } from '@/services/notion-blog-service';
+import { estimateReadingTime } from '@/utils/text-utils';
+import { unstable_cache as unstableCache } from 'next/cache';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
-type Params = Promise<{ slug: string }>
+type Params = Promise<{ slug: string }>;
 
 const getCachedPost = unstableCache(
   async (slug) => await getPost(slug),
-  ["cache-post"],
+  ['cache-post']
 );
 
 export async function generateStaticParams() {
@@ -21,18 +21,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}) {
+export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
   const post = await getCachedPost(slug);
 
   if (!post) {
     return {
-      title: "Bora Churrasco! - Post não encontrado",
-      description: "Post não encontrado",
+      title: 'Bora Churrasco! - Post não encontrado',
+      description: 'Post não encontrado',
     };
   }
 
@@ -62,16 +58,16 @@ export async function generateMetadata({
           alt: post.title,
         },
       ],
-      locale: "pt_BR",
-      type: "article",
+      locale: 'pt_BR',
+      type: 'article',
       article: {
         publishedTime: new Date(post.date).toISOString(),
-        authors: ["Bora Churrasco"],
+        authors: ['Bora Churrasco'],
         tags: post.tags,
       },
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title: `${post.title} | Bora Churrasco`,
       description: `${post.resume}`,
       images: [post.firebaseCoverImageUrl],
@@ -79,11 +75,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: Params;
-}) {
+export default async function PostPage({ params }: { params: Params }) {
   const { slug } = await params;
 
   const post = await getCachedPost(slug);
@@ -98,11 +90,11 @@ export default async function PostPage({
   return (
     <main className="min-h-screen bg-transparent px-4 shadow-xl md:container md:mx-auto md:px-9 md:pt-20 lg:px-64">
       <div className="space-y-6">
-        <div 
-          className="relative w-full overflow-hidden rounded-lg bg-gray-100" 
-          style={{ 
-            aspectRatio: "16/9",
-            contain: "layout paint" 
+        <div
+          className="relative w-full overflow-hidden rounded-lg bg-gray-100"
+          style={{
+            aspectRatio: '16/9',
+            contain: 'layout paint',
           }}
         >
           <Image
@@ -128,42 +120,47 @@ export default async function PostPage({
             content={new Date(post.date).toISOString()}
           />
 
-          <h1 itemProp="headline" className="mb-4 mt-0">{post.title}</h1>
-          
+          <h1 itemProp="headline" className="mb-4 mt-0">
+            {post.title}
+          </h1>
+
           <div className="flex items-center gap-4 text-sm text-gray-600">
             <time dateTime={new Date(post.date).toISOString()}>
-              {new Date(post.date).toLocaleDateString("pt-BR", {
-                timeZone: "America/Sao_Paulo",
+              {new Date(post.date).toLocaleDateString('pt-BR', {
+                timeZone: 'America/Sao_Paulo',
               })}
             </time>
             <span aria-hidden="true">·</span>
             <span>{readingTime} min de leitura</span>
           </div>
 
-          <Suspense fallback={
-            <div className="animate-pulse space-y-4">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-200 rounded"></div>
-              <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-            </div>
-          }>
+          <Suspense
+            fallback={
+              <div className="animate-pulse space-y-4">
+                <div className="h-4 bg-gray-200 rounded w-3/4" />
+                <div className="h-4 bg-gray-200 rounded" />
+                <div className="h-4 bg-gray-200 rounded w-5/6" />
+              </div>
+            }
+          >
             <section
               itemProp="articleBody"
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </Suspense>
 
           <div className="not-prose my-8">
             <div className="max-w-sm overflow-hidden rounded-lg bg-gray-50 shadow-lg">
-              <div 
-                className="relative w-full bg-gray-100" 
-                style={{ 
-                  aspectRatio: "4/3",
-                  contain: "layout paint"
+              <div
+                className="relative w-full bg-gray-100"
+                style={{
+                  aspectRatio: '4/3',
+                  contain: 'layout paint',
                 }}
               >
-                <Image 
-                  src={ads.image} 
+                <Image
+                  src={ads.image}
                   fill
                   sizes="(max-width: 640px) 100vw, 400px"
                   className="object-cover"
@@ -175,13 +172,11 @@ export default async function PostPage({
                 <h3 className="m-0 text-lg font-semibold text-gray-700">
                   {ads.alt}
                 </h3>
-                <p className="mt-2 text-sm text-gray-900">
-                  {ads.description}
-                </p>
-                <a 
-                  href={ads.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <p className="mt-2 text-sm text-gray-900">{ads.description}</p>
+                <a
+                  href={ads.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-4 block w-full rounded bg-red-600 px-4 py-2 text-center font-semibold text-white transition duration-300 hover:bg-red-500"
                 >
                   Adquira já
@@ -194,32 +189,32 @@ export default async function PostPage({
 
       <JsonLd
         data={{
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
           headline: post.title,
           description: post.resume,
           datePublished: new Date(post.date).toISOString(),
           author: {
-            "@type": "Person",
-            name: "Bora Churrasco",
+            '@type': 'Person',
+            name: 'Bora Churrasco',
           },
           image: post.firebaseCoverImageUrl,
           publisher: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
+            '@type': 'Organization',
+            name: 'Bora Churrasco',
             logo: {
-              "@type": "ImageObject",
-              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+              '@type': 'ImageObject',
+              url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
             },
           },
           mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://www.borachurrasco.app/post/${post.slug}`,
+            '@type': 'WebPage',
+            '@id': `https://www.borachurrasco.app/post/${post.slug}`,
           },
           wordCount: post.content.split(/\s+/).length,
           timeRequired: `PT${Math.ceil(readingTime)}M`,
           articleSection: post.tags?.[0],
-          keywords: post.tags?.join(", "),
+          keywords: post.tags?.join(', '),
         }}
       />
     </main>

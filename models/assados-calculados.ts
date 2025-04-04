@@ -1,10 +1,10 @@
 class AssadosCalculados {
-  bovina: number = 0;
-  suina: number = 0;
-  linguica: number = 0;
-  frango: number = 0;
-  queijo: number = 0;
-  paoAlho: number = 0;
+  bovina = 0;
+  suina = 0;
+  linguica = 0;
+  frango = 0;
+  queijo = 0;
+  paoAlho = 0;
 
   constructor({
     bovina = 0,
@@ -31,16 +31,16 @@ class AssadosCalculados {
 
   static fromMap(map: { [key: string]: number }): AssadosCalculados {
     return new AssadosCalculados({
-      bovina: map['bovina'] ?? 0,
-      suina: map['suina'] ?? 0,
-      linguica: map['linguica'] ?? 0,
-      frango: map['frango'] ?? 0,
-      queijo: map['queijo'] ?? 0,
-      paoAlho: map['paoAlho'] ?? 0,
+      bovina: map.bovina ?? 0,
+      suina: map.suina ?? 0,
+      linguica: map.linguica ?? 0,
+      frango: map.frango ?? 0,
+      queijo: map.queijo ?? 0,
+      paoAlho: map.paoAlho ?? 0,
     });
   }
 
-  getTotalGramasCarne() : number {
+  getTotalGramasCarne(): number {
     return this.bovina + this.suina + this.linguica + this.frango + this.queijo;
   }
 }

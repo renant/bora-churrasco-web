@@ -23,11 +23,10 @@ const adsContent = [
     description: `Aprenda tudo que precisa para fazer os espetinhos mais deliciosos do mercado!
     Faça Espetinhos Artesanais com o Primeiro Curso em Vídeo que te revela todos os Bastidores para iniciar sua Produção e Venda (Inclusive Delivery) ainda essa semana.`,
   },
-]
+];
 
 const getRandomAdsContent = () => {
-  return adsContent[Math.floor(Math.random() * adsContent.length)]
-}
+  return adsContent[Math.floor(Math.random() * adsContent.length)];
+};
 
-export { getRandomAdsContent }
-
+export { getRandomAdsContent };

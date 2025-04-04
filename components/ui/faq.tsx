@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
+} from '@/components/ui/accordion';
 
 export default function Faq() {
   return (
@@ -73,8 +73,6 @@ export default function Faq() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
-
     </div>
-  )
+  );
 }

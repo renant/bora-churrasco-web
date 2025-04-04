@@ -1,92 +1,91 @@
-import Tempo from '@/enum/tempo-enum'
-import AssadosCalculados from '@/models/assados-calculados'
-import BebidasCalculadas from '@/models/bebidas-calculadas'
-import EssenciaisCalculados from '@/models/essenciais-calculados'
-import ValoresReferencia from '@/models/valores-referencia'
-import { create } from 'zustand'
+import Tempo from '@/enum/tempo-enum';
+import AssadosCalculados from '@/models/assados-calculados';
+import BebidasCalculadas from '@/models/bebidas-calculadas';
+import EssenciaisCalculados from '@/models/essenciais-calculados';
+import ValoresReferencia from '@/models/valores-referencia';
+import { create } from 'zustand';
 
 function somatorio(x: number): number {
   if (x === 1 || x === 0) {
-    return 1
-  } else {
-    return x + somatorio(x - 1)
+    return 1;
   }
+  return x + somatorio(x - 1);
 }
 
 type ChurrascoStore = {
-  valorCarneHomem: number
-  valorCarneMulher: number
-  valorCarneCrianca: number
-  valorPaoDeAlho: number
-  cervejaPessoa: number
-  bebidasNaoAlcoolicas: number
-  valorAguaPessoa: number
-  valorSalGrosso: number
-  valorCarvao: number
-  valorGelo: number
-  homens: number | undefined
-  mulheres: number | undefined
-  criancas: number | undefined
-  bovina: boolean
-  suina: boolean
-  linguica: boolean
-  frango: boolean
-  queijo: boolean
-  paoDeAlho: boolean
-  cerveja: boolean
-  refrigerante: boolean
-  agua: boolean
-  suco: boolean
-  salGrosso: number
-  carvao: number
-  gelo: number
-  tempo: Tempo
-  totalGramasCarne: number
-  assadosCalculados: AssadosCalculados | undefined
-  bebidasCalculadas: BebidasCalculadas | undefined
-  essenciaisCalculados: EssenciaisCalculados | undefined
+  valorCarneHomem: number;
+  valorCarneMulher: number;
+  valorCarneCrianca: number;
+  valorPaoDeAlho: number;
+  cervejaPessoa: number;
+  bebidasNaoAlcoolicas: number;
+  valorAguaPessoa: number;
+  valorSalGrosso: number;
+  valorCarvao: number;
+  valorGelo: number;
+  homens: number | undefined;
+  mulheres: number | undefined;
+  criancas: number | undefined;
+  bovina: boolean;
+  suina: boolean;
+  linguica: boolean;
+  frango: boolean;
+  queijo: boolean;
+  paoDeAlho: boolean;
+  cerveja: boolean;
+  refrigerante: boolean;
+  agua: boolean;
+  suco: boolean;
+  salGrosso: number;
+  carvao: number;
+  gelo: number;
+  tempo: Tempo;
+  totalGramasCarne: number;
+  assadosCalculados: AssadosCalculados | undefined;
+  bebidasCalculadas: BebidasCalculadas | undefined;
+  essenciaisCalculados: EssenciaisCalculados | undefined;
 
-  temParticipantes: () => boolean
-  temAssados: () => boolean
-  temBebidas: () => boolean
+  temParticipantes: () => boolean;
+  temAssados: () => boolean;
+  temBebidas: () => boolean;
 
-  setHomens: (homens: number) => void
-  setMulheres: (mulheres: number) => void
-  setCriancas: (criancas: number) => void
+  setHomens: (homens: number) => void;
+  setMulheres: (mulheres: number) => void;
+  setCriancas: (criancas: number) => void;
 
-  changeBovina: () => void
-  changeSuina: () => void
-  changeLinguica: () => void
-  changeFrango: () => void
-  changeQueijo: () => void
-  changePaoDeAlho: () => void
+  changeBovina: () => void;
+  changeSuina: () => void;
+  changeLinguica: () => void;
+  changeFrango: () => void;
+  changeQueijo: () => void;
+  changePaoDeAlho: () => void;
 
-  changeCerveja: () => void
-  changeRefrigerante: () => void
-  changeAgua: () => void
-  changeSuco: () => void
+  changeCerveja: () => void;
+  changeRefrigerante: () => void;
+  changeAgua: () => void;
+  changeSuco: () => void;
 
-  createDefaultResult: (participantes: number) => void
+  createDefaultResult: (participantes: number) => void;
 
-  setTempo: (tempo: Tempo) => void
+  setTempo: (tempo: Tempo) => void;
 
-  getTempo: () => string
-  getMultiplicadorTempo: () => number
-  getValoresReferencia: (multiplicador: number) => ValoresReferencia
+  getTempo: () => string;
+  getMultiplicadorTempo: () => number;
+  getValoresReferencia: (multiplicador: number) => ValoresReferencia;
 
   calcularAssados: (
     ref: ValoresReferencia,
     homens: number,
     mulheres: number,
     criancas: number,
-    totalParticipantes: number,
-  ) => void
-  calcularBebidas: (totalParticipantes: number, totalAdultos: number) => void
-  calcularEssenciais: () => void
-  calcular: () => void
+    totalParticipantes: number
+  ) => void;
+  calcularBebidas: (totalParticipantes: number, totalAdultos: number) => void;
+  calcularEssenciais: () => void;
+  calcular: () => void;
 
-  resetState: () => void
-}
+  resetState: () => void;
+};
 
 const initState = {
   valorCarneHomem: 400,
@@ -120,17 +119,21 @@ const initState = {
   assadosCalculados: undefined,
   bebidasCalculadas: undefined,
   essenciaisCalculados: undefined,
-}
+};
 
 const churrascoStore = create<ChurrascoStore>()((set, get) => ({
   ...initState,
 
   temParticipantes: () => {
-    const homens = isNaN(get().homens ?? 0) ? 0 : get().homens ?? 0
-    const mulheres = isNaN(get().mulheres ?? 0) ? 0 : get().mulheres ?? 0
-    const criancas = isNaN(get().criancas ?? 0) ? 0 : get().criancas ?? 0
+    const homens = Number.isNaN(get().homens ?? 0) ? 0 : get().homens ?? 0;
+    const mulheres = Number.isNaN(get().mulheres ?? 0)
+      ? 0
+      : get().mulheres ?? 0;
+    const criancas = Number.isNaN(get().criancas ?? 0)
+      ? 0
+      : get().criancas ?? 0;
 
-    return homens + mulheres + criancas > 0
+    return homens + mulheres + criancas > 0;
   },
 
   temAssados: () => {
@@ -141,27 +144,27 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
       get().frango ||
       get().queijo ||
       get().paoDeAlho
-    )
+    );
   },
 
   temBebidas: () => {
-    return get().cerveja || get().refrigerante || get().agua || get().suco
+    return get().cerveja || get().refrigerante || get().agua || get().suco;
   },
 
   getTempo: () => {
-    const tempo = get().tempo
+    const tempo = get().tempo;
 
     switch (tempo) {
       case Tempo.quatroHoras:
-        return '4h'
+        return '4h';
       case Tempo.seisHoras:
-        return '6h'
+        return '6h';
       case Tempo.oitoHoras:
-        return '8h'
+        return '8h';
       case Tempo.dozeOuMaisHoras:
-        return '12h ou mais'
+        return '12h ou mais';
       default:
-        return '4h'
+        return '4h';
     }
   },
 
@@ -197,26 +200,26 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
       agua: true,
       suco: true,
       tempo: Tempo.quatroHoras,
-    }))
+    }));
   },
 
   resetState: () => {
-    set(() => ({ ...initState }))
+    set(() => ({ ...initState }));
   },
 
   getMultiplicadorTempo: () => {
-    const tempo = get().tempo
+    const tempo = get().tempo;
     switch (tempo) {
       case Tempo.quatroHoras:
-        return 1
+        return 1;
       case Tempo.seisHoras:
-        return 1.2
+        return 1.2;
       case Tempo.oitoHoras:
-        return 1.4
+        return 1.4;
       case Tempo.dozeOuMaisHoras:
-        return 1.8
+        return 1.8;
       default:
-        return 1
+        return 1;
     }
   },
 
@@ -228,8 +231,8 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
       Math.round(get().valorPaoDeAlho * multiplicador),
       Math.round(get().cervejaPessoa * multiplicador),
       Math.round(get().bebidasNaoAlcoolicas * multiplicador),
-      Math.round(get().valorAguaPessoa * multiplicador),
-    )
+      Math.round(get().valorAguaPessoa * multiplicador)
+    );
   },
 
   calcularAssados: (
@@ -237,119 +240,126 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
     homens: number,
     mulheres: number,
     criancas: number,
-    totalParticipantes: number,
+    totalParticipantes: number
   ) => {
-    const totalCarneHomem = homens * ref.valorCarneHomem
-    const totalCarneMulher = mulheres * ref.valorCarneMulher
-    const totalCarneCrianca = criancas * ref.valorCarneCrianca
+    const totalCarneHomem = homens * ref.valorCarneHomem;
+    const totalCarneMulher = mulheres * ref.valorCarneMulher;
+    const totalCarneCrianca = criancas * ref.valorCarneCrianca;
 
     const totalGramasCarne =
-      totalCarneHomem + totalCarneMulher + totalCarneCrianca
+      totalCarneHomem + totalCarneMulher + totalCarneCrianca;
 
-    const assadosList = []
+    const assadosList = [];
 
     if (get().bovina) {
-      assadosList.push('bovina')
+      assadosList.push('bovina');
     }
     if (get().suina) {
-      assadosList.push('suina')
+      assadosList.push('suina');
     }
     if (get().linguica) {
-      assadosList.push('linguica')
+      assadosList.push('linguica');
     }
     if (get().frango) {
-      assadosList.push('frango')
+      assadosList.push('frango');
     }
     if (get().queijo) {
-      assadosList.push('queijo')
+      assadosList.push('queijo');
     }
 
-    let totalSelecionado = assadosList.length
+    let totalSelecionado = assadosList.length;
 
     const auxDivisaoProporcional =
-      totalGramasCarne / somatorio(totalSelecionado)
+      totalGramasCarne / somatorio(totalSelecionado);
 
-    const assados: { [key: string]: number } = {}
+    const assados: { [key: string]: number } = {};
 
-    assadosList.forEach((assado) => {
-      assados[assado] = Math.round(auxDivisaoProporcional * totalSelecionado)
-      totalSelecionado--
-    })
+    for (const assado of assadosList) {
+      assados[assado] = Math.round(auxDivisaoProporcional * totalSelecionado);
+      totalSelecionado--;
+    }
 
     if (get().paoDeAlho) {
       assados.paoAlho = Math.ceil(
-        (totalParticipantes / 6) * get().valorPaoDeAlho,
-      )
+        (totalParticipantes / 6) * get().valorPaoDeAlho
+      );
     }
 
-    set(() => ({ assadosCalculados: AssadosCalculados.fromMap(assados) }))
+    set(() => ({ assadosCalculados: AssadosCalculados.fromMap(assados) }));
   },
 
   calcularBebidas: (totalParticipantes: number, totalAdultos: number) => {
     const totalBebidasNaoAlcoolicas =
-      get().bebidasNaoAlcoolicas * totalParticipantes
+      get().bebidasNaoAlcoolicas * totalParticipantes;
 
-    const bebidasList = []
+    const bebidasList = [];
 
     if (get().refrigerante) {
-      bebidasList.push('refrigerante')
+      bebidasList.push('refrigerante');
     }
 
     if (get().suco) {
-      bebidasList.push('suco')
+      bebidasList.push('suco');
     }
 
-    let bebidasSelecionadas = bebidasList.length
+    let bebidasSelecionadas = bebidasList.length;
 
     const auxDivisaoProporcional =
-      totalBebidasNaoAlcoolicas / somatorio(bebidasSelecionadas)
+      totalBebidasNaoAlcoolicas / somatorio(bebidasSelecionadas);
 
-    const bebidas: { [key: string]: number } = {}
+    const bebidas: { [key: string]: number } = {};
 
-    bebidasList.forEach((bebida) => {
-      bebidas[bebida] = Math.round(auxDivisaoProporcional * bebidasSelecionadas)
-      bebidasSelecionadas--
-    })
+    for (const bebida of bebidasList) {
+      bebidas[bebida] = Math.round(
+        auxDivisaoProporcional * bebidasSelecionadas
+      );
+      bebidasSelecionadas--;
+    }
 
     if (get().cerveja) {
-      bebidas.cerveja = get().cervejaPessoa * totalAdultos
+      bebidas.cerveja = get().cervejaPessoa * totalAdultos;
     }
 
     if (get().agua) {
-      bebidas.agua = get().valorAguaPessoa * totalParticipantes
+      bebidas.agua = get().valorAguaPessoa * totalParticipantes;
     }
 
-    set(() => ({ bebidasCalculadas: BebidasCalculadas.fromMap(bebidas) }))
+    set(() => ({ bebidasCalculadas: BebidasCalculadas.fromMap(bebidas) }));
   },
 
   calcularEssenciais() {
-    const bebidasCalculadas = get().bebidasCalculadas!.getTotalBebidas()
-    const totalGramasCarne = get().assadosCalculados!.getTotalGramasCarne()
+    const bebidasCalculadas = get().bebidasCalculadas?.getTotalBebidas() ?? 0;
+    const totalGramasCarne =
+      get().assadosCalculados?.getTotalGramasCarne() ?? 0;
 
     const essenciaisCalculados = new EssenciaisCalculados({
       carvao: Math.ceil((totalGramasCarne / 5000) * get().valorCarvao),
       salGrosso: Math.ceil((totalGramasCarne / 10000) * get().valorSalGrosso),
       gelo: Math.round((bebidasCalculadas / 1000) * get().valorGelo),
-    })
+    });
 
-    set(() => ({ essenciaisCalculados }))
+    set(() => ({ essenciaisCalculados }));
   },
 
   calcular: () => {
-    const homens = isNaN(get().homens ?? 0) ? 0 : get().homens ?? 0
-    const mulheres = isNaN(get().mulheres ?? 0) ? 0 : get().mulheres ?? 0
-    const criancas = isNaN(get().criancas ?? 0) ? 0 : get().criancas ?? 0
+    const homens = Number.isNaN(get().homens ?? 0) ? 0 : get().homens ?? 0;
+    const mulheres = Number.isNaN(get().mulheres ?? 0)
+      ? 0
+      : get().mulheres ?? 0;
+    const criancas = Number.isNaN(get().criancas ?? 0)
+      ? 0
+      : get().criancas ?? 0;
 
-    const totalParticipantes = Math.round(homens + mulheres + criancas / 2)
-    const totalAdultos = Math.round(homens + mulheres)
+    const totalParticipantes = Math.round(homens + mulheres + criancas / 2);
+    const totalAdultos = Math.round(homens + mulheres);
 
-    const multiplicador = get().getMultiplicadorTempo()
-    const ref = get().getValoresReferencia(multiplicador)
+    const multiplicador = get().getMultiplicadorTempo();
+    const ref = get().getValoresReferencia(multiplicador);
 
-    get().calcularAssados(ref, homens, mulheres, criancas, totalParticipantes)
-    get().calcularBebidas(totalParticipantes, totalAdultos)
-    get().calcularEssenciais()
+    get().calcularAssados(ref, homens, mulheres, criancas, totalParticipantes);
+    get().calcularBebidas(totalParticipantes, totalAdultos);
+    get().calcularEssenciais();
   },
-}))
+}));
 
-export default churrascoStore
+export default churrascoStore;

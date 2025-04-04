@@ -1,17 +1,19 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { getRecipes } from '@/services/notion-blog-service'
-import { Metadata } from 'next'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getRecipes } from '@/services/notion-blog-service';
+import type { Metadata } from 'next';
 
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 
-export const revalidate = 3600
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Receitas de Churrasco - Aprenda a Fazer o Melhor Churrasco | Bora Churrasco',
-  description: 'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!',
+  title:
+    'Receitas de Churrasco - Aprenda a Fazer o Melhor Churrasco | Bora Churrasco',
+  description:
+    'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!',
   alternates: {
-    canonical: `https://www.borachurrasco.app/recipes`,
+    canonical: 'https://www.borachurrasco.app/recipes',
   },
   manifest: 'https://www.borachurrasco.app/manifest.json',
   keywords: [
@@ -21,19 +23,20 @@ export const metadata: Metadata = {
     'Temperos para Churrasco',
     'Dicas de Churrasco',
     'Churrasco Perfeito',
-    'Calculadora de Churrasco'
+    'Calculadora de Churrasco',
   ],
   openGraph: {
     title: 'Bora Churrasco: Receitas',
-    description: 'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!',
-    url: `https://www.borachurrasco.app/recipes`,
+    description:
+      'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!',
+    url: 'https://www.borachurrasco.app/recipes',
     siteName: 'Bora Churrasco',
     images: [
       {
         url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
         width: 310,
         height: 310,
-        alt: 'Logo Bora Churrasco'
+        alt: 'Logo Bora Churrasco',
       },
     ],
     locale: 'pt_BR',
@@ -42,13 +45,14 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Receitas de Churrasco - Bora Churrasco',
-    description: 'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir.',
+    description:
+      'Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir.',
     images: ['https://www.borachurrasco.app/images/ms-icon-310x310.png'],
-  }
-}
+  },
+};
 
 export default async function RecipesPage() {
-  const result = await getRecipes()
+  const result = await getRecipes();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -59,22 +63,23 @@ export default async function RecipesPage() {
         '@type': 'Recipe',
         name: recipe.name,
         image: recipe.imagePath,
-        url: `https://www.borachurrasco.app/recipes/${recipe.slug}`
-      }
-    }))
-  }
+        url: `https://www.borachurrasco.app/recipes/${recipe.slug}`,
+      },
+    })),
+  };
 
   return (
     <>
       <script
         type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-10">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {result.recipes.map((recipe) => (
-            <Link 
-              key={recipe.id} 
+            <Link
+              key={recipe.id}
               href={`/recipes/${recipe.slug}`}
               aria-label={`Ver receita de ${recipe.name}`}
             >
@@ -100,5 +105,5 @@ export default async function RecipesPage() {
         </div>
       </main>
     </>
-  )
+  );
 }

@@ -4,17 +4,17 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Post } from '@/services/notion-blog-service'
-import Image from 'next/image'
-import Link from 'next/link'
+} from '@/components/ui/card';
+import type { Post } from '@/services/notion-blog-service';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface CardPostProps {
-  post: Post | undefined
+  post: Post | undefined;
 }
 
 export async function CardPost({ post }: CardPostProps) {
-  if (!post) return null
+  if (!post) return null;
 
   return (
     <Link href={`post/${post.slug}`}>
@@ -35,5 +35,5 @@ export async function CardPost({ post }: CardPostProps) {
         </CardContent>
       </Card>
     </Link>
-  )
+  );
 }

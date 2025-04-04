@@ -1,4 +1,4 @@
-import Result from '@/components/ui/result'
+import Result from '@/components/ui/result';
 
 export default function Resultado() {
   return (
@@ -7,5 +7,5 @@ export default function Resultado() {
         <Result />
       </main>
     </>
-  )
+  );
 }

@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import CriancaIcon from '@/components/icons/crianca-icon'
-import HomemIcon from '@/components/icons/homem-icon'
-import MulherIcon from '@/components/icons/mulher-icon'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import CriancaIcon from '@/components/icons/crianca-icon';
+import HomemIcon from '@/components/icons/homem-icon';
+import MulherIcon from '@/components/icons/mulher-icon';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
-import churrascoStore from '@/lib/churrascoStore'
-import { cn } from '@/lib/utils'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
+import churrascoStore from '@/lib/churrascoStore';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-}
+  show: { opacity: 1, y: 0 },
+};
 
 export default function Participantes() {
   const {
@@ -37,16 +37,16 @@ export default function Participantes() {
     criancas,
     setCriancas,
     temParticipantes,
-  } = churrascoStore()
+  } = churrascoStore();
 
   const handleNumberInput = (value: string, setter: (val: number) => void) => {
-    const num = parseInt(value)
-    if (!isNaN(num) && num >= 0) {
-      setter(num)
+    const num = Number.parseInt(value);
+    if (!Number.isNaN(num) && num >= 0) {
+      setter(num);
     } else if (value === '') {
-      setter(0)
+      setter(0);
     }
-  }
+  };
 
   return (
     <main className="container mx-auto flex min-h-screen flex-col items-center">
@@ -76,7 +76,9 @@ export default function Participantes() {
                     id="homens"
                     type="number"
                     min="0"
-                    onChange={(e) => handleNumberInput(e.target.value, setHomens)}
+                    onChange={(e) =>
+                      handleNumberInput(e.target.value, setHomens)
+                    }
                     value={homens === 0 ? '' : homens}
                     className="flex-1 border-red-400 bg-transparent text-lg text-red-600 placeholder-red-400/40 transition-all focus:border-red-500 focus:ring-red-500"
                     placeholder="0"
@@ -96,7 +98,9 @@ export default function Participantes() {
                     id="mulheres"
                     type="number"
                     min="0"
-                    onChange={(e) => handleNumberInput(e.target.value, setMulheres)}
+                    onChange={(e) =>
+                      handleNumberInput(e.target.value, setMulheres)
+                    }
                     value={mulheres === 0 ? '' : mulheres}
                     className="flex-1 border-red-400 bg-transparent text-lg text-red-600 placeholder-red-400/40 transition-all focus:border-red-500 focus:ring-red-500"
                     placeholder="0"
@@ -116,7 +120,9 @@ export default function Participantes() {
                     id="criancas"
                     type="number"
                     min="0"
-                    onChange={(e) => handleNumberInput(e.target.value, setCriancas)}
+                    onChange={(e) =>
+                      handleNumberInput(e.target.value, setCriancas)
+                    }
                     value={criancas === 0 ? '' : criancas}
                     className="flex-1 border-red-400 bg-transparent text-lg text-red-600 placeholder-red-400/40 transition-all focus:border-red-500 focus:ring-red-500"
                     placeholder="0"
@@ -125,29 +131,31 @@ export default function Participantes() {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={item}
-              className="flex justify-center pt-6"
-            >
-              <Link href="/assados" className={cn(!temParticipantes() && "pointer-events-none")}>
+            <motion.div variants={item} className="flex justify-center pt-6">
+              <Link
+                href="/assados"
+                className={cn(!temParticipantes() && 'pointer-events-none')}
+              >
                 <Button
                   variant="outline"
                   size="lg"
                   disabled={!temParticipantes()}
                   className={cn(
-                    "group relative overflow-hidden px-8 py-6 transition-all",
+                    'group relative overflow-hidden px-8 py-6 transition-all',
                     temParticipantes()
-                      ? "border-red-500 text-red-500 hover:border-red-600 hover:text-red-600"
-                      : "border-red-300 text-red-300 cursor-not-allowed"
+                      ? 'border-red-500 text-red-500 hover:border-red-600 hover:text-red-600'
+                      : 'border-red-300 text-red-300 cursor-not-allowed'
                   )}
                 >
                   <span className="relative z-10">Avançar</span>
-                  <div className={cn(
-                    "absolute inset-0 -z-0 transition-transform duration-300",
-                    temParticipantes()
-                      ? "bg-red-500/10 group-hover:scale-95"
-                      : "bg-red-300/5"
-                  )} />
+                  <div
+                    className={cn(
+                      'absolute inset-0 -z-0 transition-transform duration-300',
+                      temParticipantes()
+                        ? 'bg-red-500/10 group-hover:scale-95'
+                        : 'bg-red-300/5'
+                    )}
+                  />
                 </Button>
               </Link>
             </motion.div>
@@ -155,5 +163,5 @@ export default function Participantes() {
         </Card>
       </motion.div>
     </main>
-  )
+  );
 }

@@ -1,38 +1,38 @@
-'use client'
+'use client';
 
-import BovinaIcon from '@/components/icons/bovina-icon'
-import FrangoIcon from '@/components/icons/frango-icon'
-import LinguicaIcon from '@/components/icons/linguica-icon'
-import PaoDeAlhoIcon from '@/components/icons/pao-de-alho-icon'
-import QueijoIcon from '@/components/icons/queijo-icon'
-import SuinaIcon from '@/components/icons/suina-icon'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import CheckButton from '@/components/ui/check-button'
-import churrascoStore from '@/lib/churrascoStore'
-import { cn } from '@/lib/utils'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import BovinaIcon from '@/components/icons/bovina-icon';
+import FrangoIcon from '@/components/icons/frango-icon';
+import LinguicaIcon from '@/components/icons/linguica-icon';
+import PaoDeAlhoIcon from '@/components/icons/pao-de-alho-icon';
+import QueijoIcon from '@/components/icons/queijo-icon';
+import SuinaIcon from '@/components/icons/suina-icon';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import CheckButton from '@/components/ui/check-button';
+import churrascoStore from '@/lib/churrascoStore';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-}
+  show: { opacity: 1, y: 0 },
+};
 
 export default function Assados() {
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     bovina,
@@ -49,16 +49,16 @@ export default function Assados() {
     changePaoDeAlho,
     temAssados,
     temParticipantes,
-  } = churrascoStore()
+  } = churrascoStore();
 
   useEffect(() => {
     if (!temParticipantes()) {
-      router.push('/')
+      router.push('/');
     }
-  }, [router, temParticipantes])
+  }, [router, temParticipantes]);
 
   if (!temParticipantes()) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -129,29 +129,31 @@ export default function Assados() {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={item}
-              className="flex justify-center pt-6"
-            >
-              <Link href="/bebidas" className={cn(!temAssados() && "pointer-events-none")}>
+            <motion.div variants={item} className="flex justify-center pt-6">
+              <Link
+                href="/bebidas"
+                className={cn(!temAssados() && 'pointer-events-none')}
+              >
                 <Button
                   variant="outline"
                   size="lg"
                   disabled={!temAssados()}
                   className={cn(
-                    "group relative overflow-hidden px-8 py-6 transition-all",
+                    'group relative overflow-hidden px-8 py-6 transition-all',
                     temAssados()
-                      ? "border-red-500 text-red-500 hover:border-red-600 hover:text-red-600"
-                      : "border-red-300 text-red-300 cursor-not-allowed"
+                      ? 'border-red-500 text-red-500 hover:border-red-600 hover:text-red-600'
+                      : 'border-red-300 text-red-300 cursor-not-allowed'
                   )}
                 >
                   <span className="relative z-10">Avançar</span>
-                  <div className={cn(
-                    "absolute inset-0 -z-0 transition-transform duration-300",
-                    temAssados()
-                      ? "bg-red-500/10 group-hover:scale-95"
-                      : "bg-red-300/5"
-                  )} />
+                  <div
+                    className={cn(
+                      'absolute inset-0 -z-0 transition-transform duration-300',
+                      temAssados()
+                        ? 'bg-red-500/10 group-hover:scale-95'
+                        : 'bg-red-300/5'
+                    )}
+                  />
                 </Button>
               </Link>
             </motion.div>
@@ -159,5 +161,5 @@ export default function Assados() {
         </Card>
       </motion.div>
     </main>
-  )
+  );
 }

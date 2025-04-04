@@ -1,32 +1,32 @@
-'use client'
-import { Button, buttonVariants } from '@/components/ui/button'
-import churrascoStore from '@/lib/churrascoStore'
-import { useRouter } from 'next/navigation'
-import { useCallback, useEffect } from 'react'
-import { Skeleton } from './skeleton'
+'use client';
+import { Button, buttonVariants } from '@/components/ui/button';
+import churrascoStore from '@/lib/churrascoStore';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
+import { Skeleton } from './skeleton';
 
 enum TipoMedida {
-  peso,
-  liquido,
+  peso = 0,
+  liquido = 1,
 }
 
 function getMedida(value: number, tipo: TipoMedida) {
   switch (tipo) {
     case TipoMedida.peso: {
-      return value! >= 1000 ? `${value / 1000}kg` : `${value}g`
+      return value >= 1000 ? `${value / 1000}kg` : `${value}g`;
     }
     case TipoMedida.liquido: {
-      return value! >= 1000 ? `${value / 1000}L` : `${value}ml`
+      return value >= 1000 ? `${value / 1000}L` : `${value}ml`;
     }
   }
 }
 
 interface ResultProps {
-  participantes?: number | undefined
+  participantes?: number | undefined;
 }
 
 export default function Result({ participantes }: ResultProps) {
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     getTempo,
@@ -49,33 +49,35 @@ export default function Result({ participantes }: ResultProps) {
     essenciaisCalculados,
     resetState,
     createDefaultResult,
-  } = churrascoStore()
+  } = churrascoStore();
 
   useEffect(() => {
     if (participantes && participantes > 0) {
-      createDefaultResult(participantes)
+      createDefaultResult(participantes);
     }
 
     if (!temParticipantes()) {
-      router.push('/')
+      router.push('/');
     } else {
-      calcular()
+      calcular();
     }
-  }, [calcular, temParticipantes, router, createDefaultResult, participantes])
+  }, [calcular, temParticipantes, router, createDefaultResult, participantes]);
 
   const handleCalcularNovamente = useCallback(() => {
-    resetState()
-    router.push('/')
-  }, [resetState, router])
+    resetState();
+    router.push('/');
+  }, [resetState, router]);
 
   if (!temParticipantes()) {
-    return <div>
-      <Skeleton className="md:w-96 md:h-[610px] h-[669px] rounded-xl" />
-    </div>
+    return (
+      <div>
+        <Skeleton className="md:w-96 md:h-[610px] h-[669px] rounded-xl" />
+      </div>
+    );
   }
 
   return (
-    <div className='md:w-96 md:h-[610px] h-full'>
+    <div className="md:w-96 md:h-[610px] h-full">
       <div className="flex flex-col">
         <h2 className="mb-2 text-center text-lg leading-relaxed text-red-500 sm:text-4xl md:leading-snug">
           Lista de Compras!
@@ -99,37 +101,37 @@ export default function Result({ participantes }: ResultProps) {
                 {bovina && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Bovina:{' '}
-                    {getMedida(assadosCalculados!.bovina, TipoMedida.peso)}
+                    {getMedida(assadosCalculados?.bovina, TipoMedida.peso)}
                   </li>
                 )}
                 {suina && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Suina:{' '}
-                    {getMedida(assadosCalculados!.suina, TipoMedida.peso)}
+                    {getMedida(assadosCalculados?.suina, TipoMedida.peso)}
                   </li>
                 )}
                 {linguica && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Linguiça:{' '}
-                    {getMedida(assadosCalculados!.linguica, TipoMedida.peso)}
+                    {getMedida(assadosCalculados?.linguica, TipoMedida.peso)}
                   </li>
                 )}
                 {frango && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Frango:{' '}
-                    {getMedida(assadosCalculados!.frango, TipoMedida.peso)}
+                    {getMedida(assadosCalculados?.frango, TipoMedida.peso)}
                   </li>
                 )}
                 {queijo && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Queijo:{' '}
-                    {getMedida(assadosCalculados!.queijo, TipoMedida.peso)}
+                    {getMedida(assadosCalculados?.queijo, TipoMedida.peso)}
                   </li>
                 )}
                 {paoDeAlho && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Pão de Alho:{' '}
-                    {getMedida(assadosCalculados!.paoAlho, TipoMedida.peso)}
+                    {getMedida(assadosCalculados?.paoAlho, TipoMedida.peso)}
                   </li>
                 )}
               </ul>
@@ -145,28 +147,28 @@ export default function Result({ participantes }: ResultProps) {
                 {cerveja && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Cerveja:{' '}
-                    {getMedida(bebidasCalculadas!.cerveja, TipoMedida.liquido)}
+                    {getMedida(bebidasCalculadas?.cerveja, TipoMedida.liquido)}
                   </li>
                 )}
                 {refrigerante && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Refrigerante:{' '}
                     {getMedida(
-                      bebidasCalculadas!.refrigerante,
-                      TipoMedida.liquido,
+                      bebidasCalculadas?.refrigerante,
+                      TipoMedida.liquido
                     )}
                   </li>
                 )}
                 {agua && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Água:{' '}
-                    {getMedida(bebidasCalculadas!.agua, TipoMedida.liquido)}
+                    {getMedida(bebidasCalculadas?.agua, TipoMedida.liquido)}
                   </li>
                 )}
                 {suco && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Suco:{' '}
-                    {getMedida(bebidasCalculadas!.suco, TipoMedida.liquido)}
+                    {getMedida(bebidasCalculadas?.suco, TipoMedida.liquido)}
                   </li>
                 )}
               </ul>
@@ -183,21 +185,21 @@ export default function Result({ participantes }: ResultProps) {
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Sal Grosso:{' '}
                     {getMedida(
-                      essenciaisCalculados!.salGrosso,
-                      TipoMedida.peso,
+                      essenciaisCalculados?.salGrosso,
+                      TipoMedida.peso
                     )}
                   </li>
                 )}
                 {temAssados() && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Carvão:{' '}
-                    {getMedida(essenciaisCalculados!.carvao, TipoMedida.peso)}
+                    {getMedida(essenciaisCalculados?.carvao, TipoMedida.peso)}
                   </li>
                 )}
                 {temBebidas() && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
                     Gelo:{' '}
-                    {getMedida(essenciaisCalculados!.gelo, TipoMedida.peso)}
+                    {getMedida(essenciaisCalculados?.gelo, TipoMedida.peso)}
                   </li>
                 )}
               </ul>
@@ -216,5 +218,5 @@ export default function Result({ participantes }: ResultProps) {
         </Button>
       </div>
     </div>
-  )
+  );
 }

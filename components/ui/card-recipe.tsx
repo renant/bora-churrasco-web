@@ -1,13 +1,13 @@
-import Recipe from '@/models/recipe'
-import Image from 'next/image'
-import Link from 'next/link'
+import type Recipe from '@/models/recipe';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface CardRecipeProps {
-  recipe: Recipe | undefined
+  recipe: Recipe | undefined;
 }
 
 export async function CardRecipe({ recipe }: CardRecipeProps) {
-  if (!recipe) return null
+  if (!recipe) return null;
 
   return (
     <Link href={`/recipes/${recipe.id}`}>
@@ -24,5 +24,5 @@ export async function CardRecipe({ recipe }: CardRecipeProps) {
         </h3>
       </div>
     </Link>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react';
 
 interface PaoDeAlhoIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const PaoDeAlhoIcon: React.FC<PaoDeAlhoIconProps> = ({
@@ -13,6 +13,7 @@ const PaoDeAlhoIcon: React.FC<PaoDeAlhoIconProps> = ({
 }) => {
   return (
     <svg
+      role="img"
       className={className}
       width={size}
       height={size}
@@ -20,6 +21,7 @@ const PaoDeAlhoIcon: React.FC<PaoDeAlhoIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Pão de Alho</title>
       <path
         fill={color}
         d="m137.894531 299.3125-2.621093 15.785156c8.832031 1.476563 16.847656 5.597656 23.175781 11.917969 1.015625 1.015625 1.550781 2.304687 1.550781 3.726563 0 2.898437-2.359375 5.257812-5.257812 5.257812v16c11.722656 0 21.257812-9.535156 21.257812-21.257812 0-5.664063-2.207031-11-6.222656-15.03125-8.714844-8.703126-19.738282-14.375-31.882813-16.398438zm0 0"
@@ -32,7 +34,7 @@ const PaoDeAlhoIcon: React.FC<PaoDeAlhoIconProps> = ({
       <path fill={color} d="m288 64h16v16h-16zm0 0" />
       <path fill={color} d="m216 168h16v16h-16zm0 0" />
     </svg>
-  )
-}
+  );
+};
 
-export default PaoDeAlhoIcon
+export default PaoDeAlhoIcon;

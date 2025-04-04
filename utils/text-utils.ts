@@ -1,4 +1,3 @@
-
 export function estimateReadingTime(text: string): number {
   const wordsPerMinute = 200;
   const words = text.split(/\s+/).length;

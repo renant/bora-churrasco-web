@@ -1,10 +1,10 @@
-import { getPosts } from '@/services/notion-blog-service'
-import Link from 'next/link'
-import { CardPost } from './card-post'
+import { getPosts } from '@/services/notion-blog-service';
+import Link from 'next/link';
+import { CardPost } from './card-post';
 
 export async function Posts() {
-  const limitSize = 4
-  const result = await getPosts({ limitSize })
+  const limitSize = 4;
+  const result = await getPosts({ limitSize });
 
   return (
     <div>
@@ -20,9 +20,11 @@ export async function Posts() {
 
       <div className="mt-2 flex w-full justify-end border-b border-red-400 ">
         <Link href="/blog">
-          <p className="pb-2 text-red-500 hover:text-red-700">Ver todos os conteúdos</p>
+          <p className="pb-2 text-red-500 hover:text-red-700">
+            Ver todos os conteúdos
+          </p>
         </Link>
       </div>
     </div>
-  )
+  );
 }

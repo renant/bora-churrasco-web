@@ -7,7 +7,6 @@ class ValoresReferencia {
   bebidasNaoAlcoolicas: number;
   valorAguaPessoa: number;
 
-
   constructor(
     valorCarneHomem: number,
     valorCarneMulher: number,

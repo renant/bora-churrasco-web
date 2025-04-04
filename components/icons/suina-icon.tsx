@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react';
 
 interface SuinaIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const SuinaIcon: React.FC<SuinaIconProps> = ({
@@ -20,6 +20,7 @@ const SuinaIcon: React.FC<SuinaIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Suina</title>
       <g>
         <path
           fill={color}
@@ -31,7 +32,7 @@ const SuinaIcon: React.FC<SuinaIconProps> = ({
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
-export default SuinaIcon
+export default SuinaIcon;

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "check": "biome check --apply .",
+    "check-unsafe": "biome check --apply-unsafe ."
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.1.6",
@@ -29,7 +32,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "compressorjs": "^1.2.1",
-    "eslint-config-next": "^15.1.6",
     "firebase": "^10.1.0",
     "framer-motion": "^12.6.3",
     "gray-matter": "^4.0.3",
@@ -53,10 +55,8 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@rocketseat/eslint-config": "^2.1.0",
+    "@biomejs/biome": "1.6.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/typography": "^0.5.9",
-    "eslint": "^8.46.0",
-    "prettier-plugin-tailwindcss": "^0.4.1"
+    "@tailwindcss/typography": "^0.5.9"
   }
 }
