@@ -118,22 +118,12 @@ export default async function RootLayout({
   return (
     <html lang="pt-BR" className={oxygen.className}>
       <head>
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link
-          rel="preconnect"
-          href="https://firebasestorage.googleapis.com"
-          crossOrigin="anonymous"
-        />
-        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <script
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
@@ -145,23 +135,14 @@ export default async function RootLayout({
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {children}
         </main>
-
-        {/* Analytics and Performance Monitoring - Load after page load */}
-        <Analytics mode="auto" />
-        <SpeedInsights />
-
-        {/* Ads Script - Load after main content */}
+        <Analytics />
         <Script
-          id="google-adsense"
-          strategy="lazyOnload"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_ID}
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
           crossOrigin="anonymous"
-          async
         />
-
-        {/* GTM */}
         <GoogleTagManager gtmId={process.env.GA_TRACKING_ID as string} />
+        <SpeedInsights />
       </body>
     </html>
   );
