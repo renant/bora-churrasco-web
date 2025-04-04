@@ -1,17 +1,38 @@
-import JsonLd from '@/components/JsonLd';
-import { getRandomAdsContent } from '@/services/ad-service';
-import { getPost, getPosts } from '@/services/notion-blog-service';
-import { estimateReadingTime } from '@/utils/text-utils';
-import { unstable_cache as unstableCache } from 'next/cache';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
+import JsonLd from "@/components/JsonLd";
+import { getRandomAdsContent } from "@/services/ad-service";
+import { getPost, getPosts } from "@/services/notion-blog-service";
+import { estimateReadingTime } from "@/utils/text-utils";
+import { unstable_cache as unstableCache } from "next/cache";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Params = Promise<{ slug: string }>;
 
+// Improved caching strategy with specific keys and tags
 const getCachedPost = unstableCache(
-  async (slug) => await getPost(slug),
-  ['cache-post']
+  async (slug: string) => {
+    const post = await getPost(slug);
+    if (!post) return null;
+
+    return {
+      ...post,
+      readingTime: estimateReadingTime(post.content),
+    };
+  },
+  ["post-cache"],
+  {
+    tags: ["post"], // For cache invalidation
+    revalidate: 3600, // Revalidate every hour
+  }
+);
+
+const getCachedAds = unstableCache(
+  async () => await getRandomAdsContent(),
+  ["ads-cache"],
+  {
+    revalidate: 300, // Revalidate every 5 minutes
+  }
 );
 
 export async function generateStaticParams() {
@@ -27,8 +48,8 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   if (!post) {
     return {
-      title: 'Bora Churrasco! - Post não encontrado',
-      description: 'Post não encontrado',
+      title: "Bora Churrasco! - Post não encontrado",
+      description: "Post não encontrado",
     };
   }
 
@@ -58,16 +79,16 @@ export async function generateMetadata({ params }: { params: Params }) {
           alt: post.title,
         },
       ],
-      locale: 'pt_BR',
-      type: 'article',
+      locale: "pt_BR",
+      type: "article",
       article: {
         publishedTime: new Date(post.date).toISOString(),
-        authors: ['Bora Churrasco'],
+        authors: ["Bora Churrasco"],
         tags: post.tags,
       },
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${post.title} | Bora Churrasco`,
       description: `${post.resume}`,
       images: [post.firebaseCoverImageUrl],
@@ -78,14 +99,11 @@ export async function generateMetadata({ params }: { params: Params }) {
 export default async function PostPage({ params }: { params: Params }) {
   const { slug } = await params;
 
-  const post = await getCachedPost(slug);
-  const ads = await getRandomAdsContent();
+  const [post, ads] = await Promise.all([getCachedPost(slug), getCachedAds()]);
 
   if (!post) {
     return notFound();
   }
-
-  const readingTime = estimateReadingTime(post.content);
 
   return (
     <main className="min-h-screen bg-transparent px-4 shadow-xl md:container md:mx-auto md:px-9 md:pt-20 lg:px-64">
@@ -93,8 +111,8 @@ export default async function PostPage({ params }: { params: Params }) {
         <div
           className="relative w-full overflow-hidden rounded-lg bg-gray-100"
           style={{
-            aspectRatio: '16/9',
-            contain: 'layout paint',
+            aspectRatio: "16/9",
+            contain: "layout paint",
           }}
         >
           <Image
@@ -106,7 +124,7 @@ export default async function PostPage({ params }: { params: Params }) {
             alt={`Image do post ${post.title}`}
             quality={85}
             placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQrJyEwPENDPzE2O0FBNi5QWUE5SDQ7UFk2WEFHYV1ATl9hZ2hjPk1KWGX/2wBDARUXFyAeIR4eIWRCOzJkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGX/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            blurDataURL={`data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFNGRjpGTUBNYWFhcmJyf36noKCg/39ygYGBgf/2wBDARUXFx4aHh4iHh4iBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYH/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=`}
           />
         </div>
 
@@ -126,12 +144,12 @@ export default async function PostPage({ params }: { params: Params }) {
 
           <div className="flex items-center gap-4 text-sm text-gray-600">
             <time dateTime={new Date(post.date).toISOString()}>
-              {new Date(post.date).toLocaleDateString('pt-BR', {
-                timeZone: 'America/Sao_Paulo',
+              {new Date(post.date).toLocaleDateString("pt-BR", {
+                timeZone: "America/Sao_Paulo",
               })}
             </time>
             <span aria-hidden="true">·</span>
-            <span>{readingTime} min de leitura</span>
+            <span>{post.readingTime} min de leitura</span>
           </div>
 
           <Suspense
@@ -155,8 +173,8 @@ export default async function PostPage({ params }: { params: Params }) {
               <div
                 className="relative w-full bg-gray-100"
                 style={{
-                  aspectRatio: '4/3',
-                  contain: 'layout paint',
+                  aspectRatio: "4/3",
+                  contain: "layout paint",
                 }}
               >
                 <Image
@@ -189,32 +207,32 @@ export default async function PostPage({ params }: { params: Params }) {
 
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'BlogPosting',
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
           headline: post.title,
           description: post.resume,
           datePublished: new Date(post.date).toISOString(),
           author: {
-            '@type': 'Person',
-            name: 'Bora Churrasco',
+            "@type": "Person",
+            name: "Bora Churrasco",
           },
           image: post.firebaseCoverImageUrl,
           publisher: {
-            '@type': 'Organization',
-            name: 'Bora Churrasco',
+            "@type": "Organization",
+            name: "Bora Churrasco",
             logo: {
-              '@type': 'ImageObject',
-              url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+              "@type": "ImageObject",
+              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
             },
           },
           mainEntityOfPage: {
-            '@type': 'WebPage',
-            '@id': `https://www.borachurrasco.app/post/${post.slug}`,
+            "@type": "WebPage",
+            "@id": `https://www.borachurrasco.app/post/${post.slug}`,
           },
           wordCount: post.content.split(/\s+/).length,
-          timeRequired: `PT${Math.ceil(readingTime)}M`,
+          timeRequired: `PT${Math.ceil(post.readingTime)}M`,
           articleSection: post.tags?.[0],
-          keywords: post.tags?.join(', '),
+          keywords: post.tags?.join(", "),
         }}
       />
     </main>
