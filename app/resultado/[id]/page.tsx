@@ -1,6 +1,5 @@
 import JsonLd from "@/components/JsonLd";
 import ResultDefault from "@/components/ui/resultDefault";
-import { getRandomAdsContent } from "@/services/ad-service";
 
 type Params = Promise<{ id: string }>;
 
@@ -91,8 +90,6 @@ export async function generateStaticParams() {
 export default async function Resultado({ params }: { params: Params }) {
   const { id } = await params;
   const participante = Number.parseInt(id);
-
-  const ads = await getRandomAdsContent();
 
   return (
     <>

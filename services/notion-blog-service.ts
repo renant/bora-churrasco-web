@@ -1,17 +1,18 @@
-import { storage } from '@/lib/firebase';
+import { storage } from "@/lib/firebase";
 import type {
   PostsNotionDatabaseResult,
   Result,
-} from '@/models/notion-models/database-notion';
-import type Recipe from '@/models/recipe';
-import { Client } from '@notionhq/client';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import matter from 'gray-matter';
-import { NotionToMarkdown } from 'notion-to-md';
-import { remark } from 'remark';
-import html from 'remark-html';
-import sharp from 'sharp';
-import { v4 as uuidv4 } from 'uuid';
+} from "@/models/notion-models/database-notion";
+import type Recipe from "@/models/recipe";
+import { Client } from "@notionhq/client";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import matter from "gray-matter";
+import { NotionToMarkdown } from "notion-to-md";
+import { getPlaiceholder } from "plaiceholder";
+import { remark } from "remark";
+import html from "remark-html";
+import sharp from "sharp";
+import { v4 as uuidv4 } from "uuid";
 
 export interface Post {
   title: string;
@@ -25,6 +26,7 @@ export interface Post {
   id: string;
   slugId: string;
   tags: string[];
+  blurDataURL: string;
 }
 
 export interface PostContent extends Post {
@@ -44,21 +46,21 @@ export type GetQuery = {
 
 const getPosts = async (queryParam: GetQuery = {}): Promise<PostsResult> => {
   const headers = new Headers();
-  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`);
-  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`);
-  headers.append('Content-Type', 'application/json');
+  headers.append("Authorization", `Bearer ${process.env.NOTION_API_KEY}`);
+  headers.append("Notion-Version", `${process.env.NOTION_VERSION}`);
+  headers.append("Content-Type", "application/json");
 
   const parameters: any = {
     filter: {
-      property: 'Published',
+      property: "Published",
       checkbox: {
         equals: true,
       },
     },
     sorts: [
       {
-        property: 'Date',
-        direction: 'descending',
+        property: "Date",
+        direction: "descending",
       },
     ],
   };
@@ -72,10 +74,10 @@ const getPosts = async (queryParam: GetQuery = {}): Promise<PostsResult> => {
   }
 
   const response = await fetch(
-    'https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query',
+    "https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query",
     {
-      cache: 'no-store',
-      method: 'POST',
+      cache: "no-store",
+      method: "POST",
       headers,
       body: JSON.stringify(parameters),
     }
@@ -93,26 +95,26 @@ const getPosts = async (queryParam: GetQuery = {}): Promise<PostsResult> => {
       slug:
         post.properties.Slug.rich_text.length > 0
           ? post.properties.Slug.rich_text[0].plain_text
-          : '',
+          : "",
       published: post.properties.Published.checkbox,
       date: post.properties.Date.date
         ? new Date(post.properties.Date.date.start)
         : null,
       coverImage:
-        post.properties['Cover image'].files.length > 0
-          ? post.properties['Cover image'].files[0].file.url
-          : '',
+        post.properties["Cover image"].files.length > 0
+          ? post.properties["Cover image"].files[0].file.url
+          : "",
       tags: post.properties.tags.multi_select.map((tag) => tag.name),
       firebaseCoverImageUrl: post.properties.FirebaseCoverImageUrl?.rich_text[0]
         ? post.properties.FirebaseCoverImageUrl.rich_text[0].plain_text
         : null,
       resume: post.properties.Resume.rich_text[0].plain_text,
       url: post.url,
-      id: post.url.split('/').pop()?.split('-').pop(),
+      id: post.url.split("/").pop()?.split("-").pop(),
       slugId:
         post.properties.Slug.rich_text.length > 0
           ? post.properties.Slug.rich_text[0].plain_text
-          : '',
+          : "",
     } as PostContent;
 
     const postContent = await updateImageToFirebaseCoverImage(postResult);
@@ -132,13 +134,13 @@ const notion = new Client({
 
 const getPost = async (slug: string): Promise<PostContent> => {
   const headers = new Headers();
-  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`);
-  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`);
-  headers.append('Content-Type', 'application/json');
+  headers.append("Authorization", `Bearer ${process.env.NOTION_API_KEY}`);
+  headers.append("Notion-Version", `${process.env.NOTION_VERSION}`);
+  headers.append("Content-Type", "application/json");
 
   const parameters: any = {
     filter: {
-      property: 'Slug',
+      property: "Slug",
       rich_text: {
         equals: slug,
       },
@@ -146,10 +148,10 @@ const getPost = async (slug: string): Promise<PostContent> => {
   };
 
   const response = await fetch(
-    'https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query',
+    "https://api.notion.com/v1/databases/74a6577f09ee4e85888179fb21b72b6b/query",
     {
-      cache: 'no-store',
-      method: 'POST',
+      cache: "no-store",
+      method: "POST",
       headers,
       body: JSON.stringify(parameters),
     }
@@ -163,7 +165,7 @@ const getPost = async (slug: string): Promise<PostContent> => {
 
   const n2m = new NotionToMarkdown({ notionClient: notion });
 
-  const mdblocks = await n2m.pageToMarkdown(post.id ?? '');
+  const mdblocks = await n2m.pageToMarkdown(post.id ?? "");
   const mdString = n2m.toMarkdownString(mdblocks);
 
   const matterResult = matter(mdString.parent);
@@ -174,11 +176,11 @@ const getPost = async (slug: string): Promise<PostContent> => {
 
   const content = processedContent.value
     .toString()
-    .replace(/(?:\r\n|\r|\n)/g, '')
+    .replace(/(?:\r\n|\r|\n)/g, "")
     .replace(/"/g, "'")
-    .replace('|startVideoEmbeded|', "<iframe width='560' height='315' src='")
+    .replace("|startVideoEmbeded|", "<iframe width='560' height='315' src='")
     .replace(
-      '|endVideoEmbeded|',
+      "|endVideoEmbeded|",
       "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>"
     );
 
@@ -188,44 +190,52 @@ const getPost = async (slug: string): Promise<PostContent> => {
     published: post.properties.Published.checkbox,
     date: post.properties.Date.date.start,
     coverImage:
-      post.properties['Cover image'].files.length > 0
-        ? post.properties['Cover image'].files[0].file.url
-        : '',
+      post.properties["Cover image"].files.length > 0
+        ? post.properties["Cover image"].files[0].file.url
+        : "",
     firebaseCoverImageUrl: post.properties.FirebaseCoverImageUrl
       ? post.properties.FirebaseCoverImageUrl.rich_text[0].plain_text
       : null,
     resume: post.properties.Resume.rich_text[0].plain_text,
     url: post.url,
-    id: post.url.split('/').pop()?.split('-').pop(),
+    id: post.url.split("/").pop()?.split("-").pop(),
     slugId:
       post.properties.Slug.rich_text.length > 0
         ? post.properties.Slug.rich_text[0].plain_text
-        : '',
+        : "",
     content,
   } as PostContent;
 
   postContent = await updateImageToFirebaseCoverImage(postContent);
 
+  const buffer = await fetch(postContent.firebaseCoverImageUrl).then(
+    async (res) => Buffer.from(await res.arrayBuffer())
+  );
+
+  const { base64 } = await getPlaiceholder(buffer);
+  postContent.blurDataURL = base64;
+
+  console.log(postContent.blurDataURL);
   return postContent;
 };
 
 const getRecipes = async (queryParam: GetQuery = {}) => {
   const headers = new Headers();
-  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`);
-  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`);
-  headers.append('Content-Type', 'application/json');
+  headers.append("Authorization", `Bearer ${process.env.NOTION_API_KEY}`);
+  headers.append("Notion-Version", `${process.env.NOTION_VERSION}`);
+  headers.append("Content-Type", "application/json");
 
   const parameters: any = {
     filter: {
-      property: 'published',
+      property: "published",
       checkbox: {
         equals: true,
       },
     },
     sorts: [
       {
-        property: 'Date',
-        direction: 'descending',
+        property: "Date",
+        direction: "descending",
       },
     ],
   };
@@ -239,10 +249,10 @@ const getRecipes = async (queryParam: GetQuery = {}) => {
   }
 
   const response = await fetch(
-    'https://api.notion.com/v1/databases/036b43302a46488882d0c4f5cd8872dc/query',
+    "https://api.notion.com/v1/databases/036b43302a46488882d0c4f5cd8872dc/query",
     {
-      cache: 'no-store',
-      method: 'POST',
+      cache: "no-store",
+      method: "POST",
       headers,
       body: JSON.stringify(parameters),
     }
@@ -258,7 +268,7 @@ const getRecipes = async (queryParam: GetQuery = {}) => {
       slug:
         recipe.properties.slug.rich_text.length > 0
           ? recipe.properties.slug.rich_text[0].plain_text
-          : '',
+          : "",
       imagePath: recipe.properties.imageUrl?.rich_text[0]
         ? recipe.properties.imageUrl.rich_text[0].plain_text
         : null,
@@ -277,13 +287,13 @@ const getRecipes = async (queryParam: GetQuery = {}) => {
 
 const getRecipe = async (slug: string): Promise<Recipe> => {
   const headers = new Headers();
-  headers.append('Authorization', `Bearer ${process.env.NOTION_API_KEY}`);
-  headers.append('Notion-Version', `${process.env.NOTION_VERSION}`);
-  headers.append('Content-Type', 'application/json');
+  headers.append("Authorization", `Bearer ${process.env.NOTION_API_KEY}`);
+  headers.append("Notion-Version", `${process.env.NOTION_VERSION}`);
+  headers.append("Content-Type", "application/json");
 
   const parameters: any = {
     filter: {
-      property: 'slug',
+      property: "slug",
       rich_text: {
         equals: slug,
       },
@@ -291,10 +301,10 @@ const getRecipe = async (slug: string): Promise<Recipe> => {
   };
 
   const response = await fetch(
-    'https://api.notion.com/v1/databases/036b43302a46488882d0c4f5cd8872dc/query',
+    "https://api.notion.com/v1/databases/036b43302a46488882d0c4f5cd8872dc/query",
     {
-      cache: 'no-store',
-      method: 'POST',
+      cache: "no-store",
+      method: "POST",
       headers,
       body: JSON.stringify(parameters),
     }
@@ -306,7 +316,7 @@ const getRecipe = async (slug: string): Promise<Recipe> => {
 
   const n2m = new NotionToMarkdown({ notionClient: notion });
 
-  const mdblocks = await n2m.pageToMarkdown(recipeResult.id ?? '');
+  const mdblocks = await n2m.pageToMarkdown(recipeResult.id ?? "");
   const mdString = n2m.toMarkdownString(mdblocks);
 
   const matterResult = matter(mdString.parent);
@@ -317,11 +327,11 @@ const getRecipe = async (slug: string): Promise<Recipe> => {
 
   const content = processedContent.value
     .toString()
-    .replace(/(?:\r\n|\r|\n)/g, '')
+    .replace(/(?:\r\n|\r|\n)/g, "")
     .replace(/"/g, "'")
-    .replace('|startVideoEmbeded|', "<iframe width='560' height='315' src='")
+    .replace("|startVideoEmbeded|", "<iframe width='560' height='315' src='")
     .replace(
-      '|endVideoEmbeded|',
+      "|endVideoEmbeded|",
       "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>"
     );
 
@@ -330,7 +340,7 @@ const getRecipe = async (slug: string): Promise<Recipe> => {
     slug:
       recipeResult.properties.slug.rich_text.length > 0
         ? recipeResult.properties.slug.rich_text[0].plain_text
-        : '',
+        : "",
     imagePath: recipeResult.properties.imageUrl?.rich_text[0]
       ? recipeResult.properties.imageUrl.rich_text[0].plain_text
       : null,
@@ -353,7 +363,7 @@ const updateImageToFirebaseCoverImage = async (
 
   if (blob instanceof Blob) {
     const imageName = uuidv4();
-    const imageStorage = ref(storage, 'images-notion/');
+    const imageStorage = ref(storage, "images-notion/");
     const imageRef = ref(imageStorage, imageName);
 
     const metadata = {
@@ -375,7 +385,7 @@ const updateImageToFirebaseCoverImage = async (
         FirebaseCoverImageUrl: {
           rich_text: [
             {
-              type: 'text',
+              type: "text",
               text: {
                 content: postContent.firebaseCoverImageUrl,
               },
