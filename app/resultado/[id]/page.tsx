@@ -1,7 +1,6 @@
-import JsonLd from '@/components/JsonLd';
-import ResultDefault from '@/components/ui/resultDefault';
-import { getRandomAdsContent } from '@/services/ad-service';
-import Image from 'next/image';
+import JsonLd from "@/components/JsonLd";
+import ResultDefault from "@/components/ui/resultDefault";
+import { getRandomAdsContent } from "@/services/ad-service";
 
 type Params = Promise<{ id: string }>;
 
@@ -17,21 +16,21 @@ export async function generateMetadata({ params }: { params: Params }) {
       canonical: url,
     },
     keywords: [
-      'Calculadora de Churrasco',
-      'Churrasco para Grupos',
-      'Quantidade de Carne por Pessoa',
-      'Planejamento de Churrasco',
+      "Calculadora de Churrasco",
+      "Churrasco para Grupos",
+      "Quantidade de Carne por Pessoa",
+      "Planejamento de Churrasco",
       `Churrasco ${participante} pessoas`,
-      'Cálculo de Carne',
-      'Organização de Churrasco',
-      'Dicas de Churrasco',
+      "Cálculo de Carne",
+      "Organização de Churrasco",
+      "Dicas de Churrasco",
     ],
     images: [
       {
-        url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+        url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
         width: 310,
         height: 310,
-        alt: 'Bora Churrasco - Calculadora de Churrasco',
+        alt: "Bora Churrasco - Calculadora de Churrasco",
       },
     ],
     openGraph: {
@@ -40,52 +39,52 @@ export async function generateMetadata({ params }: { params: Params }) {
       url: url,
       images: [
         {
-          url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+          url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
           width: 310,
           height: 310,
-          alt: 'Bora Churrasco - Calculadora de Churrasco',
+          alt: "Bora Churrasco - Calculadora de Churrasco",
         },
       ],
-      locale: 'pt_BR',
-      type: 'article',
-      siteName: 'Bora Churrasco',
+      locale: "pt_BR",
+      type: "article",
+      siteName: "Bora Churrasco",
       article: {
         publishedTime: new Date().toISOString(),
-        authors: ['Bora Churrasco'],
-        tags: ['Churrasco', 'Calculadora', 'Planejamento', 'Carnes'],
+        authors: ["Bora Churrasco"],
+        tags: ["Churrasco", "Calculadora", "Planejamento", "Carnes"],
       },
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `Calculadora de Churrasco: Quantidade Para ${participante} Pessoas`,
       description: `Descubra a quantidade exata de carne e acompanhamentos para um churrasco de ${participante} pessoas`,
-      images: ['https://www.borachurrasco.app/images/ms-icon-310x310.png'],
+      images: ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
     },
   };
 }
 
 export async function generateStaticParams() {
   return [
-    { id: '5' },
-    { id: '10' },
-    { id: '15' },
-    { id: '20' },
-    { id: '25' },
-    { id: '30' },
-    { id: '35' },
-    { id: '40' },
-    { id: '45' },
-    { id: '50' },
-    { id: '55' },
-    { id: '60' },
-    { id: '65' },
-    { id: '70' },
-    { id: '75' },
-    { id: '80' },
-    { id: '85' },
-    { id: '90' },
-    { id: '95' },
-    { id: '100' },
+    { id: "5" },
+    { id: "10" },
+    { id: "15" },
+    { id: "20" },
+    { id: "25" },
+    { id: "30" },
+    { id: "35" },
+    { id: "40" },
+    { id: "45" },
+    { id: "50" },
+    { id: "55" },
+    { id: "60" },
+    { id: "65" },
+    { id: "70" },
+    { id: "75" },
+    { id: "80" },
+    { id: "85" },
+    { id: "90" },
+    { id: "95" },
+    { id: "100" },
   ];
 }
 
@@ -102,47 +101,7 @@ export default async function Resultado({ params }: { params: Params }) {
           Cálculo De Churrasco Para {participante} Pessoas
         </h1>
         <div className="flex flex-col md:flex-row items-center justify-center w-full gap-8">
-          <div className="w-full max-w-xl">
-            <ResultDefault participantes={participante} />
-          </div>
-          <div className="w-full max-w-[300px] flex-shrink-0">
-            <div className="overflow-hidden rounded-md bg-gray-50 shadow-lg">
-              <div className="aspect-w-1 aspect-h-1 relative">
-                <div className="absolute inset-0">
-                  <Image
-                    src={ads.image}
-                    fill
-                    sizes="(max-width: 768px) 300px, 300px"
-                    style={{ objectFit: 'cover' }}
-                    alt={ads.alt}
-                    priority
-                    quality={85}
-                  />
-                </div>
-              </div>
-              <div className="p-3">
-                <h3 className="text-md m-0 font-semibold text-gray-700">
-                  {ads.alt}
-                </h3>
-                <p className="leading-sm text-sm text-gray-900">
-                  {ads.description}
-                </p>
-              </div>
-              <a
-                href={ads.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="no-underline block"
-              >
-                <button
-                  type="button"
-                  className="w-full bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500"
-                >
-                  Adquira já
-                </button>
-              </a>
-            </div>
-          </div>
+          <ResultDefault participantes={participante} />
         </div>
         <div className="prose prose-base mt-8 w-full max-w-3xl">
           <h2 className="text-red-500">
@@ -181,9 +140,9 @@ export default async function Resultado({ params }: { params: Params }) {
 
           <p>
             <strong className="text-red-600">
-              {' '}
+              {" "}
               - Almoço ou Jantar Prolongado:
-            </strong>{' '}
+            </strong>{" "}
             Aqui, estamos falando de um evento que dura entre 4 a 5 horas. A
             quantidade recomendada aumenta para 400 a 500 gramas por
             participante.
@@ -191,9 +150,9 @@ export default async function Resultado({ params }: { params: Params }) {
 
           <p>
             <strong className="text-red-600">
-              {' '}
+              {" "}
               - Churrasco sem Hora para Acabar:
-            </strong>{' '}
+            </strong>{" "}
             O famoso churrasco de fim de semana que começa ao meio-dia e só
             termina... bem, quando o último resistente se rende. Neste cenário,
             esteja preparado com 500 a 600 gramas por pessoa.
@@ -209,13 +168,13 @@ export default async function Resultado({ params }: { params: Params }) {
           <p>
             <strong className="text-red-600">
               Maioria de Mulheres e Crianças:
-            </strong>{' '}
+            </strong>{" "}
             Geralmente, esse grupo consome menos carne, então você pode reduzir
             a conta em cerca de 100 gramas por pessoa.
           </p>
 
           <p>
-            <strong className="text-red-600">Maioria de Homens Adultos:</strong>{' '}
+            <strong className="text-red-600">Maioria de Homens Adultos:</strong>{" "}
             Principalmente se forem amigos reunidos para assistir ao jogo,
             adicione de 100 a 200 gramas extras por pessoa à sua estimativa
             inicial.
@@ -232,7 +191,7 @@ export default async function Resultado({ params }: { params: Params }) {
           <p>
             <strong className="text-red-600">
               Almoço Completo com Acompanhamentos:
-            </strong>{' '}
+            </strong>{" "}
             Se vai ter salada, maionese, vinagrete, pão de alho, entre outros,
             você pode reduzir a carne em cerca de 100 gramas por pessoa.
           </p>
@@ -248,13 +207,13 @@ export default async function Resultado({ params }: { params: Params }) {
           </h3>
 
           <p>
-            <strong className="text-red-600">Variedade de Cortes:</strong>{' '}
+            <strong className="text-red-600">Variedade de Cortes:</strong>{" "}
             Ofereça diferentes tipos de carnes. Isso agrada a vários paladares e
             ajuda a equilibrar o consumo.
           </p>
 
           <p>
-            <strong className="text-red-600">Bebidas e Entradas:</strong>{' '}
+            <strong className="text-red-600">Bebidas e Entradas:</strong>{" "}
             Aperitivos e bebidas podem influenciar na quantidade de carne
             consumida. O ideal é ter um equilíbrio.
           </p>
@@ -305,39 +264,39 @@ export default async function Resultado({ params }: { params: Params }) {
 
         <JsonLd
           data={{
-            '@context': 'https://schema.org',
-            '@type': 'Article',
+            "@context": "https://schema.org",
+            "@type": "Article",
             headline: `Cálculo De Churrasco Para ${participante} Pessoas`,
             description: `Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas.`,
             datePublished: new Date().toISOString(),
             dateModified: new Date().toISOString(),
             author: {
-              '@type': 'Organization',
-              name: 'Bora Churrasco',
-              url: 'https://www.borachurrasco.app',
+              "@type": "Organization",
+              name: "Bora Churrasco",
+              url: "https://www.borachurrasco.app",
             },
             image: {
-              '@type': 'ImageObject',
-              url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+              "@type": "ImageObject",
+              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
               width: 310,
               height: 310,
             },
             publisher: {
-              '@type': 'Organization',
-              name: 'Bora Churrasco',
+              "@type": "Organization",
+              name: "Bora Churrasco",
               logo: {
-                '@type': 'ImageObject',
-                url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+                "@type": "ImageObject",
+                url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
               },
             },
             mainEntityOfPage: {
-              '@type': 'WebPage',
-              '@id': `https://www.borachurrasco.app/resultado/${participante}`,
+              "@type": "WebPage",
+              "@id": `https://www.borachurrasco.app/resultado/${participante}`,
             },
             keywords:
-              'Calculadora de Churrasco, Quantidade de Carne, Churrasco para Grupos, Planejamento de Churrasco',
-            articleSection: 'Calculadora',
-            wordCount: '1000',
+              "Calculadora de Churrasco, Quantidade de Carne, Churrasco para Grupos, Planejamento de Churrasco",
+            articleSection: "Calculadora",
+            wordCount: "1000",
           }}
         />
       </main>

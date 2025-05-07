@@ -1,10 +1,10 @@
-import Tempo from '@/enum/tempo-enum';
-import AssadosCalculados from '@/models/assados-calculados';
-import BebidasCalculadas from '@/models/bebidas-calculadas';
-import EssenciaisCalculados from '@/models/essenciais-calculados';
-import ValoresReferencia from '@/models/valores-referencia';
-import Link from 'next/link';
-import { Button, buttonVariants } from './button';
+import Tempo from "@/enum/tempo-enum";
+import AssadosCalculados from "@/models/assados-calculados";
+import BebidasCalculadas from "@/models/bebidas-calculadas";
+import EssenciaisCalculados from "@/models/essenciais-calculados";
+import ValoresReferencia from "@/models/valores-referencia";
+import Link from "next/link";
+import { Button, buttonVariants } from "./button";
 
 enum TipoMedida {
   peso = 0,
@@ -88,11 +88,11 @@ export function createDefaultResult(participantes: number) {
 
       const assadosList = [];
 
-      assadosList.push('bovina');
-      assadosList.push('suina');
-      assadosList.push('linguica');
-      assadosList.push('frango');
-      assadosList.push('queijo');
+      assadosList.push("bovina");
+      assadosList.push("suina");
+      assadosList.push("linguica");
+      assadosList.push("frango");
+      assadosList.push("queijo");
 
       let totalSelecionado = assadosList.length;
 
@@ -118,8 +118,8 @@ export function createDefaultResult(participantes: number) {
 
       const bebidasList = [];
 
-      bebidasList.push('refrigerante');
-      bebidasList.push('suco');
+      bebidasList.push("refrigerante");
+      bebidasList.push("suco");
 
       let bebidasSelecionadas = bebidasList.length;
       const auxDivisaoProporcional =
@@ -186,7 +186,7 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
         <h2 className="mb-2 text-center text-lg leading-relaxed text-red-500 sm:text-4xl md:leading-snug">
           Lista de Compras!
         </h2>
-        <h3 className="text-md mb-2 text-center leading-relaxed text-black md:text-lg md:leading-snug">
+        <h3 className="md:text-md mb-2 text-center leading-relaxed text-black md:text-lg md:leading-snug">
           Lembrando que o resultado é estimado para até 4h de comes e bebes
         </h3>
         <h4 className="md:text-md mb-2 text-center text-sm font-thin text-black md:leading-snug">
@@ -202,7 +202,7 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
               <ul className="list-disc pl-8">
                 {bovina && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Bovina:{' '}
+                    Bovina:{" "}
                     {getMedida(assadosCalculados.bovina, TipoMedida.peso)}
                   </li>
                 )}
@@ -213,25 +213,25 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
                 )}
                 {linguica && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Linguiça:{' '}
+                    Linguiça:{" "}
                     {getMedida(assadosCalculados.linguica, TipoMedida.peso)}
                   </li>
                 )}
                 {frango && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Frango:{' '}
+                    Frango:{" "}
                     {getMedida(assadosCalculados.frango, TipoMedida.peso)}
                   </li>
                 )}
                 {queijo && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Queijo:{' '}
+                    Queijo:{" "}
                     {getMedida(assadosCalculados.queijo, TipoMedida.peso)}
                   </li>
                 )}
                 {paoDeAlho && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Pão de Alho:{' '}
+                    Pão de Alho:{" "}
                     {getMedida(assadosCalculados.paoAlho, TipoMedida.peso)}
                   </li>
                 )}
@@ -247,13 +247,13 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
               <ul className="list-disc pl-8">
                 {cerveja && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Cerveja:{' '}
+                    Cerveja:{" "}
                     {getMedida(bebidasCalculadas.cerveja, TipoMedida.liquido)}
                   </li>
                 )}
                 {refrigerante && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Refrigerante:{' '}
+                    Refrigerante:{" "}
                     {getMedida(
                       bebidasCalculadas.refrigerante,
                       TipoMedida.liquido
@@ -262,13 +262,13 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
                 )}
                 {agua && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Água:{' '}
+                    Água:{" "}
                     {getMedida(bebidasCalculadas.agua, TipoMedida.liquido)}
                   </li>
                 )}
                 {suco && (
                   <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Suco:{' '}
+                    Suco:{" "}
                     {getMedida(bebidasCalculadas.suco, TipoMedida.liquido)}
                   </li>
                 )}
@@ -283,11 +283,11 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
               </h5>
               <ul className="list-disc pl-8">
                 <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                  Sal Grosso:{' '}
+                  Sal Grosso:{" "}
                   {getMedida(essenciaisCalculados.salGrosso, TipoMedida.peso)}
                 </li>
                 <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                  Carvão:{' '}
+                  Carvão:{" "}
                   {getMedida(essenciaisCalculados.carvao, TipoMedida.peso)}
                 </li>
                 <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
@@ -300,10 +300,10 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
       </div>
       <div className="mt-4 flex flex-col justify-center pb-2">
         <Link href="/">
-          <Button className={buttonVariants({ variant: 'outline' })}>
+          <Button className={buttonVariants({ variant: "outline" })}>
             {participantes && participantes > 0
-              ? 'Calcule novamente com mais precisão'
-              : 'Calcular novamente'}
+              ? "Calcule novamente com mais precisão"
+              : "Calcular novamente"}
           </Button>
         </Link>
       </div>
