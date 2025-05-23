@@ -1,19 +1,10 @@
 import { Header } from "@/components/ui/header";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
-import { Oxygen } from "next/font/google";
+
 import Script from "next/script";
 import "./globals.css";
-
-const oxygen = Oxygen({
-  weight: ["300", "400", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  preload: true,
-  adjustFontFallback: true,
-});
 
 export const viewport: Viewport = {
   themeColor: "#FEF3C7",
@@ -116,7 +107,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={oxygen.className}>
+    <html lang="pt-BR">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -142,7 +133,6 @@ export default async function RootLayout({
           crossOrigin="anonymous"
         />
         <GoogleTagManager gtmId={process.env.GA_TRACKING_ID as string} />
-        <SpeedInsights />
       </body>
     </html>
   );

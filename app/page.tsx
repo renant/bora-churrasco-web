@@ -1,11 +1,11 @@
-import JsonLd from '@/components/JsonLd';
-import { Button } from '@/components/ui/button';
-import Faq from '@/components/ui/faq';
-import { Guide } from '@/components/ui/guide';
-import appSampleImg from '@/public/app-sample.avif';
-import { Beer, ChevronRight, Users, Utensils } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import JsonLd from "@/components/JsonLd";
+import { Button } from "@/components/ui/button";
+import { Faq } from "@/components/ui/faq";
+import { Guide } from "@/components/ui/guide";
+import appSampleImg from "@/public/app-sample.avif";
+import { Beer, ChevronRight, Users, Utensils } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   return (
@@ -104,7 +104,7 @@ export default async function Home() {
         </h2>
         <p>
           Descobrir a quantidade certa de comida e bebida para um churrasco pode
-          ser um verdadeiro desafio. Com a exclusiva{' '}
+          ser um verdadeiro desafio. Com a exclusiva{" "}
           <strong className="text-red-600">
             Calculadora de Churrasco do Bora Churrasco
           </strong>
@@ -146,7 +146,7 @@ export default async function Home() {
           Ajustar a quantidade de comida e bebida também depende do tempo que
           você planeja para o seu evento. Nosso sistema considera o tempo
           estimado do churrasco para garantir que todos estejam bem servidos do
-          início ao fim com a ajuda da{' '}
+          início ao fim com a ajuda da{" "}
           <strong className="text-red-600">calculadora de churrasco.</strong>
         </p>
 
@@ -163,7 +163,7 @@ export default async function Home() {
         </p>
 
         <p>
-          Com a{' '}
+          Com a{" "}
           <strong className="text-red-600">
             Calculadora de Churrasco do Bora Churrasco
           </strong>
@@ -177,7 +177,7 @@ export default async function Home() {
           <strong className="text-red-600">Bora Churrasco</strong> não é apenas
           o destino para quem quer acertar no churrasco; é o começo de uma
           experiência inesquecível que começa com o planejamento. Explore agora
-          nossa{' '}
+          nossa{" "}
           <a href="https://www.borachurrasco.app">Calculadora de Churrasco</a> e
           faça do seu próximo evento um sucesso absoluto!
         </p>
@@ -195,39 +195,39 @@ export default async function Home() {
 
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
           mainEntity: [
             {
-              '@type': 'Question',
-              name: 'Qual a quantidade de carne para um churrasco?',
+              "@type": "Question",
+              name: "Qual a quantidade de carne para um churrasco?",
               acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'A quantidade de carne para um churrasco varia conforme o perfil dos convidados e o tempo estimado do evento. Em média, considera-se 400 gramas por homem e 300 gramas por mulher. Para crianças, a quantidade é de 200 gramas.',
+                "@type": "Answer",
+                text: "A quantidade de carne para um churrasco varia conforme o perfil dos convidados e o tempo estimado do evento. Em média, considera-se 400 gramas por homem e 300 gramas por mulher. Para crianças, a quantidade é de 200 gramas.",
               },
             },
             {
-              '@type': 'Question',
-              name: 'Como calcular a quantidade de carvão para um churrasco?',
+              "@type": "Question",
+              name: "Como calcular a quantidade de carvão para um churrasco?",
               acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Uma boa regra é usar 1,5 kg de carvão para cada kg de carne. Isso pode variar conforme o tipo de churrasqueira e a duração do churrasco.',
+                "@type": "Answer",
+                text: "Uma boa regra é usar 1,5 kg de carvão para cada kg de carne. Isso pode variar conforme o tipo de churrasqueira e a duração do churrasco.",
               },
             },
             {
-              '@type': 'Question',
-              name: 'Quanto de acompanhamento calcular por pessoa no churrasco?',
+              "@type": "Question",
+              name: "Quanto de acompanhamento calcular por pessoa no churrasco?",
               acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Recomenda-se calcular cerca de 150g de arroz, 150g de farofa e 100g de pão por pessoa. Para saladas, considere 100g por pessoa.',
+                "@type": "Answer",
+                text: "Recomenda-se calcular cerca de 150g de arroz, 150g de farofa e 100g de pão por pessoa. Para saladas, considere 100g por pessoa.",
               },
             },
             {
-              '@type': 'Question',
-              name: 'Como calcular bebidas para churrasco?',
+              "@type": "Question",
+              name: "Como calcular bebidas para churrasco?",
               acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Calcule 1 litro de cerveja por hora por pessoa que bebe, 500ml de refrigerante por pessoa e 400ml de água por pessoa. Para um churrasco de 4 horas, multiplique esses valores.',
+                "@type": "Answer",
+                text: "Calcule 1 litro de cerveja por hora por pessoa que bebe, 500ml de refrigerante por pessoa e 400ml de água por pessoa. Para um churrasco de 4 horas, multiplique esses valores.",
               },
             },
           ],
@@ -235,20 +235,20 @@ export default async function Home() {
       />
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'SoftwareApplication',
-          name: 'Bora Churrasco - Calculadora de Churrasco',
-          operatingSystem: 'Android',
-          applicationCategory: 'UtilitiesApplication',
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "Bora Churrasco - Calculadora de Churrasco",
+          operatingSystem: "Android",
+          applicationCategory: "UtilitiesApplication",
           offers: {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'BRL',
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "BRL",
           },
           aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.8',
-            ratingCount: '486',
+            "@type": "AggregateRating",
+            ratingValue: "4.8",
+            ratingCount: "486",
           },
         }}
       />

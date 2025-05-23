@@ -1,5 +1,4 @@
 import JsonLd from "@/components/JsonLd";
-import { getRandomAdsContent } from "@/services/ad-service";
 import { getPost, getPosts } from "@/services/notion-blog-service";
 import { estimateReadingTime } from "@/utils/text-utils";
 import { unstable_cache as unstableCache } from "next/cache";
@@ -24,14 +23,6 @@ const getCachedPost = unstableCache(
   {
     tags: ["post"], // For cache invalidation
     revalidate: 3600, // Revalidate every hour
-  }
-);
-
-const getCachedAds = unstableCache(
-  async () => await getRandomAdsContent(),
-  ["ads-cache"],
-  {
-    revalidate: 300, // Revalidate every 5 minutes
   }
 );
 
@@ -99,7 +90,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 export default async function PostPage({ params }: { params: Params }) {
   const { slug } = await params;
 
-  const [post, ads] = await Promise.all([getCachedPost(slug), getCachedAds()]);
+  const post = await getCachedPost(slug);
 
   if (!post) {
     return notFound();
@@ -169,41 +160,6 @@ export default async function PostPage({ params }: { params: Params }) {
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </Suspense>
-
-          <div className="not-prose my-8">
-            <div className="max-w-sm overflow-hidden rounded-lg bg-gray-50 shadow-lg">
-              <div
-                className="relative w-full bg-gray-100"
-                style={{
-                  aspectRatio: "4/3",
-                  contain: "layout paint",
-                }}
-              >
-                <Image
-                  src={ads.image}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 400px"
-                  className="object-cover"
-                  alt={ads.alt}
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="m-0 text-lg font-semibold text-gray-700">
-                  {ads.alt}
-                </h3>
-                <p className="mt-2 text-sm text-gray-900">{ads.description}</p>
-                <a
-                  href={ads.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 block w-full rounded bg-red-600 px-4 py-2 text-center font-semibold text-white transition duration-300 hover:bg-red-500"
-                >
-                  Adquira já
-                </a>
-              </div>
-            </div>
-          </div>
         </article>
       </div>
 

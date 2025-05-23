@@ -1,8 +1,7 @@
-import JsonLd from '@/components/JsonLd';
-import { getRandomAdsContent } from '@/services/ad-service';
-import { getRecipe } from '@/services/notion-blog-service';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import JsonLd from "@/components/JsonLd";
+import { getRecipe } from "@/services/notion-blog-service";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
 type Params = Promise<{ id: string }>;
 
@@ -12,8 +11,8 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   if (!recipe) {
     return {
-      title: 'Bora Churrasco! - Receita não encontrada',
-      description: 'Receita não encontrado',
+      title: "Bora Churrasco! - Receita não encontrada",
+      description: "Receita não encontrado",
     };
   }
 
@@ -25,8 +24,8 @@ export async function generateMetadata({ params }: { params: Params }) {
     alternates: {
       canonical: url,
     },
-    keywords: ['receita', 'churrasco', 'como fazer', recipe.name],
-    authors: [{ name: 'Bora Churrasco' }],
+    keywords: ["receita", "churrasco", "como fazer", recipe.name],
+    authors: [{ name: "Bora Churrasco" }],
     robots: {
       index: true,
       follow: true,
@@ -45,8 +44,8 @@ export async function generateMetadata({ params }: { params: Params }) {
           url: recipe.imagePath,
         },
       ],
-      locale: 'pt_BR',
-      type: 'website',
+      locale: "pt_BR",
+      type: "website",
     },
   };
 }
@@ -54,14 +53,13 @@ export async function generateMetadata({ params }: { params: Params }) {
 export default async function RecipePage({ params }: { params: Params }) {
   const { id } = await params;
   const recipe = await getRecipe(id);
-  const ads = await getRandomAdsContent();
 
   if (!recipe) {
     return notFound();
   }
 
   return (
-    <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-20 lg:px-64">
+    <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-5 lg:px-64">
       <article
         itemScope
         itemType="https://schema.org/Recipe"
@@ -83,63 +81,43 @@ export default async function RecipePage({ params }: { params: Params }) {
             quality={85}
           />
         </div>
-        <h1 itemProp="name" className="mt-10!">
-          {recipe.name}
-        </h1>
+        <div className="mt-10">
+          <h1 itemProp="name" className="text-2xl font-bold">
+            {recipe.name}
+          </h1>
+        </div>
         <div itemProp="articleBody">
           {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
           <section dangerouslySetInnerHTML={{ __html: recipe.content }} />
         </div>
-
-        <div className="wrapper max-w-sm overflow-hidden rounded-b-md bg-gray-50  shadow-lg">
-          <div>
-            <Image src={ads.image} height={400} width={400} alt={ads.alt} />
-          </div>
-          <div className="p-3">
-            <h3 className="text-md m-0 font-semibold text-gray-700">
-              {ads.alt}
-            </h3>
-            <p className="leading-sm text-sm text-gray-900">
-              {ads.description}
-            </p>
-          </div>
-          <a href={ads.link} target="_blanck" className="no-underline">
-            <button
-              type="button"
-              className="flex w-full justify-center bg-red-600 py-2 font-semibold text-white transition duration-300 hover:bg-red-500"
-            >
-              Adquira já
-            </button>
-          </a>
-        </div>
       </article>
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'Recipe',
+          "@context": "https://schema.org",
+          "@type": "Recipe",
           name: recipe.name,
           description: `Receita de ${recipe.name}`,
           datePublished: new Date(recipe.createdAt).toISOString(),
           author: {
-            '@type': 'Organization',
-            name: 'Bora Churrasco',
-            url: 'https://www.borachurrasco.app',
+            "@type": "Organization",
+            name: "Bora Churrasco",
+            url: "https://www.borachurrasco.app",
           },
           image: [recipe.imagePath],
           publisher: {
-            '@type': 'Organization',
-            name: 'Bora Churrasco',
+            "@type": "Organization",
+            name: "Bora Churrasco",
             logo: {
-              '@type': 'ImageObject',
-              url: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
+              "@type": "ImageObject",
+              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
             },
           },
           mainEntityOfPage: {
-            '@type': 'WebPage',
-            '@id': `https://www.borachurrasco.app/recipes/${id}`,
+            "@type": "WebPage",
+            "@id": `https://www.borachurrasco.app/recipes/${id}`,
           },
-          isAccessibleForFree: 'True',
-          inLanguage: 'pt-BR',
+          isAccessibleForFree: "True",
+          inLanguage: "pt-BR",
         }}
       />
     </main>
