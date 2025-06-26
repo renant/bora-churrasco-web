@@ -132,6 +132,16 @@ export default async function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
           crossOrigin="anonymous"
         />
+        <Script type="text/javascript">
+          {`
+            (function(c,l,a,r,i,t,y){
+              // biome-ignore lint/suspicious/noFunctionExpressions: Vendor snippet, do not convert to arrow function
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "s5i93zjg9g");
+          `}
+        </Script>
         <GoogleTagManager gtmId={process.env.GA_TRACKING_ID as string} />
       </body>
     </html>
