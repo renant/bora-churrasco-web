@@ -1,18 +1,19 @@
-import React from 'react'
+import type React from 'react';
 
 interface AguaIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const AguaIcon: React.FC<AguaIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (
     <svg
+      role="img"
       className={className}
       width={size}
       height={size}
@@ -20,6 +21,7 @@ const AguaIcon: React.FC<AguaIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Água</title>
       <g>
         <g>
           <path
@@ -83,23 +85,23 @@ const AguaIcon: React.FC<AguaIconProps> = ({
           />
         </g>
       </g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
-      <g></g>
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
+      <g />
     </svg>
-  )
-}
+  );
+};
 
-export default AguaIcon
+export default AguaIcon;

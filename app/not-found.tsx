@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -19,15 +19,19 @@ export default function NotFound() {
             strokeLinecap="round"
             strokeLinejoin="round"
           >
+            <title>Not Found</title>
             <line x1="12" x2="12" y1="20" y2="10" />
             <line x1="18" x2="18" y1="20" y2="4" />
             <line x1="6" x2="6" y1="20" y2="16" />
           </svg>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Página Não Encontrada</h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Página Não Encontrada
+          </h2>
         </CardHeader>
         <CardContent>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Desculpe, não conseguimos encontrar a página que você está procurando.
+            Desculpe, não conseguimos encontrar a página que você está
+            procurando.
           </p>
           <div className="mt-5">
             <Link href="/">
@@ -42,5 +46,5 @@ export default function NotFound() {
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }

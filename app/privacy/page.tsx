@@ -68,7 +68,7 @@ export default function PrivacyPage() {
         </span>
       </p>
       <p>
-        <span></span>
+        <span />
       </p>
       <h3>
         <span>Compromisso do Usuário</span>
@@ -119,5 +119,5 @@ export default function PrivacyPage() {
         <span>Esta política é efetiva a partir de&nbsp;28 July 2023 18:12</span>
       </p>
     </div>
-  )
+  );
 }

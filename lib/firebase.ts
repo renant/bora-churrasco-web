@@ -1,7 +1,7 @@
-import { getAnalytics, isSupported } from 'firebase/analytics'
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
+import { getAnalytics, isSupported } from 'firebase/analytics';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -11,15 +11,15 @@ const firebaseConfig = {
   messagingSenderId: '692979667177',
   appId: process.env.FIREBASE_APP_ID,
   measurementId: 'G-3DLL7GKQ7W',
-}
+};
 
-const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
 isSupported().then((result) => {
   if (result) {
-    getAnalytics(app)
+    getAnalytics(app);
   }
-})
+});
 
-export const storage = getStorage(app)
-export const db = getFirestore(app)
+export const storage = getStorage(app);
+export const db = getFirestore(app);

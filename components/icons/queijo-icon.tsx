@@ -1,18 +1,19 @@
-import React from 'react'
+import type React from 'react';
 
 interface QueijoIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const QueijoIcon: React.FC<QueijoIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (
     <svg
+      role="img"
       className={className}
       width={size}
       height={size}
@@ -20,6 +21,7 @@ const QueijoIcon: React.FC<QueijoIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Queijo</title>
       <g>
         <path
           fill={color}
@@ -51,7 +53,7 @@ const QueijoIcon: React.FC<QueijoIconProps> = ({
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
-export default QueijoIcon
+export default QueijoIcon;

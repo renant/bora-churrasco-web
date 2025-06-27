@@ -1,5 +1,5 @@
-import { db } from '@/lib/firebase'
-import Recipe from '@/models/recipe'
+import { db } from '@/lib/firebase';
+import Recipe from '@/models/recipe';
 import {
   Timestamp,
   addDoc,
@@ -10,11 +10,11 @@ import {
   query,
   startAfter,
   where,
-} from 'firebase/firestore'
-import { v4 as uuidv4 } from 'uuid'
+} from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
 
 const addRecipe = async (recipe: Recipe) => {
-  recipe.id = uuidv4()
+  recipe.id = uuidv4();
 
   await addDoc(collection(db, 'recipes'), {
     id: recipe.id,
@@ -24,47 +24,47 @@ const addRecipe = async (recipe: Recipe) => {
     steps: recipe.steps,
     active: recipe.active,
     createdAt: Timestamp.fromDate(recipe.createdAt),
-  })
+  });
 
-  return recipe
-}
+  return recipe;
+};
 
 export type GetRecipesQuery = {
-  limitSize?: number
-  afterId?: string
-}
+  limitSize?: number;
+  afterId?: string;
+};
 
 const getRecipes = async (
-  queryParam: GetRecipesQuery = {},
+  queryParam: GetRecipesQuery = {}
 ): Promise<Recipe[]> => {
-  const recipesRef = collection(db, 'recipes')
+  const recipesRef = collection(db, 'recipes');
 
   let q = query(
     recipesRef,
     where('active', '==', true),
-    orderBy('createdAt', 'desc'),
-  )
+    orderBy('createdAt', 'desc')
+  );
 
   if (queryParam.limitSize !== undefined)
-    q = query(q, limit(queryParam.limitSize))
+    q = query(q, limit(queryParam.limitSize));
 
   if (queryParam.afterId !== undefined) {
     const lastQuery = query(
       recipesRef,
       where('id', '==', queryParam.afterId),
-      limit(1),
-    )
-    const lastSnapshot = await getDocs(lastQuery)
-    const last = lastSnapshot.docs[0]
+      limit(1)
+    );
+    const lastSnapshot = await getDocs(lastQuery);
+    const last = lastSnapshot.docs[0];
 
-    q = query(q, startAfter(last))
+    q = query(q, startAfter(last));
   }
 
-  const snapshot = await getDocs(q)
+  const snapshot = await getDocs(q);
 
-  const recipes: any[] = []
-  snapshot.forEach((doc) => {
-    const data = doc.data()
+  const recipes: any[] = [];
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
     recipes.push({
       id: data.id,
       name: data.name,
@@ -75,27 +75,27 @@ const getRecipes = async (
           : data.createdAt,
       active: data.active,
       createdBy: data.createdBy,
-    })
-  })
-  return recipes
-}
+    });
+  }
+  return recipes;
+};
 
 const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
-  const recipesRef = collection(db, 'recipes')
+  const recipesRef = collection(db, 'recipes');
 
-  const recipes: any[] = []
+  const recipes: any[] = [];
 
   const q = query(
     recipesRef,
     where('id', '>=', id),
     where('id', '!=', id),
     orderBy('id'),
-    limit(5),
-  )
-  const snapshot = await getDocs(q)
+    limit(5)
+  );
+  const snapshot = await getDocs(q);
 
-  snapshot.forEach((doc) => {
-    const data = doc.data()
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
     recipes.push(
       new Recipe(
         data.id,
@@ -108,11 +108,11 @@ const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
           : data.createdAt,
         data.active,
         data.createdBy,
-        "",
-        ""
-      ),
-    )
-  })
+        '',
+        ''
+      )
+    );
+  }
 
   if (recipes.length < 5) {
     const q = query(
@@ -120,12 +120,12 @@ const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
       where('id', '<=', id),
       where('id', '!=', id),
       orderBy('id'),
-      limit(5 - recipes.length),
-    )
-    const snapshot = await getDocs(q)
+      limit(5 - recipes.length)
+    );
+    const snapshot = await getDocs(q);
 
-    snapshot.forEach((doc) => {
-      const data = doc.data()
+    for (const doc of snapshot.docs) {
+      const data = doc.data();
       recipes.push(
         new Recipe(
           data.id,
@@ -138,25 +138,25 @@ const getRecipesExceptCurrent = async (id: string): Promise<Recipe[]> => {
             : data.createdAt,
           data.active,
           data.createdBy,
-          "",
-          ""
-        ),
-      )
-    })
+          '',
+          ''
+        )
+      );
+    }
   }
 
-  return recipes
-}
+  return recipes;
+};
 
 const getRecipeById = async (id: string): Promise<Recipe | null> => {
-  const recipesRef = collection(db, 'recipes')
+  const recipesRef = collection(db, 'recipes');
 
-  const q = query(recipesRef, where('id', '==', id), limit(1))
-  const snapshot = await getDocs(q)
+  const q = query(recipesRef, where('id', '==', id), limit(1));
+  const snapshot = await getDocs(q);
 
-  let recipe: Recipe | null = null
-  snapshot.forEach((doc) => {
-    const data = doc.data()
+  let recipe: Recipe | null = null;
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
     recipe = new Recipe(
       data.id,
       data.name,
@@ -168,12 +168,12 @@ const getRecipeById = async (id: string): Promise<Recipe | null> => {
         : data.createdAt,
       data.active,
       data.createdBy,
-      "",
-      ""
-    )
-  })
+      '',
+      ''
+    );
+  }
 
-  return recipe
-}
+  return recipe;
+};
 
-export { addRecipe, getRecipeById, getRecipes, getRecipesExceptCurrent }
+export { addRecipe, getRecipeById, getRecipes, getRecipesExceptCurrent };

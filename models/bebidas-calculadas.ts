@@ -1,8 +1,8 @@
 class BebidasCalculadas {
-  cerveja: number = 0;
-  refrigerante: number = 0;
-  agua: number = 0;
-  suco: number = 0;
+  cerveja = 0;
+  refrigerante = 0;
+  agua = 0;
+  suco = 0;
 
   constructor({
     cerveja = 0,
@@ -14,7 +14,6 @@ class BebidasCalculadas {
     agua?: number;
     suco?: number;
     refrigerante?: number;
-
   } = {}) {
     this.cerveja = cerveja ?? 0;
     this.agua = agua ?? 0;
@@ -24,10 +23,10 @@ class BebidasCalculadas {
 
   static fromMap(map: { [key: string]: number }): BebidasCalculadas {
     return new BebidasCalculadas({
-      cerveja: map['cerveja'] ?? 0,
-      agua: map['agua'] ?? 0,
-      suco: map['suco'] ?? 0,
-      refrigerante: map['refrigerante'] ?? 0,
+      cerveja: map.cerveja ?? 0,
+      agua: map.agua ?? 0,
+      suco: map.suco ?? 0,
+      refrigerante: map.refrigerante ?? 0,
     });
   }
 

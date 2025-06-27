@@ -1,125 +1,125 @@
 export interface Title {
-  plain_text: string
-  href: null
+  plain_text: string;
+  href: null;
 }
 
 export interface Text {
-  content: string
-  link: null
+  content: string;
+  link: null;
 }
 
 export interface Annotations {
-  bold: boolean
-  italic: boolean
-  strikethrough: boolean
-  underline: boolean
-  code: boolean
-  color: string
+  bold: boolean;
+  italic: boolean;
+  strikethrough: boolean;
+  underline: boolean;
+  code: boolean;
+  color: string;
 }
 
 export interface RichText {
-  type: string
-  text: Text
-  annotations: Annotations
-  plain_text: string
-  href: null
+  type: string;
+  text: Text;
+  annotations: Annotations;
+  plain_text: string;
+  href: null;
 }
 
 export interface Slug {
-  rich_text: Title[]
+  rich_text: Title[];
 }
 
 export interface Published {
-  id: string
-  type: string
-  checkbox: boolean
+  id: string;
+  type: string;
+  checkbox: boolean;
 }
 
 export interface DateDate {
-  start: Date
-  end: null
-  time_zone: null
+  start: Date;
+  end: null;
+  time_zone: null;
 }
 
 export interface DateClass {
-  id: string
-  type: string
-  date: DateDate
+  id: string;
+  type: string;
+  date: DateDate;
 }
 
 export interface FileFile {
-  url: string
-  expiry_time: Date
+  url: string;
+  expiry_time: Date;
 }
 
 export interface FileElement {
-  name: string
-  type: string
-  file: FileFile
+  name: string;
+  type: string;
+  file: FileFile;
 }
 
 export interface CoverImage {
-  id: string
-  type: string
-  files: FileElement[]
+  id: string;
+  type: string;
+  files: FileElement[];
 }
 
 export interface Page {
-  id: string
-  type: string
-  title: Title[]
+  id: string;
+  type: string;
+  title: Title[];
 }
 export interface Resume {
-  id: string
-  type: string
-  rich_text: RichText[]
+  id: string;
+  type: string;
+  rich_text: RichText[];
 }
 
 export interface MultiSelect {
-  id: string
-  name: string
-  color: string
+  id: string;
+  name: string;
+  color: string;
 }
 
 export interface Tags {
-  id: string
-  type: string
-  multi_select: MultiSelect[]
+  id: string;
+  type: string;
+  multi_select: MultiSelect[];
 }
 
 export interface Properties1 {
-  Slug: Slug
-  FirebaseCoverImageUrl: Slug
-  Published: Published
-  Date: DateClass
-  'Cover image': CoverImage
-  Resume: Resume
-  Page: Page
-  tags: Tags
+  Slug: Slug;
+  FirebaseCoverImageUrl: Slug;
+  Published: Published;
+  Date: DateClass;
+  'Cover image': CoverImage;
+  Resume: Resume;
+  Page: Page;
+  tags: Tags;
 }
 
 export interface Properties2 {
-  Slug: Slug
-  FirebaseCoverImageUrl: Slug
-  Published: Published
-  Date: DateClass
-  'Cover image': CoverImage
-  Resume: Resume
-  Page: Page
+  Slug: Slug;
+  FirebaseCoverImageUrl: Slug;
+  Published: Published;
+  Date: DateClass;
+  'Cover image': CoverImage;
+  Resume: Resume;
+  Page: Page;
 }
 
 export interface Result {
-  object: string
-  id: string
-  properties: Properties1
-  url: string
+  object: string;
+  id: string;
+  properties: Properties1;
+  url: string;
 }
 
 export interface PostsNotionDatabaseResult {
-  object: string
-  results: Result[]
-  next_cursor: string
-  has_more: boolean
-  type: string
-  developer_survey: string
+  object: string;
+  results: Result[];
+  next_cursor: string;
+  has_more: boolean;
+  type: string;
+  developer_survey: string;
 }

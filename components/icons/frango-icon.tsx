@@ -1,18 +1,19 @@
-import React from 'react'
+import type React from 'react';
 
 interface FrangoIconProps {
-  size?: number
-  color?: string
-  className?: string
+  size?: number;
+  color?: string;
+  className?: string;
 }
 
 const FrangoIcon: React.FC<FrangoIconProps> = ({
   size = 60,
-  color = 'orange',
+  color = 'red',
   className = '',
 }) => {
   return (
     <svg
+      role="img"
       className={className}
       width={size}
       height={size}
@@ -20,6 +21,7 @@ const FrangoIcon: React.FC<FrangoIconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Frango</title>
       <g>
         <g id="Page-1">
           <g id="_x30_01---Chicken">
@@ -47,7 +49,7 @@ const FrangoIcon: React.FC<FrangoIconProps> = ({
         </g>
       </g>
     </svg>
-  )
-}
+  );
+};
 
-export default FrangoIcon
+export default FrangoIcon;
