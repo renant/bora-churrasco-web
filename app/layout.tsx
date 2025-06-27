@@ -115,6 +115,24 @@ export default async function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link
+          rel="preload"
+          as="image"
+          href="/google-play-badge.avif"
+          type="image/avif"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/app-sample.avif"
+          type="image/avif"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/ms-icon-310x310.png"
+          type="image/png"
+        />
         <script
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
@@ -128,14 +146,16 @@ export default async function RootLayout({
         </main>
         <Analytics />
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
           crossOrigin="anonymous"
         />
-        <Script type="text/javascript">
+        <Script 
+          id="clarity-script"
+          strategy="lazyOnload"
+        >
           {`
             (function(c,l,a,r,i,t,y){
-              // biome-ignore lint/suspicious/noFunctionExpressions: Vendor snippet, do not convert to arrow function
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
               t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);

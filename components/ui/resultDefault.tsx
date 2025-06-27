@@ -181,131 +181,165 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
   } = defaultResult;
 
   return (
-    <div className="md:w-96 md:h-[610px] h-full">
-      <div className="flex flex-col">
-        <h2 className="mb-2 text-center text-lg leading-relaxed text-red-500 sm:text-4xl md:leading-snug">
-          Lista de Compras!
-        </h2>
-        <h3 className="md:text-md mb-2 text-center leading-relaxed text-black md:text-lg md:leading-snug">
-          Lembrando que o resultado é estimado para até 4h de comes e bebes
-        </h3>
-        <h4 className="md:text-md mb-2 text-center text-sm font-thin text-black md:leading-snug">
-          (Isso é uma estimativa a quantidade pode variar, conheça seus
-          convidados)
-        </h4>
-        <div className="mt-4 flex flex-col items-start">
-          {assadosCalculados && (
-            <div>
-              <h5 className="text-md my-2 leading-relaxed text-black md:text-lg md:leading-snug">
-                Assados
-              </h5>
-              <ul className="list-disc pl-8">
-                {bovina && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Bovina:{" "}
-                    {getMedida(assadosCalculados.bovina, TipoMedida.peso)}
-                  </li>
-                )}
-                {suina && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Suina: {getMedida(assadosCalculados.suina, TipoMedida.peso)}
-                  </li>
-                )}
-                {linguica && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Linguiça:{" "}
-                    {getMedida(assadosCalculados.linguica, TipoMedida.peso)}
-                  </li>
-                )}
-                {frango && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Frango:{" "}
-                    {getMedida(assadosCalculados.frango, TipoMedida.peso)}
-                  </li>
-                )}
-                {queijo && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Queijo:{" "}
-                    {getMedida(assadosCalculados.queijo, TipoMedida.peso)}
-                  </li>
-                )}
-                {paoDeAlho && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Pão de Alho:{" "}
-                    {getMedida(assadosCalculados.paoAlho, TipoMedida.peso)}
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
+    <div className="w-full max-w-md mx-auto">
+      {/* Fixed dimensions container to prevent CLS */}
+      <div className="bg-white rounded-lg shadow-lg p-6 min-h-[600px] border border-gray-200">
+        <div className="flex flex-col h-full">
+          <div className="text-center mb-6">
+            <h2 className="mb-2 text-lg leading-relaxed text-red-500 sm:text-2xl md:text-3xl font-bold">
+              Lista de Compras!
+            </h2>
+            <h3 className="text-sm md:text-base mb-2 text-center leading-relaxed text-gray-700">
+              Lembrando que o resultado é estimado para até 4h de comes e bebes
+            </h3>
+            <h4 className="text-xs md:text-sm mb-4 text-center font-light text-gray-600">
+              (Isso é uma estimativa a quantidade pode variar, conheça seus
+              convidados)
+            </h4>
+          </div>
 
-          {bebidasCalculadas && (
-            <div>
-              <h5 className="text-md my-2 leading-relaxed text-black md:text-lg md:leading-snug">
-                Bebidas
-              </h5>
-              <ul className="list-disc pl-8">
-                {cerveja && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Cerveja:{" "}
-                    {getMedida(bebidasCalculadas.cerveja, TipoMedida.liquido)}
-                  </li>
-                )}
-                {refrigerante && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Refrigerante:{" "}
-                    {getMedida(
-                      bebidasCalculadas.refrigerante,
-                      TipoMedida.liquido
-                    )}
-                  </li>
-                )}
-                {agua && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Água:{" "}
-                    {getMedida(bebidasCalculadas.agua, TipoMedida.liquido)}
-                  </li>
-                )}
-                {suco && (
-                  <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                    Suco:{" "}
-                    {getMedida(bebidasCalculadas.suco, TipoMedida.liquido)}
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
+          <div className="flex-1 space-y-6">
+            {assadosCalculados && (
+              <div className="bg-red-50 p-4 rounded-lg">
+                <h5 className="text-lg md:text-xl font-semibold text-red-700 mb-3 flex items-center">
+                  🥩 Assados
+                </h5>
+                <ul className="space-y-2">
+                  {bovina && (
+                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Bovina:</span>
+                      <span className="text-sm md:text-base text-red-600 font-semibold">
+                        {getMedida(assadosCalculados.bovina, TipoMedida.peso)}
+                      </span>
+                    </li>
+                  )}
+                  {suina && (
+                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Suína:</span>
+                      <span className="text-sm md:text-base text-red-600 font-semibold">
+                        {getMedida(assadosCalculados.suina, TipoMedida.peso)}
+                      </span>
+                    </li>
+                  )}
+                  {linguica && (
+                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Linguiça:</span>
+                      <span className="text-sm md:text-base text-red-600 font-semibold">
+                        {getMedida(assadosCalculados.linguica, TipoMedida.peso)}
+                      </span>
+                    </li>
+                  )}
+                  {frango && (
+                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Frango:</span>
+                      <span className="text-sm md:text-base text-red-600 font-semibold">
+                        {getMedida(assadosCalculados.frango, TipoMedida.peso)}
+                      </span>
+                    </li>
+                  )}
+                  {queijo && (
+                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Queijo:</span>
+                      <span className="text-sm md:text-base text-red-600 font-semibold">
+                        {getMedida(assadosCalculados.queijo, TipoMedida.peso)}
+                      </span>
+                    </li>
+                  )}
+                  {paoDeAlho && (
+                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Pão de Alho:</span>
+                      <span className="text-sm md:text-base text-red-600 font-semibold">
+                        {getMedida(assadosCalculados.paoAlho, TipoMedida.peso)}
+                      </span>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
 
-          {essenciaisCalculados && (
-            <div>
-              <h5 className="text-md my-2 leading-relaxed text-black md:text-lg md:leading-snug">
-                Essenciais
-              </h5>
-              <ul className="list-disc pl-8">
-                <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                  Sal Grosso:{" "}
-                  {getMedida(essenciaisCalculados.salGrosso, TipoMedida.peso)}
-                </li>
-                <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                  Carvão:{" "}
-                  {getMedida(essenciaisCalculados.carvao, TipoMedida.peso)}
-                </li>
-                <li className="md:text-md text-sm leading-relaxed text-black md:leading-snug">
-                  Gelo: {getMedida(essenciaisCalculados.gelo, TipoMedida.peso)}
-                </li>
-              </ul>
-            </div>
-          )}
+            {bebidasCalculadas && (
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h5 className="text-lg md:text-xl font-semibold text-blue-700 mb-3 flex items-center">
+                  🍻 Bebidas
+                </h5>
+                <ul className="space-y-2">
+                  {cerveja && (
+                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Cerveja:</span>
+                      <span className="text-sm md:text-base text-blue-600 font-semibold">
+                        {getMedida(bebidasCalculadas.cerveja, TipoMedida.liquido)}
+                      </span>
+                    </li>
+                  )}
+                  {refrigerante && (
+                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Refrigerante:</span>
+                      <span className="text-sm md:text-base text-blue-600 font-semibold">
+                        {getMedida(bebidasCalculadas.refrigerante, TipoMedida.liquido)}
+                      </span>
+                    </li>
+                  )}
+                  {agua && (
+                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Água:</span>
+                      <span className="text-sm md:text-base text-blue-600 font-semibold">
+                        {getMedida(bebidasCalculadas.agua, TipoMedida.liquido)}
+                      </span>
+                    </li>
+                  )}
+                  {suco && (
+                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
+                      <span className="text-sm md:text-base text-gray-700 font-medium">Suco:</span>
+                      <span className="text-sm md:text-base text-blue-600 font-semibold">
+                        {getMedida(bebidasCalculadas.suco, TipoMedida.liquido)}
+                      </span>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
+
+            {essenciaisCalculados && (
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h5 className="text-lg md:text-xl font-semibold text-green-700 mb-3 flex items-center">
+                  ✨ Essenciais
+                </h5>
+                <ul className="space-y-2">
+                  <li className="flex justify-between items-center py-1 border-b border-green-100 last:border-b-0">
+                    <span className="text-sm md:text-base text-gray-700 font-medium">Sal Grosso:</span>
+                    <span className="text-sm md:text-base text-green-600 font-semibold">
+                      {getMedida(essenciaisCalculados.salGrosso, TipoMedida.peso)}
+                    </span>
+                  </li>
+                  <li className="flex justify-between items-center py-1 border-b border-green-100 last:border-b-0">
+                    <span className="text-sm md:text-base text-gray-700 font-medium">Carvão:</span>
+                    <span className="text-sm md:text-base text-green-600 font-semibold">
+                      {getMedida(essenciaisCalculados.carvao, TipoMedida.peso)}
+                    </span>
+                  </li>
+                  <li className="flex justify-between items-center py-1 border-b border-green-100 last:border-b-0">
+                    <span className="text-sm md:text-base text-gray-700 font-medium">Gelo:</span>
+                    <span className="text-sm md:text-base text-green-600 font-semibold">
+                      {getMedida(essenciaisCalculados.gelo, TipoMedida.peso)}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-gray-200">
+            <Link href="/" className="block">
+              <Button 
+                className={`${buttonVariants({ variant: "outline" })} w-full text-sm md:text-base py-3`}
+              >
+                {participantes && participantes > 0
+                  ? "Calcule novamente com mais precisão"
+                  : "Calcular novamente"}
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="mt-4 flex flex-col justify-center pb-2">
-        <Link href="/">
-          <Button className={buttonVariants({ variant: "outline" })}>
-            {participantes && participantes > 0
-              ? "Calcule novamente com mais precisão"
-              : "Calcular novamente"}
-          </Button>
-        </Link>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 86400, // 24 hours cache for better performance
     remotePatterns: [
       {
         protocol: "https",
@@ -17,8 +17,12 @@ const nextConfig = {
       },
     ],
     formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Optimized device sizes for mobile-first approach
+    deviceSizes: [320, 420, 640, 768, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 192, 256, 384],
+    // Enable blur placeholder for better CLS
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   compress: true,
   poweredByHeader: false,
@@ -28,6 +32,87 @@ const nextConfig = {
   },
   experimental: {
     scrollRestoration: true,
+    // Enable partial prerendering for better performance
+    ppr: false, // Keep disabled for now as it's experimental
+    // Optimize bundle for mobile
+    optimizePackageImports: ['lucide-react'],
+  },
+  // Headers for better caching and performance
+  async headers() {
+    return [
+      {
+        source: '/images/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/(.*).avif',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/(.*).webp',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
+  },
+  // Enable webpack optimizations
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      // Optimize for production builds
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // Create a separate chunk for React
+          react: {
+            name: 'react',
+            chunks: 'all',
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            priority: 20,
+          },
+          // Create a separate chunk for UI components
+          ui: {
+            name: 'ui',
+            chunks: 'all',
+            test: /[\\/]components[\\/]ui[\\/]/,
+            priority: 10,
+          },
+        },
+      };
+    }
+    return config;
   },
 };
 

@@ -6,10 +6,11 @@ import appSampleImg from "@/public/app-sample.avif";
 import { Beer, ChevronRight, Users, Utensils } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function Home() {
   return (
-    <main className="px-4 ">
+    <main className="px-4">
       <section className="container mx-auto py-12 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
@@ -44,14 +45,15 @@ export default async function Home() {
                   src="/google-play-badge.avif"
                   className="h-12 w-auto"
                   priority
+                  sizes="(max-width: 768px) 150px, 168px"
                 />
               </a>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative min-h-[400px] md:min-h-[600px]">
             <div className="absolute -top-10 -left-10 w-64 h-64 bg-red-400 rounded-full filter blur-3xl opacity-20" />
             <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-red-400 rounded-full filter blur-3xl opacity-20" />
-            <div className="relative bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 shadow-2xl min-h-[400px] md:min-h-[500px]">
               <div className="absolute inset-0 bg-black/10 rounded-3xl" />
               <div className="relative z-10">
                 <div className="flex justify-center mb-8">
@@ -84,13 +86,17 @@ export default async function Home() {
                     </Button>
                   </div>
                 </div>
-                <Image
-                  src={appSampleImg}
-                  alt="App Screenshot"
-                  width={300}
-                  height={600}
-                  className="absolute -right-16 -bottom-20 w-48 h-auto rounded-xl shadow-2xl border-4 border-white/20 rotate-6"
-                />
+                <div className="absolute -right-16 -bottom-20 w-48 h-auto">
+                  <Image
+                    src={appSampleImg}
+                    alt="App Screenshot"
+                    width={192}
+                    height={384}
+                    className="rounded-xl shadow-2xl border-4 border-white/20 rotate-6"
+                    priority
+                    sizes="(max-width: 768px) 150px, 192px"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -190,8 +196,13 @@ export default async function Home() {
         </p>
       </div>
 
-      <Guide />
-      <Faq />
+      <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg" />}>
+        <Guide />
+      </Suspense>
+      
+      <Suspense fallback={<div className="h-64 bg-gray-100 animate-pulse rounded-lg" />}>
+        <Faq />
+      </Suspense>
 
       <JsonLd
         data={{

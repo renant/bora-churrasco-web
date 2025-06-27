@@ -104,6 +104,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-display: swap; /* Better font loading */
   }
 }
 
@@ -117,9 +118,113 @@
   }
 }
 
+/* Custom utilities for performance */
+@layer utilities {
+  /* Prevent layout shifts by reserving space */
+  .aspect-ratio-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+  
+  .aspect-ratio-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+  
+  .aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Optimized animations that work well on mobile */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-pulse {
+      animation: none;
+    }
+  }
+
+  /* Performance optimized skeleton */
+  .skeleton-optimized {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  /* Critical styles for above-the-fold content */
+  .hero-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Optimize text rendering */
+  .text-optimize {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Keyframes for optimized animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Legacy class for compatibility */
 .custom-centered {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* Prevent zoom on input focus */
+  }
+  
+  .hero-section {
+    min-height: 50vh;
+  }
+  
+  /* Optimize touch targets */
+  button, a, input, textarea {
+    min-height: 44px; /* Apple's recommended touch target size */
+  }
 }
