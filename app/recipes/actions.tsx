@@ -36,7 +36,7 @@ export async function getRecipes({
   if (searchTerm && searchTerm.trim() !== "") {
     recipes = recipes.filter((recipe) => {
       if (!recipe) return false;
-      return recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
+      return recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
   }
 
@@ -82,6 +82,14 @@ export async function getRecipes({
   if (limit) {
     recipes = recipes.slice(start, start + limit);
   }
+
+  recipes = recipes.map((recipe) => {
+    if (!recipe) return null;
+    return {
+      ...recipe,
+      title: recipe.name,
+    };
+  });
 
   return {
     recipes,
@@ -137,6 +145,7 @@ export async function getRecipe(slug: string): Promise<Recipe | null> {
     return {
       ...mdxModule.metadata,
       slug,
+      name: mdxModule.metadata.title,
       content: htmlContent,
     } as Recipe;
   } catch (error) {

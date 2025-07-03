@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: { params: Params }) {
   const url = `https://www.borachurrasco.app/recipes/${recipe.slug}`;
 
   return {
-    title: `${recipe.name} - Receita | Bora Churrasco`,
-    description: `Aprenda a fazer ${recipe.name}. Receita completa com ingredientes e modo de preparo passo a passo.`,
+    title: `${recipe.title} - Receita | Bora Churrasco`,
+    description: `Aprenda a fazer ${recipe.title}. Receita completa com ingredientes e modo de preparo passo a passo.`,
     alternates: {
       canonical: url,
     },
-    keywords: ["receita", "churrasco", "como fazer", recipe.name],
+    keywords: ["receita", "churrasco", "como fazer", recipe.title],
     authors: [{ name: "Bora Churrasco" }],
     robots: {
       index: true,
@@ -57,8 +57,8 @@ export async function generateMetadata({ params }: { params: Params }) {
       },
     ],
     openGraph: {
-      title: `${recipe.name}`,
-      description: `Receita de ${recipe.name}`,
+      title: `${recipe.title}`,
+      description: `Receita de ${recipe.title}`,
       url: url,
       images: [
         {
@@ -99,14 +99,14 @@ export default async function RecipePage({ params }: { params: Params }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
             className="rounded-md object-cover"
             src={recipe.imagePath}
-            alt={`Foto da receita: ${recipe.name}`}
+            alt={`Foto da receita: ${recipe.title}`}
             itemProp="image"
             quality={85}
           />
         </div>
         <div className="mt-10">
           <h1 itemProp="name" className="text-2xl font-bold">
-            {recipe.name}
+            {recipe.title}
           </h1>
         </div>
         <Recipe />
@@ -115,8 +115,8 @@ export default async function RecipePage({ params }: { params: Params }) {
         data={{
           "@context": "https://schema.org",
           "@type": "Recipe",
-          name: recipe.name,
-          description: `Receita de ${recipe.name}`,
+          name: recipe.title,
+          description: `Receita de ${recipe.title}`,
           datePublished: new Date(recipe.date).toISOString(),
           author: {
             "@type": "Organization",

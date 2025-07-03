@@ -1,6 +1,7 @@
 class Recipe {
   constructor(
     public id: string,
+    public title: string,
     public name: string,
     public imagePath: string,
     public ingredients: string[],
