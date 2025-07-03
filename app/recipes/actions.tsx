@@ -95,7 +95,7 @@ export async function getRecipes({
     recipes,
     totalRecipes,
     has_more: recipes.length === limit,
-    next_cursor: (page ?? 1) + 1,
+    next_cursor: String((page ?? 1) + 1),
   };
 }
 
