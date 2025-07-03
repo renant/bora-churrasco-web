@@ -90,6 +90,14 @@ export async function getPosts({
     posts = posts.slice(start, start + limit);
   }
 
+  posts = posts.map((post) => {
+    if (!post) return null;
+    return {
+      ...post,
+      firebaseCoverImageUrl: post.coverImage,
+    };
+  });
+
   return {
     posts,
     totalPosts,
@@ -126,6 +134,7 @@ export async function getPost(slug: string): Promise<PostContent | null> {
     return {
       ...mdxModule.metadata,
       slug,
+      firebaseCoverImageUrl: mdxModule.metadata.coverImage,
       content: htmlContent,
     } as PostContent;
   } catch (error) {
