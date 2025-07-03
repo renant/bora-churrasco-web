@@ -1,20 +1,41 @@
 import JsonLd from "@/components/JsonLd";
-import { getRecipe } from "@/services/notion-blog-service";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import fs from "node:fs";
+import path from "node:path";
 
-type Params = Promise<{ id: string }>;
+type Params = Promise<{ slug: string }>;
+
+async function loadMdxFile(slug: string) {
+  try {
+    console.log("slug", slug);
+    const mdxPath = path.join(process.cwd(), "recipe-contents", `${slug}.mdx`);
+
+    if (!fs.existsSync(mdxPath)) {
+      return null;
+    }
+    const mdxModule = await import(`@/recipe-contents/${slug}.mdx`);
+    return mdxModule;
+  } catch (error) {
+    console.error("Failed to load MDX file:", error);
+    return null;
+  }
+}
 
 export async function generateMetadata({ params }: { params: Params }) {
-  const { id } = await params;
-  const recipe = await getRecipe(id);
+  const { slug } = await params;
+  const mdxModule = await loadMdxFile(slug);
 
-  if (!recipe) {
+  if (!mdxModule) {
     return {
       title: "Bora Churrasco! - Receita não encontrada",
       description: "Receita não encontrado",
     };
   }
+
+  const { metadata } = mdxModule;
+
+  const recipe = metadata;
 
   const url = `https://www.borachurrasco.app/recipes/${recipe.slug}`;
 
@@ -51,15 +72,17 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export default async function RecipePage({ params }: { params: Params }) {
-  const { id } = await params;
-  const recipe = await getRecipe(id);
+  const { slug } = await params;
+  const { metadata, default: Recipe } = await loadMdxFile(slug);
 
-  if (!recipe) {
+  const recipe = metadata;
+
+  if (!metadata) {
     return notFound();
   }
 
   return (
-    <main className="min-h-screen bg-transparent px-9 shadow-xl md:container md:mx-auto md:pt-5 lg:px-64">
+    <main className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-5 lg:px-64">
       <article
         itemScope
         itemType="https://schema.org/Recipe"
@@ -67,7 +90,7 @@ export default async function RecipePage({ params }: { params: Params }) {
       >
         <meta
           itemProp="datePublished"
-          content={new Date(recipe.createdAt).toISOString()}
+          content={new Date(recipe.date).toISOString()}
         />
         <div className="relative z-0 h-60 w-full lg:h-[450px]">
           <Image
@@ -86,10 +109,7 @@ export default async function RecipePage({ params }: { params: Params }) {
             {recipe.name}
           </h1>
         </div>
-        <div itemProp="articleBody">
-          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-          <section dangerouslySetInnerHTML={{ __html: recipe.content }} />
-        </div>
+        <Recipe />
       </article>
       <JsonLd
         data={{
@@ -97,7 +117,7 @@ export default async function RecipePage({ params }: { params: Params }) {
           "@type": "Recipe",
           name: recipe.name,
           description: `Receita de ${recipe.name}`,
-          datePublished: new Date(recipe.createdAt).toISOString(),
+          datePublished: new Date(recipe.date).toISOString(),
           author: {
             "@type": "Organization",
             name: "Bora Churrasco",
@@ -114,7 +134,7 @@ export default async function RecipePage({ params }: { params: Params }) {
           },
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `https://www.borachurrasco.app/recipes/${id}`,
+            "@id": `https://www.borachurrasco.app/recipes/${slug}`,
           },
           isAccessibleForFree: "True",
           inLanguage: "pt-BR",
@@ -123,3 +143,14 @@ export default async function RecipePage({ params }: { params: Params }) {
     </main>
   );
 }
+
+export function generateStaticParams() {
+  const files = fs.readdirSync(path.join(process.cwd(), "recipe-contents"));
+  const slugs = files.map((file) => ({
+    slug: file.replace(/\.mdx$/, ""),
+  }));
+
+  return slugs;
+}
+
+export const dynamicParams = false;

@@ -1,10 +1,10 @@
-import { type GetQuery, getPosts } from '@/services/notion-blog-service';
-import { type NextRequest, NextResponse } from 'next/server';
+import { type GetPostParams, getPosts } from "@/app/blog/actions";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  if (request.headers.get('x-api-key') !== process.env.API_KEY) {
+  if (request.headers.get("x-api-key") !== process.env.API_KEY) {
     return NextResponse.json(
-      { message: 'unauthorized' },
+      { message: "unauthorized" },
       {
         status: 401,
       }
@@ -16,16 +16,17 @@ export async function POST(request: NextRequest) {
 
     if (body.limitSize === undefined) {
       return NextResponse.json(
-        { message: 'limitSize is required' },
+        { message: "limitSize is required" },
         {
           status: 400,
         }
       );
     }
 
-    const query: GetQuery = {
-      limitSize: body.limitSize,
-      start_cursor: body.start_cursor,
+    const query: GetPostParams = {
+      limit: body.limitSize,
+      page: body.start_cursor,
+      sort: "date_desc",
     };
 
     const posts = await getPosts(query);
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (_error) {
     return NextResponse.json(
-      { message: 'error on get posts' },
+      { message: "error on get posts" },
       {
         status: 400,
       }

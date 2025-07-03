@@ -5,11 +5,12 @@ class Recipe {
     public imagePath: string,
     public ingredients: string[],
     public steps: string[],
-    public createdAt: Date,
+    public date: Date,
     public active: boolean,
     public createdBy: string,
     public content: string,
-    public slug: string
+    public slug: string,
+    public formattedDate?: string
   ) {}
 }
 
