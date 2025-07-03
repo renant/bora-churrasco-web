@@ -87,7 +87,7 @@ export async function getRecipes({
     if (!recipe) return null;
     return {
       ...recipe,
-      title: recipe.name,
+      name: recipe.title,
     };
   });
 
