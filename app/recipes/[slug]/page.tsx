@@ -83,10 +83,11 @@ export default async function RecipePage({ params }: { params: Params }) {
   }
 
   return (
-    <>
-      {/* Hero Section with Recipe Image */}
-      <div className="relative min-h-[50vh] lg:min-h-[60vh] overflow-hidden">
-        <div className="absolute inset-0">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
+      {/* Mobile-First Hero Section */}
+      <div className="relative">
+        {/* Recipe Image */}
+        <div className="relative h-[35vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] overflow-hidden">
           <Image
             fill
             priority
@@ -95,70 +96,67 @@ export default async function RecipePage({ params }: { params: Params }) {
             src={recipe.imagePath}
             alt={`Foto da receita: ${recipe.title}`}
             itemProp="image"
-            quality={90}
+            quality={85}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          {/* Mobile-Optimized Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
         </div>
         
-        {/* Hero Content */}
-        <div className="relative z-10 flex items-end min-h-[50vh] lg:min-h-[60vh]">
-          <div className="container mx-auto px-4 md:px-8 lg:px-16 pb-16">
-            <div className="max-w-4xl">
-              {/* Breadcrumb */}
-              <nav className="flex items-center space-x-2 text-white/80 text-sm mb-6">
-                <a href="/" className="hover:text-white transition-colors">
-                  Início
-                </a>
+        {/* Hero Content - Mobile Optimized */}
+        <div className="absolute inset-0 flex items-end">
+          <div className="w-full px-4 sm:px-6 md:px-8 pb-6 sm:pb-8 md:pb-12">
+            <div className="max-w-4xl mx-auto">
+              {/* Mobile-Friendly Breadcrumb */}
+              <nav className="hidden sm:flex items-center space-x-2 text-white/80 text-sm mb-3 md:mb-4">
+                <a href="/" className="hover:text-white transition-colors">Início</a>
                 <span>•</span>
-                <a href="/recipes" className="hover:text-white transition-colors">
-                  Receitas
-                </a>
+                <a href="/recipes" className="hover:text-white transition-colors">Receitas</a>
                 <span>•</span>
                 <span className="text-white">Receita</span>
               </nav>
 
               {/* Recipe Badge */}
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-4 py-2 bg-orange-500/90 text-white text-sm font-medium rounded-full backdrop-blur-sm flex items-center gap-2">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <span className="px-2 py-1 sm:px-3 sm:py-1.5 bg-orange-500/90 text-white text-xs sm:text-sm font-medium rounded-full backdrop-blur-sm flex items-center gap-1.5 sm:gap-2">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8.1 13.34l2.83-2.83L3.91 3.5a4.008 4.008 0 0 0 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
                   </svg>
-                  Receita de Churrasco
+                  <span>Receita de Churrasco</span>
                 </span>
               </div>
 
-              {/* Title */}
+              {/* Mobile-Responsive Title */}
               <h1 
                 itemProp="name" 
-                className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-lg"
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight mb-4 sm:mb-6 drop-shadow-lg"
               >
                 {recipe.title}
               </h1>
 
-              {/* Meta Info */}
-              <div className="flex items-center gap-6 text-white/80">
-                <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {/* Simplified Meta Info for Mobile */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 text-white/80 text-xs sm:text-sm">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   <time dateTime={new Date(recipe.date).toISOString()}>
                     {new Date(recipe.date).toLocaleDateString("pt-BR", {
                       day: "numeric",
-                      month: "long",
+                      month: "short",
                       year: "numeric",
                     })}
                   </time>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Tempo de preparo variável</span>
+                  <span>Preparo rápido</span>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                   <span>Para toda família</span>
@@ -169,89 +167,143 @@ export default async function RecipePage({ params }: { params: Params }) {
         </div>
       </div>
 
-      {/* Main Content */}
-      <main className="bg-gray-50/30">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16 py-12">
-          <div className="max-w-4xl mx-auto">
+      {/* Main Content - Mobile-First */}
+      <main className="relative -mt-4 sm:-mt-6 md:-mt-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+          {/* Recipe Content Card */}
+          <article
+            itemScope
+            itemType="https://schema.org/Recipe"
+            className="bg-white rounded-t-3xl shadow-2xl border border-gray-100 overflow-hidden mb-8 sm:mb-12 relative z-10"
+          >
+            <meta
+              itemProp="datePublished"
+              content={new Date(recipe.date).toISOString()}
+            />
+            
             {/* Recipe Content */}
-            <article
-              itemScope
-              itemType="https://schema.org/Recipe"
-              className="bg-white rounded-2xl shadow-lg overflow-hidden mb-16"
-            >
-              <meta
-                itemProp="datePublished"
-                content={new Date(recipe.date).toISOString()}
-              />
-              
-              {/* Recipe Content */}
-              <div className="p-8 md:p-12">
-                <div className="prose prose-lg max-w-none
-                  prose-headings:text-gray-900 prose-headings:font-bold
-                  prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-0
-                  prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8 prose-h2:border-b prose-h2:border-orange-100 prose-h2:pb-2
-                  prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6
-                  prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
-                  prose-ul:space-y-2 prose-li:text-gray-700
-                  prose-strong:text-gray-900 prose-strong:font-semibold
-                  prose-ul:bg-orange-50 prose-ul:p-4 prose-ul:rounded-lg prose-ul:border prose-ul:border-orange-100
-                  prose-ol:bg-blue-50 prose-ol:p-4 prose-ol:rounded-lg prose-ol:border prose-ol:border-blue-100
-                ">
-                  <Recipe />
-                </div>
-              </div>
-            </article>
+            <div className="p-4 sm:p-6 md:p-8 lg:p-12">
+              <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none
+                prose-headings:text-gray-900 prose-headings:font-bold prose-headings:tracking-tight
+                prose-h1:text-lg prose-h1:sm:text-xl prose-h1:md:text-2xl prose-h1:mb-3 prose-h1:mt-0
+                prose-h2:text-base prose-h2:sm:text-lg prose-h2:md:text-xl prose-h2:mb-3 prose-h2:mt-6 prose-h2:pb-2 prose-h2:border-b prose-h2:border-orange-100
+                prose-h3:text-sm prose-h3:sm:text-base prose-h3:md:text-lg prose-h3:mb-2 prose-h3:mt-4
+                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-3
+                prose-ul:my-3 prose-ul:space-y-1 prose-li:text-gray-700 prose-li:my-1
+                prose-ol:my-3 prose-ol:space-y-1
+                prose-strong:text-gray-900 prose-strong:font-semibold
+                
+                [&_h2:contains('Ingredientes')]:bg-orange-50 [&_h2:contains('Ingredientes')]:p-3 [&_h2:contains('Ingredientes')]:rounded-lg [&_h2:contains('Ingredientes')]:border [&_h2:contains('Ingredientes')]:border-orange-200 [&_h2:contains('Ingredientes')]:text-orange-900
+                [&_h2:contains('Passos')]:bg-blue-50 [&_h2:contains('Passos')]:p-3 [&_h2:contains('Passos')]:rounded-lg [&_h2:contains('Passos')]:border [&_h2:contains('Passos')]:border-blue-200 [&_h2:contains('Passos')]:text-blue-900
+                [&_h2:contains('Modo')]:bg-blue-50 [&_h2:contains('Modo')]:p-3 [&_h2:contains('Modo')]:rounded-lg [&_h2:contains('Modo')]:border [&_h2:contains('Modo')]:border-blue-200 [&_h2:contains('Modo')]:text-blue-900
 
-            {/* Recipe Actions */}
-            <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-8 md:p-12 text-white text-center mb-16 shadow-xl">
-              <div className="max-w-2xl mx-auto space-y-6">
-                <div className="text-6xl mb-4">🔥</div>
-                <h3 className="text-2xl md:text-3xl font-bold">
-                  Pronto para arrasar no churrasco?
-                </h3>
-                <p className="text-lg opacity-90 leading-relaxed">
-                  Agora que você tem uma receita incrível, que tal calcular a quantidade perfeita 
-                  de ingredientes para sua festa? Nosso app gratuito te ajuda a não errar nas compras!
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-                  <a
-                    href="/"
-                    className="inline-flex items-center gap-2 bg-white text-orange-600 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                  >
-                    🧮 Calcular Ingredientes
-                  </a>
-                  <a
-                    href="/recipes"
-                    className="inline-flex items-center gap-2 border-2 border-white text-white font-semibold px-6 py-3 rounded-full hover:bg-white hover:text-orange-600 transition-all duration-300"
-                  >
-                    Ver Mais Receitas
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </a>
-                </div>
+                [&_h2:contains('Ingredientes')~ul]:bg-orange-50/50 [&_h2:contains('Ingredientes')~ul]:p-3 [&_h2:contains('Ingredientes')~ul]:rounded-lg [&_h2:contains('Ingredientes')~ul]:border [&_h2:contains('Ingredientes')~ul]:border-orange-100
+                [&_h2:contains('Passos')~ul]:bg-blue-50/50 [&_h2:contains('Passos')~ul]:p-3 [&_h2:contains('Passos')~ul]:rounded-lg [&_h2:contains('Passos')~ul]:border [&_h2:contains('Passos')~ul]:border-blue-100
+                [&_h2:contains('Passos')~ol]:bg-blue-50/50 [&_h2:contains('Passos')~ol]:p-3 [&_h2:contains('Passos')~ol]:rounded-lg [&_h2:contains('Passos')~ol]:border [&_h2:contains('Passos')~ol]:border-blue-100
+                [&_h2:contains('Modo')~ul]:bg-blue-50/50 [&_h2:contains('Modo')~ul]:p-3 [&_h2:contains('Modo')~ul]:rounded-lg [&_h2:contains('Modo')~ul]:border [&_h2:contains('Modo')~ul]:border-blue-100
+                [&_h2:contains('Modo')~ol]:bg-blue-50/50 [&_h2:contains('Modo')~ol]:p-3 [&_h2:contains('Modo')~ol]:rounded-lg [&_h2:contains('Modo')~ol]:border [&_h2:contains('Modo')~ol]:border-blue-100
+              ">
+                <Recipe />
               </div>
             </div>
+          </article>
 
-            {/* Recipe Tips */}
-            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-8 mb-16">
-              <div className="max-w-3xl mx-auto text-center space-y-4">
-                <h3 className="text-2xl font-bold text-blue-900 flex items-center justify-center gap-2">
-                  💡 Dica do Chef
-                </h3>
-                <p className="text-blue-800 leading-relaxed">
-                  Lembre-se: o segredo de um churrasco perfeito está no tempero, no timing e na paixão! 
-                  Use sempre ingredientes frescos e de qualidade. E não se esqueça: cada churrasqueira 
-                  tem suas particularidades, então vá ajustando os tempos conforme sua experiência.
-                </p>
+          {/* Mobile-Optimized Chef Tips */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
+            <div className="max-w-3xl mx-auto text-center space-y-3 sm:space-y-4">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-900 flex items-center justify-center gap-2">
+                <span className="text-xl sm:text-2xl">💡</span>
+                <span>Dica do Chef</span>
+              </h3>
+              <p className="text-sm sm:text-base text-blue-800 leading-relaxed">
+                Lembre-se: o segredo de um churrasco perfeito está no tempero, no timing e na paixão! 
+                Use sempre ingredientes frescos e de qualidade. E não se esqueça: cada churrasqueira 
+                tem suas particularidades, então vá ajustando os tempos conforme sua experiência.
+              </p>
+            </div>
+          </div>
+
+          {/* Mobile-Optimized Action Section */}
+          <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 text-white text-center mb-8 sm:mb-12 shadow-xl transform hover:scale-[1.02] transition-transform duration-300">
+            <div className="max-w-2xl mx-auto space-y-4 sm:space-y-6">
+              <div className="text-4xl sm:text-5xl md:text-6xl">🔥</div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight">
+                Pronto para arrasar no churrasco?
+              </h3>
+              <p className="text-sm sm:text-base md:text-lg opacity-90 leading-relaxed max-w-xl mx-auto">
+                Agora que você tem uma receita incrível, que tal calcular a quantidade perfeita 
+                de ingredientes para sua festa? Nosso app gratuito te ajuda a não errar nas compras!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-2 sm:pt-4">
+                <a
+                  href="/"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-orange-600 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  <span className="text-lg">🧮</span>
+                  <span className="text-sm sm:text-base">Calcular Ingredientes</span>
+                </a>
+                <a
+                  href="/recipes"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-white text-white font-semibold px-6 py-3 rounded-full hover:bg-white hover:text-orange-600 transition-all duration-300"
+                >
+                  <span className="text-sm sm:text-base">Ver Mais Receitas</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Suggested Content */}
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <SuggestedContent type="recipe-contents" currentSlug={slug} count={3} />
+        {/* Enhanced Suggested Content Section */}
+        <div className="bg-gradient-to-br from-gray-50 to-orange-50/30 py-8 sm:py-12 md:py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <SuggestedContent type="recipe-contents" currentSlug={slug} count={3} />
+          </div>
+        </div>
+
+        {/* Mobile-Optimized Quick Actions */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pb-8 sm:pb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* Save Recipe */}
+            <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 text-center hover:shadow-xl transition-shadow duration-300">
+              <div className="space-y-3">
+                <div className="text-2xl sm:text-3xl">⭐</div>
+                <h3 className="text-base sm:text-lg font-bold text-gray-900">
+                  Salvar Receita
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Guarde esta receita nos seus favoritos para não perder nunca!
+                </p>
+                <button
+                  type="button"
+                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium px-4 py-2.5 rounded-full transition-colors duration-300 text-sm"
+                >
+                  Salvar nos Favoritos
+                </button>
+              </div>
+            </div>
+
+            {/* Share Recipe */}
+            <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 text-center hover:shadow-xl transition-shadow duration-300">
+              <div className="space-y-3">
+                <div className="text-2xl sm:text-3xl">📤</div>
+                <h3 className="text-base sm:text-lg font-bold text-gray-900">
+                  Compartilhar
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Compartilhe esta receita incrível com seus amigos!
+                </p>
+                <button
+                  type="button"
+                  className="w-full bg-orange-100 hover:bg-orange-200 text-orange-800 font-medium px-4 py-2.5 rounded-full transition-colors duration-300 text-sm"
+                >
+                  Compartilhar Receita
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
@@ -284,7 +336,7 @@ export default async function RecipePage({ params }: { params: Params }) {
           inLanguage: "pt-BR",
         }}
       />
-    </>
+    </div>
   );
 }
 
