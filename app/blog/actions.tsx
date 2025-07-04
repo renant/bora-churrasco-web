@@ -102,7 +102,7 @@ export async function getPosts({
     posts,
     totalPosts,
     has_more: posts.length === limit,
-    next_cursor: String((Number(page) ?? 1) + 1),
+    next_cursor: String(Number(page ?? 1) + 1),
   };
 }
 
