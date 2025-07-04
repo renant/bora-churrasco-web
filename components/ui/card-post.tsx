@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { Post } from "@/services/notion-blog-service";
+import type { Post } from "@/models/post-content";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -48,7 +48,7 @@ export async function CardPost({ post }: CardPostProps) {
             <Image
               fill={true}
               className="rounded-md object-cover"
-              src={post.firebaseCoverImageUrl}
+              src={post.coverImage}
               alt={`Image do post ${post.title}`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               loading="lazy"
