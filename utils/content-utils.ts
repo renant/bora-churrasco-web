@@ -1,5 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
 
 export interface PostMetadata {
   title: string;
@@ -17,16 +17,6 @@ export interface RecipeMetadata {
   date: string;
 }
 
-async function loadMdxMetadata(folder: string, filename: string) {
-  try {
-    const mdxModule = await import(`@/${folder}/${filename}`);
-    return mdxModule.metadata;
-  } catch (error) {
-    console.error(`Failed to load metadata for ${filename}:`, error);
-    return null;
-  }
-}
-
 export async function getRandomPosts(count = 3, excludeSlug?: string): Promise<PostMetadata[]> {
   try {
     const files = fs.readdirSync(path.join(process.cwd(), "post-contents"));
@@ -38,22 +28,28 @@ export async function getRandomPosts(count = 3, excludeSlug?: string): Promise<P
     const shuffled = mdxFiles.sort(() => 0.5 - Math.random());
     const selectedFiles = shuffled.slice(0, count);
     
-    const posts = await Promise.all(
-      selectedFiles.map(async (file: string) => {
-        const slug = file.replace(/\.mdx$/, "");
-        const metadata = await loadMdxMetadata("post-contents", file);
-        return metadata ? { ...metadata, slug } : null;
-      })
-    );
+    const posts: PostMetadata[] = [];
     
-    return posts.filter(Boolean) as PostMetadata[];
+    for (const file of selectedFiles) {
+      try {
+        const slug = file.replace(/\.mdx$/, "");
+        const mdxModule = await import(`../post-contents/${file}`);
+        if (mdxModule.metadata) {
+          posts.push({ ...mdxModule.metadata, slug });
+        }
+      } catch (error) {
+        console.error(`Failed to load metadata for ${file}:`, error);
+      }
+    }
+    
+    return posts;
   } catch (error) {
     console.error("Failed to get random posts:", error);
     return [];
   }
 }
 
-export async function getRandomRecipes(count = 3, excludeSlug?: string): Promise<RecipeMetadata[]> {
+export async function getRandomRecipes(count = 6, excludeSlug?: string): Promise<RecipeMetadata[]> {
   try {
     const files = fs.readdirSync(path.join(process.cwd(), "recipe-contents"));
     const mdxFiles = files
@@ -64,15 +60,21 @@ export async function getRandomRecipes(count = 3, excludeSlug?: string): Promise
     const shuffled = mdxFiles.sort(() => 0.5 - Math.random());
     const selectedFiles = shuffled.slice(0, count);
     
-    const recipes = await Promise.all(
-      selectedFiles.map(async (file: string) => {
-        const slug = file.replace(/\.mdx$/, "");
-        const metadata = await loadMdxMetadata("recipe-contents", file);
-        return metadata ? { ...metadata, slug } : null;
-      })
-    );
+    const recipes: RecipeMetadata[] = [];
     
-    return recipes.filter(Boolean) as RecipeMetadata[];
+    for (const file of selectedFiles) {
+      try {
+        const slug = file.replace(/\.mdx$/, "");
+        const mdxModule = await import(`../recipe-contents/${file}`);
+        if (mdxModule.metadata) {
+          recipes.push({ ...mdxModule.metadata, slug });
+        }
+      } catch (error) {
+        console.error(`Failed to load metadata for ${file}:`, error);
+      }
+    }
+    
+    return recipes;
   } catch (error) {
     console.error("Failed to get random recipes:", error);
     return [];

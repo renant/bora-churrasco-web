@@ -1,5 +1,5 @@
 import JsonLd from "@/components/JsonLd";
-import TestSuggestedRecipes from "@/components/test-suggested-recipes";
+import DynamicSuggestedRecipes from "@/components/dynamic-suggested-recipes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -140,8 +140,8 @@ export default async function RecipePage({ params }: { params: Params }) {
           </div>
         </article>
 
-        {/* Suggested Recipes Section - TEST VERSION */}
-        <TestSuggestedRecipes />
+        {/* Dynamic Suggested Recipes Section */}
+        <DynamicSuggestedRecipes excludeSlug={slug} count={6} />
       </main>
 
       <JsonLd
