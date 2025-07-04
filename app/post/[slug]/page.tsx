@@ -1,5 +1,5 @@
 import JsonLd from "@/components/JsonLd";
-import SuggestedPosts from "@/components/suggested-posts";
+import TestSuggestedPosts from "@/components/test-suggested-posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -163,8 +163,8 @@ export default async function PostPage({ params }: { params: Params }) {
           </div>
         </article>
 
-        {/* Suggested Posts Section */}
-        <SuggestedPosts excludeSlug={slug} count={3} />
+        {/* Suggested Posts Section - TEST VERSION */}
+        <TestSuggestedPosts />
       </main>
 
       <JsonLd

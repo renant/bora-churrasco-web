@@ -1,5 +1,5 @@
 import JsonLd from "@/components/JsonLd";
-import SuggestedPosts from "@/components/suggested-posts";
+import TestSuggestedPosts from "@/components/test-suggested-posts";
 import ResultDefault from "@/components/ui/resultDefault";
 
 type Params = Promise<{ id: string }>;
@@ -305,8 +305,8 @@ export default async function Resultado({ params }: { params: Params }) {
           </div>
         </div>
 
-        {/* Suggested Posts Section */}
-        <SuggestedPosts count={3} />
+        {/* Suggested Posts Section - TEST VERSION */}
+        <TestSuggestedPosts />
       </main>
 
       <JsonLd
