@@ -1,4 +1,5 @@
 import JsonLd from "@/components/JsonLd";
+import SuggestedRecipes from "@/components/suggested-recipes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -82,35 +83,81 @@ export default async function RecipePage({ params }: { params: Params }) {
   }
 
   return (
-    <main className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-5 lg:px-64">
-      <article
-        itemScope
-        itemType="https://schema.org/Recipe"
-        className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700"
-      >
-        <meta
-          itemProp="datePublished"
-          content={new Date(recipe.date).toISOString()}
-        />
-        <div className="relative z-0 h-60 w-full lg:h-[450px]">
-          <Image
-            fill={true}
-            priority={true}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-            className="rounded-md object-cover"
-            src={recipe.imagePath}
-            alt={`Foto da receita: ${recipe.title}`}
-            itemProp="image"
-            quality={85}
-          />
-        </div>
-        <div className="mt-10">
-          <h1 itemProp="name" className="text-2xl font-bold">
-            {recipe.title}
-          </h1>
-        </div>
-        <Recipe />
-      </article>
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-50">
+      {/* Hero Section with Enhanced Visual Design */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
+        <main className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
+          
+          {/* Recipe Image with Modern Design */}
+          <div className="relative w-full overflow-hidden rounded-3xl shadow-2xl mb-8 md:mb-12">
+            <div className="relative z-0 h-80 w-full lg:h-[500px]">
+              <Image
+                fill={true}
+                priority={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                className="rounded-3xl object-cover"
+                src={recipe.imagePath}
+                alt={`Foto da receita: ${recipe.title}`}
+                itemProp="image"
+                quality={90}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent rounded-3xl" />
+              
+              {/* Recipe Title Overlay */}
+              <div className="absolute inset-0 flex items-end p-6 md:p-8">
+                <div className="text-white">
+                  <h1 itemProp="name" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 drop-shadow-2xl">
+                    {recipe.title}
+                  </h1>
+                  <div className="flex items-center gap-4 text-sm md:text-base">
+                    <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+                      <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">BC</span>
+                      </div>
+                      <span className="font-medium">Bora Churrasco</span>
+                    </div>
+                    <time 
+                      dateTime={new Date(recipe.date).toISOString()}
+                      className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 font-medium"
+                    >
+                      {new Date(recipe.date).toLocaleDateString("pt-BR", {
+                        timeZone: "America/Sao_Paulo",
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </time>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Recipe Content with Enhanced Design */}
+          <article
+            itemScope
+            itemType="https://schema.org/Recipe"
+            className="prose prose-lg max-w-none pb-12 md:pb-16 prose-headings:text-orange-600 prose-headings:font-bold prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-xl md:prose-h3:text-2xl prose-h3:text-amber-600 prose-p:text-gray-700 prose-p:text-lg prose-p:leading-relaxed prose-a:text-orange-500 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-orange-700 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-lg prose-blockquote:border-l-orange-500 prose-blockquote:bg-orange-50 prose-blockquote:text-orange-800"
+          >
+            <meta
+              itemProp="datePublished"
+              content={new Date(recipe.date).toISOString()}
+            />
+            
+            {/* Recipe Content in Beautiful Container */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-12 shadow-lg border border-orange-100 space-y-8">
+              <Recipe />
+            </div>
+          </article>
+
+          {/* Suggested Recipes Section */}
+          <div className="mt-16 md:mt-20 mb-12">
+            <SuggestedRecipes excludeSlug={slug} count={6} />
+          </div>
+        </main>
+      </div>
+
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -140,7 +187,7 @@ export default async function RecipePage({ params }: { params: Params }) {
           inLanguage: "pt-BR",
         }}
       />
-    </main>
+    </div>
   );
 }
 
