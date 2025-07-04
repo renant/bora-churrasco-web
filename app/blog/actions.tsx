@@ -95,6 +95,7 @@ export async function getPosts({
     return {
       ...post,
       firebaseCoverImageUrl: post.coverImage,
+      slugId: post.slug,
     };
   });
 
@@ -135,6 +136,7 @@ export async function getPost(slug: string): Promise<PostContent | null> {
       ...mdxModule.metadata,
       slug,
       firebaseCoverImageUrl: mdxModule.metadata.coverImage,
+      slugId: slug,
       content: htmlContent,
     } as PostContent;
   } catch (error) {
