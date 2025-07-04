@@ -1,8 +1,7 @@
 import createMDX from "@next/mdx";
-import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
-const nextConfig: NextConfig = {
+const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   images: {
     minimumCacheTTL: 86400, // 24 hours cache for better performance
@@ -94,13 +93,10 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    // Disable React components in MDX for server-side processing
-    providerImportSource: undefined,
-    // Use remark and rehype plugins for better compatibility
     remarkPlugins: [],
     rehypePlugins: [],
   },
 });
 
 // Merge MDX config with Next.js config
-module.exports = withMDX(nextConfig);
+export default withMDX(nextConfig);

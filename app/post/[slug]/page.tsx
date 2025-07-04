@@ -91,9 +91,8 @@ export default async function PostPage({ params }: { params: Params }) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
-        
         {/* Cover Image */}
         <div className="relative w-full overflow-hidden rounded-lg shadow-lg mb-8 md:mb-12">
           <div
@@ -119,7 +118,7 @@ export default async function PostPage({ params }: { params: Params }) {
 
         {/* Article Content */}
         <article
-          className="prose prose-lg max-w-none space-y-6 pb-12 md:pb-16 prose-headings:text-red-600 prose-headings:font-bold prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl prose-h1:leading-tight prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl md:prose-h3:text-2xl prose-h3:text-orange-600 prose-p:text-gray-700 prose-p:text-lg prose-p:leading-relaxed prose-a:text-red-500 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-red-700 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-lg prose-blockquote:border-l-red-500 prose-blockquote:bg-red-50 prose-blockquote:text-red-800"
+          className="prose prose-lg max-w-none space-y-6 pb-12 md:pb-16 prose-headings:text-red-600 prose-headings:font-bold prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl prose-h1:leading-tight prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl md:prose-h3:text-2xl prose-h3:text-red-600 prose-p:text-gray-700 prose-p:text-lg prose-p:leading-relaxed prose-a:text-red-500 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-red-700 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-lg prose-blockquote:border-l-red-500 prose-blockquote:bg-red-50 prose-blockquote:text-red-800"
           itemScope
           itemType="https://schema.org/Article"
         >
@@ -135,15 +134,15 @@ export default async function PostPage({ params }: { params: Params }) {
             </h1>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-600 bg-gray-50 rounded-lg py-4 px-6 border border-gray-200">
-              <time 
+              <time
                 dateTime={new Date(metadata.date).toISOString()}
                 className="font-medium"
               >
                 {new Date(metadata.date).toLocaleDateString("pt-BR", {
                   timeZone: "America/Sao_Paulo",
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
                 })}
               </time>
               {metadata.tags?.[0] && (
@@ -158,7 +157,7 @@ export default async function PostPage({ params }: { params: Params }) {
           </div>
 
           {/* Content */}
-          <div className="bg-white rounded-lg">
+          <div className=" rounded-lg">
             <Post />
           </div>
         </article>
