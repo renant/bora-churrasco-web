@@ -1,5 +1,5 @@
 import JsonLd from "@/components/JsonLd";
-import DynamicSuggestedPosts from "@/components/dynamic-suggested-posts";
+import ClientSuggestedPosts from "@/components/client-suggested-posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -163,8 +163,8 @@ export default async function PostPage({ params }: { params: Params }) {
           </div>
         </article>
 
-        {/* Dynamic Suggested Posts Section */}
-        <DynamicSuggestedPosts excludeSlug={slug} count={3} />
+        {/* Client-Side Suggested Posts Section */}
+        <ClientSuggestedPosts excludeSlug={slug} count={3} />
       </main>
 
       <JsonLd
