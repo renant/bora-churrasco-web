@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getRandomPosts, type PostMetadata } from "@/utils/content-utils";
-import { ChefHat, Clock, Tag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,14 +34,11 @@ export default async function SuggestedPosts({ excludeSlug, count = 3 }: Suggest
   if (!posts.length) return null;
 
   return (
-    <section className="w-full bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-6 md:p-8 shadow-lg border border-orange-100">
+    <section className="w-full bg-white rounded-lg p-6 md:p-8 shadow-md border border-gray-200 mt-12">
       <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <ChefHat className="h-8 w-8 text-red-500" />
-          <h2 className="text-2xl md:text-3xl font-bold text-red-600 tracking-tight">
-            Mais Dicas de Churrasco
-          </h2>
-        </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+          Mais Dicas de Churrasco
+        </h2>
         <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
           Continue explorando nosso conteúdo e torne-se um mestre do churrasco! 🔥
         </p>
@@ -51,7 +47,7 @@ export default async function SuggestedPosts({ excludeSlug, count = 3 }: Suggest
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post: PostMetadata) => (
           <Link href={`/post/${post.slug}`} key={post.slug} className="group">
-            <Card className="h-full transition-all duration-300 hover:shadow-xl hover:scale-105 bg-white/80 backdrop-blur-sm border-orange-200 overflow-hidden">
+            <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 bg-white border-gray-200 overflow-hidden">
               <div className="relative aspect-video overflow-hidden">
                 <Image
                   src={post.coverImage}
@@ -64,7 +60,6 @@ export default async function SuggestedPosts({ excludeSlug, count = 3 }: Suggest
                     shimmer(400, 225)
                   )}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               
               <CardHeader className="pb-2">
@@ -78,17 +73,11 @@ export default async function SuggestedPosts({ excludeSlug, count = 3 }: Suggest
               
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between text-xs text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    <span>{new Date(post.date).toLocaleDateString("pt-BR")}</span>
-                  </div>
+                  <span>{new Date(post.date).toLocaleDateString("pt-BR")}</span>
                   {post.tags?.[0] && (
-                    <div className="flex items-center gap-1">
-                      <Tag className="h-3 w-3" />
-                      <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
-                        {post.tags[0]}
-                      </span>
-                    </div>
+                    <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
+                      {post.tags[0]}
+                    </span>
                   )}
                 </div>
               </CardContent>
@@ -100,9 +89,8 @@ export default async function SuggestedPosts({ excludeSlug, count = 3 }: Suggest
       <div className="text-center mt-8">
         <Link 
           href="/blog" 
-          className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+          className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-lg"
         >
-          <ChefHat className="h-4 w-4" />
           Ver Todas as Dicas
         </Link>
       </div>
