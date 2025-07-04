@@ -14,9 +14,6 @@ export default async function Home() {
       <section className="container mx-auto py-12 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-red-100 text-red-700 font-medium text-sm">
-              Calculadora de Churrasco
-            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-red-900 leading-tight">
               Seu app Android para calcular churrasco
             </h1>
@@ -196,11 +193,15 @@ export default async function Home() {
         </p>
       </div>
 
-      <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg" />}>
+      <Suspense
+        fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg" />}
+      >
         <Guide />
       </Suspense>
-      
-      <Suspense fallback={<div className="h-64 bg-gray-100 animate-pulse rounded-lg" />}>
+
+      <Suspense
+        fallback={<div className="h-64 bg-gray-100 animate-pulse rounded-lg" />}
+      >
         <Faq />
       </Suspense>
 
