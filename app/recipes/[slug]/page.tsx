@@ -1,4 +1,5 @@
 import JsonLd from "@/components/JsonLd";
+import ClientSuggestedRecipes from "@/components/client-suggested-recipes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -82,35 +83,66 @@ export default async function RecipePage({ params }: { params: Params }) {
   }
 
   return (
-    <main className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-5 lg:px-64">
-      <article
-        itemScope
-        itemType="https://schema.org/Recipe"
-        className="prose prose-sm max-w-none pb-44 md:prose-lg prose-headings:my-4 prose-h2:my-4 prose-p:my-2 prose-a:text-blue-700"
-      >
-        <meta
-          itemProp="datePublished"
-          content={new Date(recipe.date).toISOString()}
-        />
-        <div className="relative z-0 h-60 w-full lg:h-[450px]">
-          <Image
-            fill={true}
-            priority={true}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-            className="rounded-md object-cover"
-            src={recipe.imagePath}
-            alt={`Foto da receita: ${recipe.title}`}
-            itemProp="image"
-            quality={85}
+    <div className="min-h-screen bg-white">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
+        {/* Recipe Image */}
+        <div className="relative w-full overflow-hidden rounded-lg shadow-lg mb-8 md:mb-12">
+          <div className="relative z-0 h-80 w-full lg:h-[500px]">
+            <Image
+              fill={true}
+              priority={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+              className="rounded-lg object-cover"
+              src={recipe.imagePath}
+              alt={`Foto da receita: ${recipe.title}`}
+              itemProp="image"
+              quality={90}
+            />
+          </div>
+        </div>
+
+        {/* Recipe Content */}
+        <article
+          itemScope
+          itemType="https://schema.org/Recipe"
+          className="prose prose-lg max-w-none pb-12 md:pb-16 prose-headings:text-orange-600 prose-headings:font-bold prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl prose-h1:leading-tight prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl md:prose-h3:text-2xl prose-h3:text-amber-600 prose-p:text-gray-700 prose-p:text-lg prose-p:leading-relaxed prose-a:text-orange-500 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-orange-700 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-lg prose-blockquote:border-l-orange-500 prose-blockquote:bg-orange-50 prose-blockquote:text-orange-800"
+        >
+          <meta
+            itemProp="datePublished"
+            content={new Date(recipe.date).toISOString()}
           />
-        </div>
-        <div className="mt-10">
-          <h1 itemProp="name" className="text-2xl font-bold">
-            {recipe.title}
-          </h1>
-        </div>
-        <Recipe />
-      </article>
+
+          {/* Title and Meta */}
+          <div className="text-center mb-8 md:mb-12">
+            <h1 itemProp="name" className="mb-6 text-orange-600">
+              {recipe.title}
+            </h1>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-600 bg-gray-50 rounded-lg py-4 px-6 border border-gray-200">
+              <time
+                dateTime={new Date(recipe.date).toISOString()}
+                className="font-medium"
+              >
+                {new Date(recipe.date).toLocaleDateString("pt-BR", {
+                  timeZone: "America/Sao_Paulo",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </div>
+          </div>
+
+          {/* Recipe Content */}
+          <div className="bg-white rounded-lg space-y-8">
+            <Recipe />
+          </div>
+        </article>
+
+        {/* Client-Side Suggested Recipes Section */}
+        <ClientSuggestedRecipes excludeSlug={slug} count={3} />
+      </main>
+
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -140,7 +172,7 @@ export default async function RecipePage({ params }: { params: Params }) {
           inLanguage: "pt-BR",
         }}
       />
-    </main>
+    </div>
   );
 }
 
