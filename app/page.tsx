@@ -1,18 +1,18 @@
+import JsonLd from "@/components/JsonLd";
+import { CTASection } from "@/components/ui/cta-section";
+import { Faq } from "@/components/ui/faq";
+import { Features } from "@/components/ui/features";
+import { Guide } from "@/components/ui/guide";
+import { Hero } from "@/components/ui/hero";
+import { HowItWorks } from "@/components/ui/how-it-works";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import JsonLd from "@/components/JsonLd";
-import { Hero } from "@/components/ui/hero";
-import { Features } from "@/components/ui/features";
-import { HowItWorks } from "@/components/ui/how-it-works";
-import { Testimonials } from "@/components/ui/testimonials";
-import { CTASection } from "@/components/ui/cta-section";
-import { Guide } from "@/components/ui/guide";
-import { Faq } from "@/components/ui/faq";
 
 // Metadata específica para a página inicial
 export const metadata: Metadata = {
   title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
-  description: "Calcule a quantidade exata de carne, bebidas e acompanhamentos para seu churrasco. Ferramenta 100% gratuita usada por mais de 50 mil pessoas. Evite desperdícios!",
+  description:
+    "Calcule a quantidade exata de carne, bebidas e acompanhamentos para seu churrasco. Ferramenta 100% gratuita usada por mais de 50 mil pessoas. Evite desperdícios!",
   keywords: [
     "calculadora de churrasco",
     "calcular churrasco online",
@@ -24,7 +24,8 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
-    description: "Planeje o churrasco perfeito! Calcule carnes, bebidas e acompanhamentos em segundos. 100% Grátis.",
+    description:
+      "Planeje o churrasco perfeito! Calcule carnes, bebidas e acompanhamentos em segundos. 100% Grátis.",
     images: [
       {
         url: "/images/ms-icon-310x310.png",
@@ -39,51 +40,59 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Hero Section - Above the fold */}
       <Hero />
 
-      {/* Main content */}
       <main className="relative">
-        {/* How it works section */}
         <HowItWorks />
 
-        {/* Features section */}
         <Features />
 
-        {/* Testimonials section */}
-        <Testimonials />
+        {/* <Testimonials /> */}
 
-        {/* SEO Content Section - Simplified */}
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4">
             <article className="prose prose-lg mx-auto max-w-4xl">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 A Calculadora de Churrasco mais completa do Brasil
               </h2>
-              
+
               <p className="text-gray-600 leading-relaxed">
-                O <strong className="text-gray-900">Bora Churrasco</strong> é a ferramenta definitiva para 
-                planejar churrascos sem erro. Nossa calculadora considera o perfil dos seus convidados 
-                (homens, mulheres e crianças), a duração do evento e suas preferências de carnes e bebidas 
-                para gerar uma lista de compras precisa.
+                O <strong className="text-gray-900">Bora Churrasco</strong> é a
+                ferramenta definitiva para planejar churrascos sem erro. Nossa
+                calculadora considera o perfil dos seus convidados (homens,
+                mulheres e crianças), a duração do evento e suas preferências de
+                carnes e bebidas para gerar uma lista de compras precisa.
               </p>
 
               <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">
                 Por que usar nossa calculadora?
               </h3>
-              
+
               <ul className="space-y-2 text-gray-600">
-                <li>✓ <strong>Economia garantida:</strong> Compre apenas o necessário, sem desperdícios</li>
-                <li>✓ <strong>Precisão comprovada:</strong> Algoritmo baseado em milhares de churrascos reais</li>
-                <li>✓ <strong>Totalmente gratuita:</strong> Todas as funcionalidades sem custo algum</li>
-                <li>✓ <strong>Fácil de usar:</strong> Interface intuitiva que qualquer pessoa consegue usar</li>
+                <li>
+                  ✓ <strong>Economia garantida:</strong> Compre apenas o
+                  necessário, sem desperdícios
+                </li>
+                <li>
+                  ✓ <strong>Precisão comprovada:</strong> Algoritmo baseado em
+                  milhares de churrascos reais
+                </li>
+                <li>
+                  ✓ <strong>Totalmente gratuita:</strong> Todas as
+                  funcionalidades sem custo algum
+                </li>
+                <li>
+                  ✓ <strong>Fácil de usar:</strong> Interface intuitiva que
+                  qualquer pessoa consegue usar
+                </li>
               </ul>
 
               <div className="bg-amber-50 border-l-4 border-amber-400 p-4 my-8">
                 <p className="text-sm text-amber-800">
-                  <strong>Dica importante:</strong> Lembre-se de que fatores como horário do evento, 
-                  clima e perfil dos convidados podem influenciar no consumo. Use nossa calculadora 
-                  como base e ajuste conforme sua experiência.
+                  <strong>Dica importante:</strong> Lembre-se de que fatores
+                  como horário do evento, clima e perfil dos convidados podem
+                  influenciar no consumo. Use nossa calculadora como base e
+                  ajuste conforme sua experiência.
                 </p>
               </div>
             </article>
@@ -118,7 +127,8 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "Bora Churrasco - Calculadora de Churrasco",
-          description: "Calculadora online gratuita para planejar churrascos com precisão",
+          description:
+            "Calculadora online gratuita para planejar churrascos com precisão",
           url: "https://www.borachurrasco.app",
           applicationCategory: "UtilityApplication",
           operatingSystem: "Any",

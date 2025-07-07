@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Check, ChevronRight, Clock, Users, Calculator } from "lucide-react";
+import appSampleImg from "@/public/app-sample.avif";
+import { Check, ChevronRight, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import appSampleImg from "@/public/app-sample.avif";
 
 export function Hero() {
   const benefits = [
@@ -19,22 +19,11 @@ export function Hero() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-red-50 via-orange-50 to-amber-50">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
-      <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-red-500/10 blur-3xl" />
-      <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-orange-500/10 blur-3xl" />
-      
+    <section className="relative overflow-hidden">
       <div className="container relative mx-auto px-4 py-16 sm:py-24 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Content */}
           <div className="flex flex-col space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center rounded-full bg-red-100 px-4 py-1.5 text-sm font-medium text-red-800 w-fit">
-              <Calculator className="mr-2 h-4 w-4" />
-              Calculadora 100% Gratuita
-            </div>
-
             {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
@@ -42,8 +31,9 @@ export function Hero() {
                 <span className="text-red-600">sem complicação</span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Calcule a quantidade ideal de carnes, bebidas e acompanhamentos para seu evento em segundos. 
-                Economize tempo e dinheiro com nossa calculadora inteligente.
+                Calcule a quantidade ideal de carnes, bebidas e acompanhamentos
+                para seu evento em segundos. Economize tempo e dinheiro com
+                nossa calculadora inteligente.
               </p>
             </div>
 
@@ -60,7 +50,7 @@ export function Hero() {
             </ul>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-center">
               <Button
                 size="lg"
                 className="bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25 hover:shadow-xl hover:shadow-red-600/25 transition-all"
@@ -73,7 +63,7 @@ export function Hero() {
               </Button>
               <a
                 href="https://play.google.com/store/apps/details?id=io.ionic.bora.churras"
-                className="inline-flex"
+                className="inline-flex items-center"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -93,7 +83,9 @@ export function Hero() {
             <div className="flex flex-wrap gap-8 pt-4 border-t border-gray-200">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center sm:text-left">
-                  <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                  <div className="text-2xl font-bold text-gray-900">
+                    {stat.value}
+                  </div>
                   <div className="text-sm text-gray-600">{stat.label}</div>
                 </div>
               ))}
@@ -101,7 +93,7 @@ export function Hero() {
           </div>
 
           {/* Visual */}
-          <div className="relative lg:ml-auto">
+          <div className="relative lg:pr-8">
             <div className="relative mx-auto w-full max-w-lg">
               {/* Phone mockup background */}
               <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-red-700 rounded-[3rem] transform rotate-3 scale-105" />
@@ -110,40 +102,54 @@ export function Hero() {
                   {/* App preview */}
                   <div className="rounded-[2rem] bg-white p-6 space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-gray-900">Seu Churrasco</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Seu Churrasco
+                      </h3>
                       <Clock className="h-5 w-5 text-gray-400" />
                     </div>
-                    
+
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <div className="flex items-center gap-3">
                           <Users className="h-5 w-5 text-red-600" />
-                          <span className="text-sm font-medium">Participantes</span>
+                          <span className="text-sm font-medium">
+                            Participantes
+                          </span>
                         </div>
                         <span className="text-sm font-semibold">12</span>
                       </div>
-                      
+
                       <div className="grid grid-cols-2 gap-3">
                         <div className="p-3 bg-red-50 rounded-lg text-center">
-                          <div className="text-2xl font-bold text-red-600">4.8kg</div>
+                          <div className="text-2xl font-bold text-red-600">
+                            4.8kg
+                          </div>
                           <div className="text-xs text-gray-600">Carnes</div>
                         </div>
                         <div className="p-3 bg-blue-50 rounded-lg text-center">
-                          <div className="text-2xl font-bold text-blue-600">24L</div>
+                          <div className="text-2xl font-bold text-blue-600">
+                            12L
+                          </div>
                           <div className="text-xs text-gray-600">Bebidas</div>
                         </div>
                       </div>
                     </div>
 
-                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
-                      Ver Lista Completa
+                    <Button
+                      className="w-full bg-red-600 hover:bg-red-700 text-white"
+                      asChild
+                    >
+                      <Link href="/participantes">
+                        Calcular Agora
+                        <ChevronRight className="ml-2 h-5 w-5" />
+                      </Link>
                     </Button>
                   </div>
                 </div>
               </div>
-              
+
               {/* Floating app screenshot */}
-              <div className="absolute -right-8 -bottom-8 w-32 sm:w-40 transform rotate-12 hover:rotate-6 transition-transform duration-300">
+              <div className="absolute right-0 bottom-0 w-32 sm:w-40 transform rotate-12 hover:rotate-6 transition-transform duration-300">
                 <Image
                   src={appSampleImg}
                   alt="Bora Churrasco App"
