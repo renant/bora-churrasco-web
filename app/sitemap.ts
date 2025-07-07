@@ -5,6 +5,7 @@ export default async function sitemap() {
   const recipesFiles = fs.readdirSync(
     path.join(process.cwd(), "recipe-contents")
   );
+
   const recipesSlugs = recipesFiles.map((file) => ({
     slug: file.replace(/\.mdx$/, ""),
   }));
@@ -14,18 +15,18 @@ export default async function sitemap() {
     slug: file.replace(/\.mdx$/, ""),
   }));
 
-  const recipesRoutes = recipesSlugs.map((slug) => {
+  const recipesRoutes = recipesSlugs.map((recipe) => {
     return {
-      url: `https://www.borachurrasco.app/recipes/${slug}`,
+      url: `https://www.borachurrasco.app/recipes/${recipe.slug}`,
       lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.8,
     };
   });
 
-  const postsRoutes = postsSlugs.map((slug) => {
+  const postsRoutes = postsSlugs.map((post) => {
     return {
-      url: `https://www.borachurrasco.app/blog/${slug}`,
+      url: `https://www.borachurrasco.app/blog/${post.slug}`,
       lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.8,
