@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Skeleton } from './skeleton';
 import { createDefaultResult } from './resultDefault';
+import ShareButton from './share-button';
 
 enum TipoMedida {
   peso = 0,
@@ -146,6 +147,60 @@ export default function Result({ participantes }: ResultProps) {
     resetState();
     router.push('/');
   }, [resetState, router]);
+
+  // Format shopping list for sharing
+  const formatShoppingList = useCallback(() => {
+    let text = `🍖 Lista de Compras - Bora Churrasco\n`;
+    text += `Estimado para até ${getTempo()} de comes e bebes\n\n`;
+
+    if (assadosCalculados && temAssados()) {
+      text += `🥩 ASSADOS:\n`;
+      if (bovina) text += `• Bovina: ${getMedida(assadosCalculados.bovina, TipoMedida.peso)}\n`;
+      if (suina) text += `• Suína: ${getMedida(assadosCalculados.suina, TipoMedida.peso)}\n`;
+      if (linguica) text += `• Linguiça: ${getMedida(assadosCalculados.linguica, TipoMedida.peso)}\n`;
+      if (frango) text += `• Frango: ${getMedida(assadosCalculados.frango, TipoMedida.peso)}\n`;
+      if (queijo) text += `• Queijo: ${getMedida(assadosCalculados.queijo, TipoMedida.peso)}\n`;
+      if (paoDeAlho) text += `• Pão de Alho: ${getMedida(assadosCalculados.paoAlho, TipoMedida.peso)}\n`;
+      text += `\n`;
+    }
+
+    if (temBebidas() && bebidasCalculadas) {
+      text += `🍻 BEBIDAS:\n`;
+      if (cerveja) text += `• Cerveja: ${getMedida(bebidasCalculadas.cerveja, TipoMedida.liquido)}\n`;
+      if (refrigerante) text += `• Refrigerante: ${getMedida(bebidasCalculadas.refrigerante, TipoMedida.liquido)}\n`;
+      if (agua) text += `• Água: ${getMedida(bebidasCalculadas.agua, TipoMedida.liquido)}\n`;
+      if (suco) text += `• Suco: ${getMedida(bebidasCalculadas.suco, TipoMedida.liquido)}\n`;
+      text += `\n`;
+    }
+
+    if ((temAssados() || temBebidas()) && essenciaisCalculados) {
+      text += `✨ ESSENCIAIS:\n`;
+      if (temAssados()) text += `• Sal Grosso: ${getMedida(essenciaisCalculados.salGrosso, TipoMedida.peso)}\n`;
+      if (temAssados()) text += `• Carvão: ${getMedida(essenciaisCalculados.carvao, TipoMedida.peso)}\n`;
+      if (temBebidas()) text += `• Gelo: ${getMedida(essenciaisCalculados.gelo, TipoMedida.peso)}\n`;
+      text += `\n`;
+    }
+
+    text += `\nCalculado em: www.borachurrasco.app`;
+    return text;
+  }, [
+    getTempo,
+    temAssados,
+    temBebidas,
+    assadosCalculados,
+    bebidasCalculadas,
+    essenciaisCalculados,
+    bovina,
+    suina,
+    linguica,
+    frango,
+    queijo,
+    paoDeAlho,
+    cerveja,
+    refrigerante,
+    agua,
+    suco,
+  ]);
 
   // Show skeleton with proper dimensions to prevent CLS
   if (!hasParticipantes) {
@@ -305,7 +360,7 @@ export default function Result({ participantes }: ResultProps) {
             )}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-gray-200">
+          <div className="mt-6 pt-4 border-t border-gray-200 space-y-3">
             <Button
               onClick={handleCalcularNovamente}
               className={`${buttonVariants({ variant: 'outline' })} w-full text-sm md:text-base py-3`}
@@ -314,6 +369,7 @@ export default function Result({ participantes }: ResultProps) {
                 ? 'Calcule novamente com mais precisão'
                 : 'Calcular novamente'}
             </Button>
+            <ShareButton shareText={formatShoppingList()} />
           </div>
         </div>
       </div>
