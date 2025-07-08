@@ -5,6 +5,7 @@ import EssenciaisCalculados from "@/models/essenciais-calculados";
 import ValoresReferencia from "@/models/valores-referencia";
 import Link from "next/link";
 import { Button, buttonVariants } from "./button";
+import ResultDefaultWithShare from "./result-default-with-share";
 
 enum TipoMedida {
   peso = 0,
@@ -328,7 +329,7 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
             )}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-gray-200">
+          <div className="mt-6 pt-4 border-t border-gray-200 space-y-3">
             <Link href="/" className="block">
               <Button 
                 className={`${buttonVariants({ variant: "outline" })} w-full text-sm md:text-base py-3`}
@@ -338,6 +339,7 @@ export default function ResultDefault({ participantes }: ResultDefaultProps) {
                   : "Calcular novamente"}
               </Button>
             </Link>
+            <ResultDefaultWithShare participantes={participantes} />
           </div>
         </div>
       </div>
