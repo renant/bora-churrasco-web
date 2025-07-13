@@ -26,7 +26,7 @@ export default async function sitemap() {
 
   const postsRoutes = postsSlugs.map((post) => {
     return {
-      url: `https://www.borachurrasco.app/blog/${post.slug}`,
+      url: `https://www.borachurrasco.app/post/${post.slug}`,
       lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.8,
