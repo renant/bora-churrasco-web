@@ -1,0 +1,159 @@
+# Bora Churrasco - BBQ Calculator Web Application
+
+## Project Overview
+Bora Churrasco is a Next.js web application that helps users calculate the exact amount of meat, drinks, and accompaniments needed for Brazilian barbecue (churrasco) events. The application is designed to help users plan their barbecues efficiently and avoid food waste.
+
+## Technology Stack
+- **Framework**: Next.js 15.3.4 with App Router
+- **Language**: TypeScript 5.1.6
+- **UI Framework**: React 19.0.0
+- **Styling**: Tailwind CSS with Tailwind Animate
+- **UI Components**: Shadcn UI, Radix UI
+- **State Management**: Zustand 4.3.9
+- **Content**: MDX for recipes and blog posts
+- **Database**: Firebase 10.1.0
+- **Analytics**: Vercel Analytics, Google Analytics
+- **Code Quality**: Biome (linting, formatting)
+- **Deployment**: Vercel Platform
+
+## Project Structure
+
+### Core Directories
+- `/app/` - Next.js App Router pages and layouts
+  - Main pages: home calculator, recipes, blog, results
+  - API routes for backend functionality
+  - Layout components and metadata configuration
+
+- `/components/` - Reusable React components
+  - UI components following Shadcn patterns
+  - Calculator-specific components
+  - Icon components and shared utilities
+
+- `/lib/` - Core business logic and utilities
+  - `churrascoStore.ts` - Main Zustand store for calculator state
+  - `firebase.ts` - Firebase configuration
+  - `utils.ts` - Utility functions
+
+- `/models/` - TypeScript data models
+  - Calculator value references and calculations
+  - Data structures for barbecue planning
+
+- `/utils/` - Utility functions
+  - Content processing utilities
+  - Text manipulation helpers
+
+- `/recipe-contents/` - MDX recipe files
+  - Individual recipe files in MDX format
+  - Structured recipe content with frontmatter
+
+- `/post-contents/` - Blog post content in MDX
+- `/public/` - Static assets (images, icons, manifest)
+
+### Key Files
+- `package.json` - Dependencies and scripts
+- `next.config.mjs` - Next.js configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `biome.json` - Code quality configuration
+- `.cursorrules` - Development guidelines and coding standards
+
+## Core Functionality
+
+### Barbecue Calculator
+The main feature calculates quantities based on:
+- **Participants**: Number of men, women, and children
+- **Duration**: Event length (affects quantities)
+- **Meat Types**: Beef, pork, chicken, sausage selection
+- **Accompaniments**: Cheese, garlic bread options
+- **Beverages**: Beer, soft drinks, water, juice
+- **Essentials**: Salt, charcoal, ice calculations
+
+### Content Management
+- Recipe database with MDX files
+- Blog posts for barbecue tips and guides
+- Notion integration for content management
+- SEO-optimized content structure
+
+### Features
+- Responsive mobile-first design
+- PWA capabilities with manifest
+- Google Analytics integration
+- Sitemap and robots.txt generation
+- Optimized images with Sharp
+- SEO metadata management
+
+## Development Guidelines
+
+### Code Style (from .cursorrules)
+- Use TypeScript for all code; prefer interfaces over types
+- Avoid enums; use maps instead
+- Use functional and declarative programming patterns
+- Prefer iteration and modularization over code duplication
+- Use descriptive variable names with auxiliary verbs (isLoading, hasError)
+- Structure files: exported component, subcomponents, helpers, static content, types
+
+### Naming Conventions
+- Use lowercase with dashes for directories (e.g., components/auth-wizard)
+- Favor named exports for components
+- Use the "function" keyword for pure functions
+
+### UI and Styling
+- Use Shadcn UI, Radix, and Tailwind for components and styling
+- Implement responsive design with Tailwind CSS; use mobile-first approach
+- Use declarative JSX
+
+### Performance Optimization
+- Minimize 'use client', 'useEffect', and 'setState'
+- Favor React Server Components (RSC)
+- Wrap client components in Suspense with fallback
+- Use dynamic loading for non-critical components
+- Optimize images: WebP format, size data, lazy loading
+
+### State Management
+- Use Zustand for application state
+- Use 'nuqs' for URL search parameter state management
+- Limit 'use client' usage to Web API access in small components
+
+## API and Data Models
+
+### Core Models
+- `ValoresReferencia` - Reference values for calculations
+- `AssadosCalculados` - Calculated meat quantities
+- `BebidasCalculadas` - Calculated beverage quantities  
+- `EssenciaisCalculados` - Calculated essential items
+- `Recipe` - Recipe data structure
+- `PostContent` - Blog post structure
+
+### Business Logic
+The calculator uses reference values per person/category and applies multipliers based on:
+- Participant demographics (men/women/children have different consumption rates)
+- Event duration (affects total quantities)
+- Selected items (meat types, drinks, accompaniments)
+
+## Content Strategy
+- Focus on Brazilian barbecue culture and techniques
+- Recipe content optimized for SEO
+- Educational blog posts about barbecue planning
+- Mobile-optimized content consumption
+
+## SEO and Performance
+- Optimized metadata for all pages
+- Structured data (JSON-LD) implementation
+- Image optimization with next/image
+- Core Web Vitals optimization (LCP, CLS, FID)
+- PWA features for mobile users
+
+## Development Commands
+- `npm run dev` - Development server
+- `npm run build` - Production build
+- `npm run start` - Production server
+- `npm run format` - Format code with Biome
+- `npm run lint` - Lint code with Biome
+- `npm run check` - Run Biome checks and apply fixes
+
+## Deployment
+- Hosted on Vercel Platform
+- Automatic deployments from main branch
+- Environment variables for Firebase and analytics
+- CDN optimization for static assets
+
+This application serves the Brazilian barbecue community by providing accurate calculations and recipes, helping users plan successful churrasco events while minimizing food waste.
