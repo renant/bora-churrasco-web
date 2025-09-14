@@ -205,36 +205,141 @@ export default async function Resultado({ params }: { params: Params }) {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: `Cálculo De Churrasco Para ${participante} Pessoas`,
-          description: `Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas.`,
+          alternativeHeadline: `Quantidade de Carne e Acompanhamentos para Churrasco de ${participante} Pessoas`,
+          description: `Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas para organizar seu evento.`,
+          abstract: `Calculadora especializada para planejamento de churrasco com ${participante} pessoas. Inclui quantidades precisas de carnes, acompanhamentos, bebidas e dicas práticas.`,
           datePublished: new Date().toISOString(),
           dateModified: new Date().toISOString(),
-          author: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-            url: "https://www.borachurrasco.app",
-          },
-          image: {
-            "@type": "ImageObject",
-            url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-            width: 310,
-            height: 310,
-          },
+          author: [
+            {
+              "@type": "Organization",
+              name: "Bora Churrasco",
+              url: "https://www.borachurrasco.app",
+              sameAs: [
+                "https://www.facebook.com/borachurrasco",
+                "https://www.instagram.com/borachurrasco",
+              ],
+              logo: {
+                "@type": "ImageObject",
+                url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+                width: 310,
+                height: 310,
+              },
+            },
+          ],
           publisher: {
             "@type": "Organization",
             name: "Bora Churrasco",
+            url: "https://www.borachurrasco.app",
             logo: {
               "@type": "ImageObject",
               url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+              width: 310,
+              height: 310,
             },
+            sameAs: [
+              "https://www.facebook.com/borachurrasco",
+              "https://www.instagram.com/borachurrasco",
+            ],
           },
           mainEntityOfPage: {
             "@type": "WebPage",
             "@id": `https://www.borachurrasco.app/resultado/${participante}`,
+            url: `https://www.borachurrasco.app/resultado/${participante}`,
+            name: `Calculadora de Churrasco para ${participante} Pessoas`,
+            description: `Página de resultado da calculadora de churrasco para ${participante} pessoas`,
+            isPartOf: {
+              "@type": "WebSite",
+              name: "Bora Churrasco",
+              url: "https://www.borachurrasco.app",
+            },
           },
-          keywords:
-            "Calculadora de Churrasco, Quantidade de Carne, Churrasco para Grupos, Planejamento de Churrasco",
-          articleSection: "Calculadora",
-          wordCount: "1000",
+          image: [
+            {
+              "@type": "ImageObject",
+              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+              width: 310,
+              height: 310,
+              caption: "Bora Churrasco - Calculadora de Churrasco",
+              representativeOfPage: true,
+            },
+          ],
+          keywords: [
+            "Calculadora de Churrasco",
+            "Quantidade de Carne por Pessoa",
+            "Churrasco para Grupos",
+            "Planejamento de Churrasco",
+            `Churrasco ${participante} pessoas`,
+            "Cálculo de Carne",
+            "Organização de Churrasco",
+            "Dicas de Churrasco",
+            "Receitas de Churrasco",
+            "Acompanhamentos para Churrasco",
+          ],
+          articleSection: "Calculadora de Churrasco",
+          wordCount: 1200,
+          inLanguage: "pt-BR",
+          about: [
+            {
+              "@type": "Thing",
+              name: "Churrasco",
+              description:
+                "Técnica culinária de cozinhar carnes em grelha ou espeto",
+            },
+            {
+              "@type": "Thing",
+              name: "Calculadora de Churrasco",
+              description:
+                "Ferramenta para calcular quantidades de ingredientes para churrasco",
+            },
+          ],
+          mentions: [
+            {
+              "@type": "Thing",
+              name: "Carnes para Churrasco",
+              description:
+                "Diferentes tipos de carnes utilizadas em churrascos",
+            },
+            {
+              "@type": "Thing",
+              name: "Acompanhamentos",
+              description:
+                "Sides e acompanhamentos tradicionais do churrasco brasileiro",
+            },
+          ],
+          speakable: {
+            "@type": "SpeakableSpecification",
+            cssSelector: ["h1", ".text-center p"],
+          },
+          isAccessibleForFree: true,
+          genre: "Culinária",
+          audience: {
+            "@type": "Audience",
+            audienceType: "Pessoas interessadas em churrasco e culinária",
+          },
+          breadcrumb: {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://www.borachurrasco.app",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Calculadora",
+                item: "https://www.borachurrasco.app/resultado",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: `${participante} Pessoas`,
+                item: `https://www.borachurrasco.app/resultado/${participante}`,
+              },
+            ],
+          },
         }}
       />
     </div>
