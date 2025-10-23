@@ -164,7 +164,7 @@ export default async function RecipesPage(props: {
             ) : (
               result.recipes.map((recipe) => (
                 <Link
-                  key={recipe?.id}
+                  key={recipe?.slug}
                   href={`/recipes/${recipe?.slug}`}
                   aria-label={`Ver receita de ${recipe?.name}`}
                 >
