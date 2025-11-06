@@ -35,8 +35,6 @@ const nextConfig = {
   },
   experimental: {
     scrollRestoration: true,
-    // Enable partial prerendering for better performance
-    ppr: false, // Keep disabled for now as it's experimental
     // Optimize bundle for mobile
     optimizePackageImports: ["lucide-react"],
   },
