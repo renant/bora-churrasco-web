@@ -41,6 +41,7 @@
     "node-fetch": "^3.3.2",
     "plaiceholder": "^3.0.0",
     "postcss": "^8.4.27",
+    "posthog-js": "^1.290.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "remark": "^14.0.3",
