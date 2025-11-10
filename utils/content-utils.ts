@@ -17,23 +17,28 @@ export interface RecipeMetadata {
   date: string;
 }
 
-export async function getRandomPosts(count = 3, excludeSlug?: string): Promise<PostMetadata[]> {
+export async function getRandomPosts(
+  count = 3,
+  excludeSlug?: string
+): Promise<PostMetadata[]> {
   try {
     const files = fs.readdirSync(path.join(process.cwd(), "post-contents"));
     const mdxFiles = files
-      .filter((file: string) => file.endsWith('.mdx'))
-      .filter((file: string) => excludeSlug ? !file.includes(excludeSlug) : true);
-    
+      .filter((file: string) => file.endsWith(".mdx"))
+      .filter((file: string) =>
+        excludeSlug ? !file.includes(excludeSlug) : true
+      );
+
     // Shuffle array and take requested count
     const shuffled = mdxFiles.sort(() => 0.5 - Math.random());
     const selectedFiles = shuffled.slice(0, count);
-    
+
     const posts: PostMetadata[] = [];
-    
+
     for (const file of selectedFiles) {
       try {
         const slug = file.replace(/\.mdx$/, "");
-        const mdxModule = await import(`../post-contents/${file}`);
+        const mdxModule = await import(`@/post-contents/${file}`);
         if (mdxModule.metadata) {
           posts.push({ ...mdxModule.metadata, slug });
         }
@@ -41,7 +46,7 @@ export async function getRandomPosts(count = 3, excludeSlug?: string): Promise<P
         console.error(`Failed to load metadata for ${file}:`, error);
       }
     }
-    
+
     return posts;
   } catch (error) {
     console.error("Failed to get random posts:", error);
@@ -49,23 +54,28 @@ export async function getRandomPosts(count = 3, excludeSlug?: string): Promise<P
   }
 }
 
-export async function getRandomRecipes(count = 6, excludeSlug?: string): Promise<RecipeMetadata[]> {
+export async function getRandomRecipes(
+  count = 6,
+  excludeSlug?: string
+): Promise<RecipeMetadata[]> {
   try {
     const files = fs.readdirSync(path.join(process.cwd(), "recipe-contents"));
     const mdxFiles = files
-      .filter((file: string) => file.endsWith('.mdx'))
-      .filter((file: string) => excludeSlug ? !file.includes(excludeSlug) : true);
-    
+      .filter((file: string) => file.endsWith(".mdx"))
+      .filter((file: string) =>
+        excludeSlug ? !file.includes(excludeSlug) : true
+      );
+
     // Shuffle array and take requested count
     const shuffled = mdxFiles.sort(() => 0.5 - Math.random());
     const selectedFiles = shuffled.slice(0, count);
-    
+
     const recipes: RecipeMetadata[] = [];
-    
+
     for (const file of selectedFiles) {
       try {
         const slug = file.replace(/\.mdx$/, "");
-        const mdxModule = await import(`../recipe-contents/${file}`);
+        const mdxModule = await import(`@/recipe-contents/${file}`);
         if (mdxModule.metadata) {
           recipes.push({ ...mdxModule.metadata, slug });
         }
@@ -73,7 +83,7 @@ export async function getRandomRecipes(count = 6, excludeSlug?: string): Promise
         console.error(`Failed to load metadata for ${file}:`, error);
       }
     }
-    
+
     return recipes;
   } catch (error) {
     console.error("Failed to get random recipes:", error);

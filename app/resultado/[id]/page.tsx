@@ -1,7 +1,9 @@
-import JsonLd from "@/components/JsonLd";
-import ClientSuggestedPosts from "@/components/client-suggested-posts";
 import ComoCalcularComponent from "@/components/como-calcular-component";
+import JsonLd from "@/components/JsonLd";
+import ServerSuggestedPosts from "@/components/server-suggested-posts";
 import ResultDefault from "@/components/ui/resultDefault";
+import SuggestedPostsSkeleton from "@/components/ui/suggested-posts-skeleton";
+import { Suspense } from "react";
 
 type Params = Promise<{ id: string }>;
 
@@ -193,8 +195,10 @@ export default async function Resultado({ params }: { params: Params }) {
         <div className="flex flex-col md:flex-row items-center justify-center w-full gap-8">
           <ResultDefault participantes={participante} />
         </div>
-        <div className=" mb-4 md:mb-12">
-          <ClientSuggestedPosts count={3} />
+        <div className="mb-4 md:mb-12">
+          <Suspense fallback={<SuggestedPostsSkeleton />}>
+            <ServerSuggestedPosts count={3} />
+          </Suspense>
         </div>
 
         <ComoCalcularComponent />
@@ -205,28 +209,14 @@ export default async function Resultado({ params }: { params: Params }) {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: `Cálculo De Churrasco Para ${participante} Pessoas`,
-          alternativeHeadline: `Quantidade de Carne e Acompanhamentos para Churrasco de ${participante} Pessoas`,
           description: `Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas para organizar seu evento.`,
-          abstract: `Calculadora especializada para planejamento de churrasco com ${participante} pessoas. Inclui quantidades precisas de carnes, acompanhamentos, bebidas e dicas práticas.`,
           datePublished: new Date().toISOString(),
           dateModified: new Date().toISOString(),
-          author: [
-            {
-              "@type": "Organization",
-              name: "Bora Churrasco",
-              url: "https://www.borachurrasco.app",
-              sameAs: [
-                "https://www.facebook.com/borachurrasco",
-                "https://www.instagram.com/borachurrasco",
-              ],
-              logo: {
-                "@type": "ImageObject",
-                url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-                width: 310,
-                height: 310,
-              },
-            },
-          ],
+          author: {
+            "@type": "Organization",
+            name: "Bora Churrasco",
+            url: "https://www.borachurrasco.app",
+          },
           publisher: {
             "@type": "Organization",
             name: "Bora Churrasco",
@@ -237,86 +227,19 @@ export default async function Resultado({ params }: { params: Params }) {
               width: 310,
               height: 310,
             },
-            sameAs: [
-              "https://www.facebook.com/borachurrasco",
-              "https://www.instagram.com/borachurrasco",
-            ],
           },
           mainEntityOfPage: {
             "@type": "WebPage",
             "@id": `https://www.borachurrasco.app/resultado/${participante}`,
             url: `https://www.borachurrasco.app/resultado/${participante}`,
-            name: `Calculadora de Churrasco para ${participante} Pessoas`,
-            description: `Página de resultado da calculadora de churrasco para ${participante} pessoas`,
-            isPartOf: {
-              "@type": "WebSite",
-              name: "Bora Churrasco",
-              url: "https://www.borachurrasco.app",
-            },
           },
-          image: [
-            {
-              "@type": "ImageObject",
-              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-              width: 310,
-              height: 310,
-              caption: "Bora Churrasco - Calculadora de Churrasco",
-              representativeOfPage: true,
-            },
-          ],
-          keywords: [
-            "Calculadora de Churrasco",
-            "Quantidade de Carne por Pessoa",
-            "Churrasco para Grupos",
-            "Planejamento de Churrasco",
-            `Churrasco ${participante} pessoas`,
-            "Cálculo de Carne",
-            "Organização de Churrasco",
-            "Dicas de Churrasco",
-            "Receitas de Churrasco",
-            "Acompanhamentos para Churrasco",
-          ],
-          articleSection: "Calculadora de Churrasco",
-          wordCount: 1200,
+          image: {
+            "@type": "ImageObject",
+            url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+            width: 310,
+            height: 310,
+          },
           inLanguage: "pt-BR",
-          about: [
-            {
-              "@type": "Thing",
-              name: "Churrasco",
-              description:
-                "Técnica culinária de cozinhar carnes em grelha ou espeto",
-            },
-            {
-              "@type": "Thing",
-              name: "Calculadora de Churrasco",
-              description:
-                "Ferramenta para calcular quantidades de ingredientes para churrasco",
-            },
-          ],
-          mentions: [
-            {
-              "@type": "Thing",
-              name: "Carnes para Churrasco",
-              description:
-                "Diferentes tipos de carnes utilizadas em churrascos",
-            },
-            {
-              "@type": "Thing",
-              name: "Acompanhamentos",
-              description:
-                "Sides e acompanhamentos tradicionais do churrasco brasileiro",
-            },
-          ],
-          speakable: {
-            "@type": "SpeakableSpecification",
-            cssSelector: ["h1", ".text-center p"],
-          },
-          isAccessibleForFree: true,
-          genre: "Culinária",
-          audience: {
-            "@type": "Audience",
-            audienceType: "Pessoas interessadas em churrasco e culinária",
-          },
           breadcrumb: {
             "@type": "BreadcrumbList",
             itemListElement: [
