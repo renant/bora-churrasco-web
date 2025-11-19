@@ -1,9 +1,5 @@
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import { WizardSkeleton } from '@/components/ui/wizard-skeleton';
 
 export default function Loading() {
-  return (
-    <div className="h-screen">
-      <LoadingSpinner />
-    </div>
-  );
+  return <WizardSkeleton />;
 }

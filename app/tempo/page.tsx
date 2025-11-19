@@ -55,41 +55,46 @@ export default function TempoPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 p-6">
-            <motion.div variants={item}>
-              <div className="grid grid-cols-2 gap-4">
-                <CheckButton
-                  isChecked={tempo === Tempo.quatroHoras}
-                  description="Até 4 horas"
-                  onClick={() => setTempo(Tempo.quatroHoras)}
-                  className="aspect-square"
-                >
-                  <h2 className="text-5xl font-bold text-red-600">4h</h2>
-                </CheckButton>
-                <CheckButton
-                  isChecked={tempo === Tempo.seisHoras}
-                  description="Até 6 horas"
-                  onClick={() => setTempo(Tempo.seisHoras)}
-                  className="aspect-square"
-                >
-                  <h2 className="text-5xl font-bold text-red-600">6h</h2>
-                </CheckButton>
-                <CheckButton
-                  isChecked={tempo === Tempo.oitoHoras}
-                  description="Até 8 horas"
-                  onClick={() => setTempo(Tempo.oitoHoras)}
-                  className="aspect-square"
-                >
-                  <h2 className="text-5xl font-bold text-red-600">8h</h2>
-                </CheckButton>
-                <CheckButton
-                  isChecked={tempo === Tempo.dozeOuMaisHoras}
-                  description="12 horas ou mais"
-                  onClick={() => setTempo(Tempo.dozeOuMaisHoras)}
-                  className="aspect-square"
-                >
-                  <h2 className="text-5xl font-bold text-red-600">12h</h2>
-                </CheckButton>
-              </div>
+            <motion.div 
+              className="grid grid-cols-2 gap-4"
+              variants={container}
+            >
+              <CheckButton
+                isChecked={tempo === Tempo.quatroHoras}
+                description="Até 4 horas"
+                onClick={() => setTempo(Tempo.quatroHoras)}
+                className="aspect-square"
+                variants={item}
+              >
+                <h2 className="text-5xl font-bold text-red-600">4h</h2>
+              </CheckButton>
+              <CheckButton
+                isChecked={tempo === Tempo.seisHoras}
+                description="Até 6 horas"
+                onClick={() => setTempo(Tempo.seisHoras)}
+                className="aspect-square"
+                variants={item}
+              >
+                <h2 className="text-5xl font-bold text-red-600">6h</h2>
+              </CheckButton>
+              <CheckButton
+                isChecked={tempo === Tempo.oitoHoras}
+                description="Até 8 horas"
+                onClick={() => setTempo(Tempo.oitoHoras)}
+                className="aspect-square"
+                variants={item}
+              >
+                <h2 className="text-5xl font-bold text-red-600">8h</h2>
+              </CheckButton>
+              <CheckButton
+                isChecked={tempo === Tempo.dozeOuMaisHoras}
+                description="12 horas ou mais"
+                onClick={() => setTempo(Tempo.dozeOuMaisHoras)}
+                className="aspect-square"
+                variants={item}
+              >
+                <h2 className="text-5xl font-bold text-red-600">12h</h2>
+              </CheckButton>
             </motion.div>
 
             <motion.div variants={item} className="flex justify-center pt-6">

@@ -76,57 +76,64 @@ export default function Assados() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 p-6">
-            <motion.div variants={item}>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                <CheckButton
-                  isChecked={bovina}
-                  description="Bovina"
-                  onClick={() => changeBovina()}
-                  className="aspect-square"
-                >
-                  <BovinaIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={suina}
-                  description="Suina"
-                  onClick={() => changeSuina()}
-                  className="aspect-square"
-                >
-                  <SuinaIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={linguica}
-                  description="Linguiça"
-                  onClick={() => changeLinguica()}
-                  className="aspect-square"
-                >
-                  <LinguicaIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={frango}
-                  description="Frango"
-                  onClick={() => changeFrango()}
-                  className="aspect-square"
-                >
-                  <FrangoIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={queijo}
-                  description="Queijo"
-                  onClick={() => changeQueijo()}
-                  className="aspect-square"
-                >
-                  <QueijoIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={paoDeAlho}
-                  description="Pão de Alho"
-                  onClick={() => changePaoDeAlho()}
-                  className="aspect-square"
-                >
-                  <PaoDeAlhoIcon size={50} />
-                </CheckButton>
-              </div>
+            <motion.div 
+              className="grid grid-cols-2 gap-4 md:grid-cols-3"
+              variants={container}
+            >
+              <CheckButton
+                isChecked={bovina}
+                description="Bovina"
+                onClick={() => changeBovina()}
+                className="aspect-square"
+                variants={item}
+              >
+                <BovinaIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={suina}
+                description="Suina"
+                onClick={() => changeSuina()}
+                className="aspect-square"
+                variants={item}
+              >
+                <SuinaIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={linguica}
+                description="Linguiça"
+                onClick={() => changeLinguica()}
+                className="aspect-square"
+                variants={item}
+              >
+                <LinguicaIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={frango}
+                description="Frango"
+                onClick={() => changeFrango()}
+                className="aspect-square"
+                variants={item}
+              >
+                <FrangoIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={queijo}
+                description="Queijo"
+                onClick={() => changeQueijo()}
+                className="aspect-square"
+                variants={item}
+              >
+                <QueijoIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={paoDeAlho}
+                description="Pão de Alho"
+                onClick={() => changePaoDeAlho()}
+                className="aspect-square"
+                variants={item}
+              >
+                <PaoDeAlhoIcon size={50} />
+              </CheckButton>
             </motion.div>
 
             <motion.div variants={item} className="flex justify-center pt-6">

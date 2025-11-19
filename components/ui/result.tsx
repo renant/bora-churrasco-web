@@ -1,91 +1,75 @@
 'use client';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { CountUp } from '@/components/ui/count-up';
 import churrascoStore from '@/lib/churrascoStore';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Share2, ShoppingCart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo } from 'react';
-import { Skeleton } from './skeleton';
 import { createDefaultResult } from './resultDefault';
 import ShareButton from './share-button';
+import { Card, CardContent, CardHeader, CardTitle } from './card';
 
 enum TipoMedida {
   peso = 0,
   liquido = 1,
 }
 
-function getMedida(value: number, tipo: TipoMedida) {
-  switch (tipo) {
-    case TipoMedida.peso: {
-      return value >= 1000 ? `${value / 1000}kg` : `${value}g`;
-    }
-    case TipoMedida.liquido: {
-      return value >= 1000 ? `${value / 1000}L` : `${value}ml`;
-    }
+function getMedidaParts(value: number, tipo: TipoMedida) {
+  if (value >= 1000) {
+    return { value: Number((value / 1000).toFixed(2)), unit: tipo === TipoMedida.peso ? 'kg' : 'L' };
   }
+  return { value, unit: tipo === TipoMedida.peso ? 'g' : 'ml' };
+}
+
+// Keep backward compatibility for share text
+function getMedida(value: number, tipo: TipoMedida) {
+  const { value: val, unit } = getMedidaParts(value, tipo);
+  return `${val}${unit}`;
 }
 
 interface ResultProps {
   participantes?: number | undefined;
 }
 
-// Skeleton component with proper dimensions to prevent CLS
 function ResultSkeleton() {
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-white rounded-lg shadow-lg p-6 min-h-[600px] border border-gray-200">
-        <div className="space-y-4 animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-3/4 mx-auto"></div>
-          <div className="h-4 bg-gray-200 rounded w-full"></div>
-          <div className="h-4 bg-gray-200 rounded w-2/3 mx-auto"></div>
-          
-          <div className="space-y-6 mt-8">
-            {/* Assados skeleton */}
-            <div className="bg-red-50 p-4 rounded-lg">
-              <div className="h-6 bg-red-200 rounded w-24 mb-3"></div>
-              <div className="space-y-2">
-                {Array.from({ length: 6 }, (_, i) => (
-                  <div key={i} className="flex justify-between items-center py-1">
-                    <div className="h-4 bg-gray-200 rounded w-20"></div>
-                    <div className="h-4 bg-red-200 rounded w-16"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Bebidas skeleton */}
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <div className="h-6 bg-blue-200 rounded w-24 mb-3"></div>
-              <div className="space-y-2">
-                {Array.from({ length: 4 }, (_, i) => (
-                  <div key={i} className="flex justify-between items-center py-1">
-                    <div className="h-4 bg-gray-200 rounded w-24"></div>
-                    <div className="h-4 bg-blue-200 rounded w-16"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Essenciais skeleton */}
-            <div className="bg-green-50 p-4 rounded-lg">
-              <div className="h-6 bg-green-200 rounded w-24 mb-3"></div>
-              <div className="space-y-2">
-                {Array.from({ length: 3 }, (_, i) => (
-                  <div key={i} className="flex justify-between items-center py-1">
-                    <div className="h-4 bg-gray-200 rounded w-20"></div>
-                    <div className="h-4 bg-green-200 rounded w-16"></div>
-                  </div>
-                ))}
-              </div>
+    <div className="w-full max-w-4xl mx-auto space-y-8">
+      <div className="text-center space-y-4 animate-pulse">
+        <div className="h-10 bg-gray-200 rounded-lg w-3/4 mx-auto max-w-md"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+      </div>
+      
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 h-64 animate-pulse">
+            <div className="h-6 bg-gray-100 rounded w-1/3 mb-6"></div>
+            <div className="space-y-3">
+              <div className="h-4 bg-gray-100 rounded w-full"></div>
+              <div className="h-4 bg-gray-100 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-100 rounded w-5/6"></div>
             </div>
           </div>
-          
-          <div className="mt-6 pt-4 border-t border-gray-200">
-            <div className="h-10 bg-gray-200 rounded w-full"></div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function Result({ participantes }: ResultProps) {
   const router = useRouter();
@@ -112,7 +96,6 @@ export default function Result({ participantes }: ResultProps) {
     resetState,
   } = churrascoStore();
 
-  // Memoize the calculation to prevent unnecessary re-renders
   const isValidParticipantes = useMemo(() => 
     participantes && participantes > 0, 
     [participantes]
@@ -123,12 +106,8 @@ export default function Result({ participantes }: ResultProps) {
     [temParticipantes]
   );
 
-  // Create a default result function that works with the store
   const handleCreateDefaultResult = useCallback((numParticipantes: number) => {
-    // This will create default values in the store
-    const defaultData = createDefaultResult(numParticipantes);
-    // You would need to populate the store with this data
-    // This is a simplified version - you might need to adapt based on how your store works
+    createDefaultResult(numParticipantes);
   }, []);
 
   useEffect(() => {
@@ -148,7 +127,6 @@ export default function Result({ participantes }: ResultProps) {
     router.push('/');
   }, [resetState, router]);
 
-  // Format shopping list for sharing
   const formatShoppingList = useCallback(() => {
     let text = `🍖 Lista de Compras - Bora Churrasco\n`;
     text += `Estimado para até ${getTempo()} de comes e bebes\n\n`;
@@ -202,177 +180,149 @@ export default function Result({ participantes }: ResultProps) {
     suco,
   ]);
 
-  // Show skeleton with proper dimensions to prevent CLS
   if (!hasParticipantes) {
     return <ResultSkeleton />;
   }
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-white rounded-lg shadow-lg p-6 min-h-[600px] border border-gray-200">
-        <div className="flex flex-col h-full">
-          <div className="text-center mb-6">
-            <h2 className="mb-2 text-lg leading-relaxed text-red-500 sm:text-2xl md:text-3xl font-bold">
-              Lista de Compras!
-            </h2>
-            <h3 className="text-sm md:text-base mb-2 text-center leading-relaxed text-gray-700">
-              Lembrando que o resultado é estimado para até {getTempo()} de comes e bebes
-            </h3>
-            <h4 className="text-xs md:text-sm mb-4 text-center font-light text-gray-600">
-              (Isso é uma estimativa a quantidade pode variar, conheça seus
-              convidados)
-            </h4>
+    <div className="w-full max-w-5xl mx-auto px-4 py-8">
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={container}
+        className="space-y-8"
+      >
+        {/* Header */}
+        <motion.div variants={item} className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center p-3 bg-red-100 rounded-full mb-2">
+            <ShoppingCart className="w-8 h-8 text-red-600" />
           </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+            Sua Lista de Compras
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Estimativa para um evento de até <span className="font-semibold text-red-500">{getTempo()}</span>. 
+            Lembre-se que as quantidades podem variar de acordo com o perfil dos seus convidados.
+          </p>
+        </motion.div>
 
-          <div className="flex-1 space-y-6">
-            {assadosCalculados && temAssados() && (
-              <div className="bg-red-50 p-4 rounded-lg">
-                <h5 className="text-lg md:text-xl font-semibold text-red-700 mb-3 flex items-center">
-                  🥩 Assados
-                </h5>
-                <ul className="space-y-2">
-                  {bovina && (
-                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Bovina:</span>
-                      <span className="text-sm md:text-base text-red-600 font-semibold">
-                        {getMedida(assadosCalculados?.bovina, TipoMedida.peso)}
+        {/* Results Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start">
+          
+          {/* Assados Card */}
+          {assadosCalculados && temAssados() && (
+            <motion.div variants={item} className="h-full">
+              <Card className="h-full border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="pb-4 border-b border-red-50 bg-red-50/30">
+                  <CardTitle className="flex items-center gap-2 text-xl text-red-700">
+                    <span>🥩</span> Assados
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-4">
+                  {[
+                    { show: bovina, label: 'Bovina', value: assadosCalculados.bovina },
+                    { show: suina, label: 'Suína', value: assadosCalculados.suina },
+                    { show: linguica, label: 'Linguiça', value: assadosCalculados.linguica },
+                    { show: frango, label: 'Frango', value: assadosCalculados.frango },
+                    { show: queijo, label: 'Queijo', value: assadosCalculados.queijo },
+                    { show: paoDeAlho, label: 'Pão de Alho', value: assadosCalculados.paoAlho },
+                  ].map(item => item.show && (
+                    <div key={item.label} className="flex justify-between items-baseline">
+                      <span className="text-gray-600 font-medium">{item.label}</span>
+                      <span className="text-xl font-bold text-gray-900">
+                        <CountUp 
+                          end={getMedidaParts(item.value, TipoMedida.peso).value} 
+                          decimals={getMedidaParts(item.value, TipoMedida.peso).unit === 'kg' ? 2 : 0}
+                          suffix={getMedidaParts(item.value, TipoMedida.peso).unit}
+                        />
                       </span>
-                    </li>
-                  )}
-                  {suina && (
-                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Suína:</span>
-                      <span className="text-sm md:text-base text-red-600 font-semibold">
-                        {getMedida(assadosCalculados?.suina, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                  {linguica && (
-                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Linguiça:</span>
-                      <span className="text-sm md:text-base text-red-600 font-semibold">
-                        {getMedida(assadosCalculados?.linguica, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                  {frango && (
-                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Frango:</span>
-                      <span className="text-sm md:text-base text-red-600 font-semibold">
-                        {getMedida(assadosCalculados?.frango, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                  {queijo && (
-                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Queijo:</span>
-                      <span className="text-sm md:text-base text-red-600 font-semibold">
-                        {getMedida(assadosCalculados?.queijo, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                  {paoDeAlho && (
-                    <li className="flex justify-between items-center py-1 border-b border-red-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Pão de Alho:</span>
-                      <span className="text-sm md:text-base text-red-600 font-semibold">
-                        {getMedida(assadosCalculados?.paoAlho, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
-            {temBebidas() && bebidasCalculadas && (
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h5 className="text-lg md:text-xl font-semibold text-blue-700 mb-3 flex items-center">
-                  🍻 Bebidas
-                </h5>
-                <ul className="space-y-2">
-                  {cerveja && (
-                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Cerveja:</span>
-                      <span className="text-sm md:text-base text-blue-600 font-semibold">
-                        {getMedida(bebidasCalculadas?.cerveja, TipoMedida.liquido)}
+          {/* Bebidas Card */}
+          {temBebidas() && bebidasCalculadas && (
+            <motion.div variants={item} className="h-full">
+              <Card className="h-full border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="pb-4 border-b border-blue-50 bg-blue-50/30">
+                  <CardTitle className="flex items-center gap-2 text-xl text-blue-700">
+                    <span>🍻</span> Bebidas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-4">
+                  {[
+                    { show: cerveja, label: 'Cerveja', value: bebidasCalculadas.cerveja },
+                    { show: refrigerante, label: 'Refrigerante', value: bebidasCalculadas.refrigerante },
+                    { show: agua, label: 'Água', value: bebidasCalculadas.agua },
+                    { show: suco, label: 'Suco', value: bebidasCalculadas.suco },
+                  ].map(item => item.show && (
+                    <div key={item.label} className="flex justify-between items-baseline">
+                      <span className="text-gray-600 font-medium">{item.label}</span>
+                      <span className="text-xl font-bold text-gray-900">
+                         <CountUp 
+                          end={getMedidaParts(item.value, TipoMedida.liquido).value} 
+                          decimals={getMedidaParts(item.value, TipoMedida.liquido).unit === 'L' ? 1 : 0}
+                          suffix={getMedidaParts(item.value, TipoMedida.liquido).unit}
+                        />
                       </span>
-                    </li>
-                  )}
-                  {refrigerante && (
-                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Refrigerante:</span>
-                      <span className="text-sm md:text-base text-blue-600 font-semibold">
-                        {getMedida(bebidasCalculadas?.refrigerante, TipoMedida.liquido)}
-                      </span>
-                    </li>
-                  )}
-                  {agua && (
-                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Água:</span>
-                      <span className="text-sm md:text-base text-blue-600 font-semibold">
-                        {getMedida(bebidasCalculadas?.agua, TipoMedida.liquido)}
-                      </span>
-                    </li>
-                  )}
-                  {suco && (
-                    <li className="flex justify-between items-center py-1 border-b border-blue-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Suco:</span>
-                      <span className="text-sm md:text-base text-blue-600 font-semibold">
-                        {getMedida(bebidasCalculadas?.suco, TipoMedida.liquido)}
-                      </span>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
-            {(temAssados() || temBebidas()) && essenciaisCalculados && (
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h5 className="text-lg md:text-xl font-semibold text-green-700 mb-3 flex items-center">
-                  ✨ Essenciais
-                </h5>
-                <ul className="space-y-2">
-                  {temAssados() && (
-                    <li className="flex justify-between items-center py-1 border-b border-green-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Sal Grosso:</span>
-                      <span className="text-sm md:text-base text-green-600 font-semibold">
-                        {getMedida(essenciaisCalculados?.salGrosso, TipoMedida.peso)}
+          {/* Essenciais Card */}
+          {(temAssados() || temBebidas()) && essenciaisCalculados && (
+            <motion.div variants={item} className="h-full">
+              <Card className="h-full border-green-100 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="pb-4 border-b border-green-50 bg-green-50/30">
+                  <CardTitle className="flex items-center gap-2 text-xl text-green-700">
+                    <span>✨</span> Essenciais
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-4">
+                  {[
+                    { show: temAssados(), label: 'Sal Grosso', value: essenciaisCalculados.salGrosso },
+                    { show: temAssados(), label: 'Carvão', value: essenciaisCalculados.carvao },
+                    { show: temBebidas(), label: 'Gelo', value: essenciaisCalculados.gelo },
+                  ].map(item => item.show && (
+                    <div key={item.label} className="flex justify-between items-baseline">
+                      <span className="text-gray-600 font-medium">{item.label}</span>
+                      <span className="text-xl font-bold text-gray-900">
+                         <CountUp 
+                          end={getMedidaParts(item.value, TipoMedida.peso).value} 
+                          decimals={getMedidaParts(item.value, TipoMedida.peso).unit === 'kg' ? 2 : 0}
+                          suffix={getMedidaParts(item.value, TipoMedida.peso).unit}
+                        />
                       </span>
-                    </li>
-                  )}
-                  {temAssados() && (
-                    <li className="flex justify-between items-center py-1 border-b border-green-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Carvão:</span>
-                      <span className="text-sm md:text-base text-green-600 font-semibold">
-                        {getMedida(essenciaisCalculados?.carvao, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                  {temBebidas() && (
-                    <li className="flex justify-between items-center py-1 border-b border-green-100 last:border-b-0">
-                      <span className="text-sm md:text-base text-gray-700 font-medium">Gelo:</span>
-                      <span className="text-sm md:text-base text-green-600 font-semibold">
-                        {getMedida(essenciaisCalculados?.gelo, TipoMedida.peso)}
-                      </span>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
-          </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </div>
 
-          <div className="mt-6 pt-4 border-t border-gray-200 space-y-3">
-            <Button
-              onClick={handleCalcularNovamente}
-              className={`${buttonVariants({ variant: 'outline' })} w-full text-sm md:text-base py-3`}
-            >
-              {participantes && participantes > 0
-                ? 'Calcule novamente com mais precisão'
-                : 'Calcular novamente'}
-            </Button>
+        {/* Actions */}
+        <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-center pt-8 border-t border-gray-200">
+          <Button
+            onClick={handleCalcularNovamente}
+            variant="outline"
+            size="lg"
+            className="w-full sm:w-auto"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Recalcular
+          </Button>
+          <div className="w-full sm:w-auto">
             <ShareButton shareText={formatShoppingList()} />
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

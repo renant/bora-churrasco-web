@@ -70,41 +70,46 @@ export default function Bebidas() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 p-6">
-            <motion.div variants={item}>
-              <div className="grid grid-cols-2 gap-4">
-                <CheckButton
-                  isChecked={cerveja}
-                  description="Cerveja"
-                  onClick={() => changeCerveja()}
-                  className="aspect-square"
-                >
-                  <CervejaIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={agua}
-                  description="Água"
-                  onClick={() => changeAgua()}
-                  className="aspect-square"
-                >
-                  <AguaIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={suco}
-                  description="Suco"
-                  onClick={() => changeSuco()}
-                  className="aspect-square"
-                >
-                  <SucoIcon size={50} />
-                </CheckButton>
-                <CheckButton
-                  isChecked={refrigerante}
-                  description="Refrigerante"
-                  onClick={() => changeRefrigerante()}
-                  className="aspect-square"
-                >
-                  <RefrigeranteIcon size={50} />
-                </CheckButton>
-              </div>
+            <motion.div 
+              className="grid grid-cols-2 gap-4"
+              variants={container}
+            >
+              <CheckButton
+                isChecked={cerveja}
+                description="Cerveja"
+                onClick={() => changeCerveja()}
+                className="aspect-square"
+                variants={item}
+              >
+                <CervejaIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={agua}
+                description="Água"
+                onClick={() => changeAgua()}
+                className="aspect-square"
+                variants={item}
+              >
+                <AguaIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={suco}
+                description="Suco"
+                onClick={() => changeSuco()}
+                className="aspect-square"
+                variants={item}
+              >
+                <SucoIcon size={50} />
+              </CheckButton>
+              <CheckButton
+                isChecked={refrigerante}
+                description="Refrigerante"
+                onClick={() => changeRefrigerante()}
+                className="aspect-square"
+                variants={item}
+              >
+                <RefrigeranteIcon size={50} />
+              </CheckButton>
             </motion.div>
 
             <motion.div variants={item} className="flex justify-center pt-6">
