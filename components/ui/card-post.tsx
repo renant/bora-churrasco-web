@@ -45,19 +45,32 @@ export async function CardPost({ post }: CardPostProps) {
         </CardHeader>
         <CardContent>
           <div className="relative z-0 h-64 w-full">
-            <Image
-              fill={true}
-              className="rounded-md object-cover"
-              src={post.coverImage}
-              alt={`Image do post ${post.title}`}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              loading="lazy"
-              placeholder="blur"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                shimmer(700, 475)
-              )}`}
-              quality={75}
-            />
+            {post.hdWebp ? (
+              <Image
+                fill
+                className="rounded-md object-cover"
+                src={post.thumbWebp}
+                alt={`Imagem do post ${post.title}`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
+                blurDataURL={post.blurDataURL}
+                quality={75}
+              />
+            ) : (
+              <Image
+                fill
+                className="rounded-md object-cover"
+                src={post.coverImage}
+                alt={`Imagem do post ${post.title}`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(700, 475)
+                )}`}
+                quality={75}
+              />
+            )}
           </div>
         </CardContent>
       </Card>

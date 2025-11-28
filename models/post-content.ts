@@ -12,6 +12,8 @@ export interface Post {
   tags: string[];
   blurDataURL: string;
   formattedDate: string;
+  hdWebp: string;
+  thumbWebp: string;
 }
 
 export interface PostContent extends Post {

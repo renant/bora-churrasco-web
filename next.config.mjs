@@ -4,7 +4,6 @@ import createMDX from "@next/mdx";
 const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   images: {
-    minimumCacheTTL: 86400, // 24 hours cache for better performance
     remotePatterns: [
       {
         protocol: "https",
@@ -23,13 +22,8 @@ const nextConfig = {
         hostname: "pub-992a36cf1a614410b68f49587c83df71.r2.dev",
       },
     ],
-    formats: ["image/avif", "image/webp"],
-    // Optimized device sizes for mobile-first approach
-    deviceSizes: [320, 420, 640, 768, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 192, 256, 384],
-    // Enable blur placeholder for better CLS
-    dangerouslyAllowSVG: false,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    formats: ["image/webp"],
+    minimumCacheTTL: 60 * 60 * 24 * 365,
   },
   compress: true,
   poweredByHeader: false,
