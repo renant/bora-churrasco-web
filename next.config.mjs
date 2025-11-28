@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "img.buymeacoffee.com",
       },
+      {
+        protocol: "https",
+        hostname: "pub-992a36cf1a614410b68f49587c83df71.r2.dev",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     // Optimized device sizes for mobile-first approach
