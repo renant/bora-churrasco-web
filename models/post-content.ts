@@ -12,6 +12,7 @@ export interface Post {
   formattedDate: string;
   hdWebp: string;
   thumbWebp: string;
+  firebaseCoverImageUrl: string;
 }
 
 export interface PostContent extends Post {
