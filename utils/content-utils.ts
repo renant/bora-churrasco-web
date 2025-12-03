@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { connection } from "next/server";
 
 export interface PostMetadata {
   title: string;
@@ -24,6 +25,9 @@ export async function getRandomPosts(
   excludeSlug?: string
 ): Promise<PostMetadata[]> {
   try {
+    // Signal to Next.js that this requires dynamic rendering
+    await connection();
+
     const files = fs.readdirSync(path.join(process.cwd(), "post-contents"));
     const mdxFiles = files
       .filter((file: string) => file.endsWith(".mdx"))
@@ -61,6 +65,9 @@ export async function getRandomRecipes(
   excludeSlug?: string
 ): Promise<RecipeMetadata[]> {
   try {
+    // Signal to Next.js that this requires dynamic rendering
+    await connection();
+
     const files = fs.readdirSync(path.join(process.cwd(), "recipe-contents"));
     const mdxFiles = files
       .filter((file: string) => file.endsWith(".mdx"))

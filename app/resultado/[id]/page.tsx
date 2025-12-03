@@ -52,7 +52,6 @@ export async function generateMetadata({ params }: { params: Params }) {
       type: "article",
       siteName: "Bora Churrasco",
       article: {
-        publishedTime: new Date().toISOString(),
         authors: ["Bora Churrasco"],
         tags: ["Churrasco", "Calculadora", "Planejamento", "Carnes"],
       },
@@ -209,9 +208,10 @@ export default async function Resultado({ params }: { params: Params }) {
         headline={`Cálculo De Churrasco Para ${participante} Pessoas`}
         description={`Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas para organizar seu evento.`}
         url={`https://www.borachurrasco.app/resultado/${participante}`}
-        datePublished={new Date().toISOString()}
-        dateModified={new Date().toISOString()}
-        author={{ name: "Bora Churrasco", url: "https://www.borachurrasco.app" }}
+        author={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
+        }}
         image="https://www.borachurrasco.app/images/ms-icon-310x310.png"
         publisher={{
           name: "Bora Churrasco",
@@ -223,19 +223,16 @@ export default async function Resultado({ params }: { params: Params }) {
       />
 
       <BreadcrumbJsonLd
-        itemListElements={[
+        items={[
           {
-            position: 1,
             name: "Home",
             item: "https://www.borachurrasco.app",
           },
           {
-            position: 2,
             name: "Calculadora",
             item: "https://www.borachurrasco.app/resultado",
           },
           {
-            position: 3,
             name: `${participante} Pessoas`,
             item: `https://www.borachurrasco.app/resultado/${participante}`,
           },

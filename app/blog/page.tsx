@@ -1,7 +1,7 @@
 import { CardPost } from "@/components/ui/card-post";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArticleJsonLd } from "next-seo";
+import Link from "next/link";
 import { getPosts } from "./actions";
 
 function getFirstValue(param: string | string[] | undefined): string {
@@ -92,9 +92,16 @@ export default async function PostsPage(props: {
         headline="Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador"
         description="Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis."
         url="https://www.borachurrasco.app/blog"
-        datePublished={posts[0]?.date ?? new Date().toISOString()}
-        dateModified={posts[0]?.date ?? new Date().toISOString()}
-        author={{ name: "Bora Churrasco", url: "https://www.borachurrasco.app" }}
+        datePublished={
+          posts[0]?.date ? new Date(posts[0].date).toISOString() : undefined
+        }
+        dateModified={
+          posts[0]?.date ? new Date(posts[0].date).toISOString() : undefined
+        }
+        author={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
+        }}
         image="https://www.borachurrasco.app/images/ms-icon-310x310.png"
         publisher={{
           name: "Bora Churrasco",
