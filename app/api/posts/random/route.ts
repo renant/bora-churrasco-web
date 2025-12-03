@@ -10,7 +10,9 @@ export interface SuggestedPostsProps {
 export interface PostMetadata {
   title: string;
   slug: string;
-  coverImage: string;
+  hdWebp: string;
+  thumbWebp: string;
+  blurDataURL: string;
   resume: string;
   date: string;
   tags: string[];

@@ -75,14 +75,13 @@ export default function ClientSuggestedRecipes({
                 <div className="relative w-full overflow-hidden rounded-lg shadow-lg">
                   <div className="relative z-0 h-32 w-full lg:h-32">
                     <Image
-                      fill={true}
-                      priority={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                      fill
                       className="rounded-lg object-cover"
-                      src={recipe.imagePath}
+                      src={recipe.thumbWebp ?? ""}
                       alt={`Foto da receita: ${recipe.title}`}
-                      itemProp="image"
-                      quality={90}
+                      sizes="100vw"
+                      loading="lazy"
+                      unoptimized
                     />
                   </div>
                 </div>

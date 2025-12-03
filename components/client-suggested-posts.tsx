@@ -80,14 +80,13 @@ export default function ClientSuggestedPosts({
                 <div className="relative w-full overflow-hidden rounded-lg shadow-lg">
                   <div className="relative z-0 h-32 w-full lg:h-32">
                     <Image
-                      fill={true}
-                      priority={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                      className="rounded-lg object-cover"
-                      src={post.coverImage}
-                      alt={`Foto da receita: ${post.title}`}
-                      itemProp="image"
-                      quality={90}
+                      fill
+                      src={post.thumbWebp ?? ""}
+                      alt={`Imagem do post ${post.title}`}
+                      className="rounded-md object-cover"
+                      sizes="100vw"
+                      loading="lazy"
+                      unoptimized
                     />
                   </div>
                 </div>

@@ -10,7 +10,9 @@ export interface SuggestedRecipesProps {
 export interface RecipeMetadata {
   title: string;
   slug: string;
-  imagePath: string;
+  hdWebp: string;
+  thumbWebp: string;
+  blurDataURL: string;
   date: string;
 }
 

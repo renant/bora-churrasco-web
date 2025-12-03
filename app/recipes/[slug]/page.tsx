@@ -90,13 +90,12 @@ export default async function RecipePage({ params }: { params: Params }) {
           <div className="relative z-0 h-80 w-full lg:h-[500px]">
             <Image
               fill={true}
-              priority={true}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+              sizes="100vw"
+              loading="lazy"
               className="rounded-lg object-cover"
-              src={recipe.imagePath}
+              src={recipe.hdWebp ?? ""}
               alt={`Foto da receita: ${recipe.title}`}
-              itemProp="image"
-              quality={90}
+              unoptimized
             />
           </div>
         </div>
