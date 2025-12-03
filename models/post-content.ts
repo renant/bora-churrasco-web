@@ -1,10 +1,8 @@
 export interface Post {
   title: string;
   slug: string;
-  firebaseCoverImageUrl: string;
   published: boolean;
   date: Date;
-  coverImage: string;
   resume: string;
   url: string;
   id: string;
