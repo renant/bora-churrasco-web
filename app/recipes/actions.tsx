@@ -1,4 +1,5 @@
 import type Recipe from "@/models/recipe";
+import { cacheLife } from "next/cache";
 import fs from "node:fs";
 import path from "node:path";
 import { remark } from "remark";
@@ -19,6 +20,8 @@ export async function getRecipes({
   searchTerm,
   sort = "date_desc",
 }: GetRecipeParams) {
+  "use cache";
+  cacheLife("hours");
   const files = fs.readdirSync(RECIPES_PATH);
   const slugs = files.map((file) => ({
     slug: file.replace(/\.mdx$/, ""),
@@ -118,6 +121,9 @@ async function loadMdxMetadata(slug: string): Promise<Recipe | null> {
 }
 
 export async function getRecipe(slug: string): Promise<Recipe | null> {
+  "use cache";
+  cacheLife("days");
+
   try {
     const mdxPath = path.join(RECIPES_PATH, `${slug}.mdx`);
 

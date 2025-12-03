@@ -118,13 +118,13 @@ export default async function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/google-play-badge.avif"
+          href="/google-play-badge.webp"
           type="image/avif"
         />
         <link
           rel="preload"
           as="image"
-          href="/app-sample.avif"
+          href="/app-sample.webp"
           type="image/avif"
         />
         <link
@@ -150,10 +150,7 @@ export default async function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
           crossOrigin="anonymous"
         />
-        <Script 
-          id="clarity-script"
-          strategy="lazyOnload"
-        >
+        <Script id="clarity-script" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

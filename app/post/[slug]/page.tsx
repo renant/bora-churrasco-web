@@ -204,5 +204,3 @@ export function generateStaticParams() {
 
   return slugs;
 }
-
-export const dynamicParams = false;

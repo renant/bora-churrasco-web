@@ -43,8 +43,6 @@ const CardContent = dynamic(
   }
 );
 
-export const revalidate = 3600;
-
 export const metadata: Metadata = {
   title:
     "Receitas de Churrasco - Aprenda a Fazer o Melhor Churrasco | Bora Churrasco",
