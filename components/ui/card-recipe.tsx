@@ -13,11 +13,13 @@ export async function CardRecipe({ recipe }: CardRecipeProps) {
     <Link href={`/recipes/${recipe.id}`}>
       <div className="relative w-32 text-center md:w-full">
         <Image
+          fill
           className="overflow-hidden rounded-3xl opacity-70 shadow-xl"
-          src={recipe.imagePath}
+          src={recipe.thumbWebp ?? ""}
           alt={`Foto da receita: ${recipe.title}`}
-          width={200}
-          height={200}
+          sizes="100vw"
+          loading="lazy"
+          unoptimized
         />
         <h3 className="custom-centered text-sm font-extrabold text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] md:text-lg">
           {recipe.title}

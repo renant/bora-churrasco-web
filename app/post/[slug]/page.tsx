@@ -102,32 +102,15 @@ export default async function PostPage({ params }: { params: Params }) {
               contain: "layout paint",
             }}
           >
-            {metadata.hdWebp ? (
-              <Image
-                priority
-                width={1200}
-                height={675}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
-                className="object-cover"
-                src={metadata.hdWebp}
-                alt={`Imagem do post ${metadata.title}`}
-                quality={90}
-                fetchPriority="high"
-                blurDataURL={metadata.blurDataURL}
-              />
-            ) : (
-              <Image
-                priority
-                width={1200}
-                height={675}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
-                className="object-cover"
-                src={metadata.coverImage}
-                alt={`Imagem do post ${metadata.title}`}
-                quality={90}
-                fetchPriority="high"
-              />
-            )}
+            <Image
+              fill
+              src={metadata.hdWebp}
+              alt={`Imagem do post ${metadata.title}`}
+              className="rounded-md object-cover"
+              sizes="100vw"
+              loading="lazy"
+              unoptimized
+            />
           </div>
         </div>
 

@@ -3,7 +3,6 @@ class Recipe {
     public id: string,
     public title: string,
     public name: string,
-    public imagePath: string,
     public ingredients: string[],
     public steps: string[],
     public date: Date,
@@ -11,7 +10,10 @@ class Recipe {
     public createdBy: string,
     public content: string,
     public slug: string,
-    public formattedDate?: string
+    public formattedDate?: string,
+    public blurDataURL?: string,
+    public hdWebp?: string,
+    public thumbWebp?: string
   ) {}
 }
 

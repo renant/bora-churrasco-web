@@ -94,7 +94,7 @@ export async function getPosts({
     if (!post) return null;
     return {
       ...post,
-      firebaseCoverImageUrl: post.coverImage,
+      firebaseCoverImageUrl: post.thumbWebp ?? "",
       slugId: post.slug,
     };
   });
@@ -135,7 +135,7 @@ export async function getPost(slug: string): Promise<PostContent | null> {
     return {
       ...mdxModule.metadata,
       slug,
-      firebaseCoverImageUrl: mdxModule.metadata.coverImage,
+      firebaseCoverImageUrl: mdxModule.metadata.thumbWebp ?? "",
       slugId: slug,
       content: htmlContent,
     } as PostContent;

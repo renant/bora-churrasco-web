@@ -115,7 +115,7 @@ export default async function RecipesPage(props: {
       item: {
         "@type": "Recipe",
         name: recipe?.name,
-        image: recipe?.imagePath,
+        image: recipe?.hdWebp,
         url: `https://www.borachurrasco.app/recipes/${recipe?.slug}`,
       },
     })),
@@ -175,15 +175,13 @@ export default async function RecipesPage(props: {
                     <CardContent>
                       <div className="relative z-0 h-64 w-full">
                         <Image
-                          fill={true}
+                          fill
                           className="rounded-md object-cover"
-                          src={recipe?.imagePath || ""}
+                          src={recipe?.hdWebp ?? ""}
                           alt={`Foto da receita de ${recipe?.name}`}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          sizes="100vw"
                           loading="lazy"
-                          placeholder="blur"
-                          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciPjxzdG9wIHN0b3AtY29sb3I9IiNmNmY3ZjgiIG9mZnNldD0iMCUiIC8+PHN0b3Agc3RvcC1jb2xvcj0iI2VkZWVmMSIgb2Zmc2V0PSIyMCUiIC8+PHN0b3Agc3RvcC1jb2xvcj0iI2Y2ZjdmOCIgb2Zmc2V0PSI0MCUiIC8+PHN0b3Agc3RvcC1jb2xvcj0iI2Y2ZjdmOCIgb2Zmc2V0PSI3MCUiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjcwMCIgaGVpZ2h0PSI0NzUiIGZpbGw9IiNmNmY3ZjgiIC8+PHJlY3QgaWQ9InIiIHdpZHRoPSI3MDAiIGhlaWdodD0iNDc1IiBmaWxsPSJ1cmwoI2cpIiAvPjxhbmltYXRlIHhsaW5rOmhyZWY9IiNyIiBhdHRyaWJ1dGVOYW1lPSJ4IiBmcm9tPSItNzAwIiB0bz0iNzAwIiBkdXI9IjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgIC8+PC9zdmc+"
-                          quality={75}
+                          unoptimized
                         />
                       </div>
                     </CardContent>
