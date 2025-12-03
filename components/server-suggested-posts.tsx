@@ -31,7 +31,8 @@ export default async function ServerSuggestedPosts({
           Você também pode gostar
         </h2>
         <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-          Continue explorando nosso conteúdo e torne-se um mestre do churrasco! 🔥
+          Continue explorando nosso conteúdo e torne-se um mestre do churrasco!
+          🔥
         </p>
       </div>
 
@@ -54,7 +55,7 @@ export default async function ServerSuggestedPosts({
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="rounded-lg object-cover"
-                    src={post.coverImage}
+                    src={post.thumbWebp}
                     alt={`Foto da receita: ${post.title}`}
                     itemProp="image"
                     quality={85}
@@ -85,4 +86,3 @@ export default async function ServerSuggestedPosts({
     </section>
   );
 }
-

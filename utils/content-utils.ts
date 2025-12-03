@@ -4,7 +4,8 @@ import path from "path";
 export interface PostMetadata {
   title: string;
   slug: string;
-  coverImage: string;
+  hdWebp: string;
+  thumbWebp: string;
   resume: string;
   date: string;
   tags: string[];
@@ -13,7 +14,8 @@ export interface PostMetadata {
 export interface RecipeMetadata {
   title: string;
   slug: string;
-  imagePath: string;
+  hdWebp: string;
+  thumbWebp: string;
   date: string;
 }
 
