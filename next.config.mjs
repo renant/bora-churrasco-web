@@ -22,7 +22,7 @@ const nextConfig = {
         hostname: "pub-992a36cf1a614410b68f49587c83df71.r2.dev",
       },
     ],
-    formats: ["image/webp"],
+    formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 365,
   },
   compress: true,

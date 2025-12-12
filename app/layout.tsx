@@ -1,10 +1,17 @@
 import { Header } from "@/components/ui/header";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
-
+import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const viewport: Viewport = {
   themeColor: "#FEF3C7",
@@ -107,14 +114,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={inter.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        {/* Preconnect to external domains for better performance */}
+        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
+        <link rel="dns-prefetch" href="https://pub-992a36cf1a614410b68f49587c83df71.r2.dev" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
+        {/* Preload critical above-the-fold images */}
         <link
           rel="preload"
           as="image"
@@ -127,24 +135,19 @@ export default async function RootLayout({
           href="/app-sample.avif"
           type="image/avif"
         />
-        <link
-          rel="preload"
-          as="image"
-          href="/images/ms-icon-310x310.png"
-          type="image/png"
-        />
         <script
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100">
+      <body className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 font-sans antialiased">
         <Header />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {children}
         </main>
         <Analytics />
+        <SpeedInsights />
         <Script
           strategy="lazyOnload"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"

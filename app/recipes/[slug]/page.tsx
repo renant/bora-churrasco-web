@@ -90,7 +90,7 @@ export default async function RecipePage({ params }: { params: Params }) {
           <div className="relative z-0 h-80 w-full lg:h-[500px]">
             <Image
               fill={true}
-              sizes="100vw"
+              sizes="(max-width: 1024px) 100vw, 896px"
               loading="lazy"
               className="rounded-lg object-cover"
               src={recipe.hdWebp ?? ""}
