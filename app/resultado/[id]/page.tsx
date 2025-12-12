@@ -1,8 +1,8 @@
 import ComoCalcularComponent from "@/components/como-calcular-component";
-import JsonLd from "@/components/JsonLd";
 import ServerSuggestedPosts from "@/components/server-suggested-posts";
 import ResultDefault from "@/components/ui/resultDefault";
 import SuggestedPostsSkeleton from "@/components/ui/suggested-posts-skeleton";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "next-seo";
 import { Suspense } from "react";
 
 type Params = Promise<{ id: string }>;
@@ -52,7 +52,6 @@ export async function generateMetadata({ params }: { params: Params }) {
       type: "article",
       siteName: "Bora Churrasco",
       article: {
-        publishedTime: new Date().toISOString(),
         authors: ["Bora Churrasco"],
         tags: ["Churrasco", "Calculadora", "Planejamento", "Carnes"],
       },
@@ -204,66 +203,40 @@ export default async function Resultado({ params }: { params: Params }) {
         <ComoCalcularComponent />
       </main>
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: `Cálculo De Churrasco Para ${participante} Pessoas`,
-          description: `Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas para organizar seu evento.`,
-          datePublished: new Date().toISOString(),
-          dateModified: new Date().toISOString(),
-          author: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-            url: "https://www.borachurrasco.app",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-            url: "https://www.borachurrasco.app",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-              width: 310,
-              height: 310,
-            },
-          },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://www.borachurrasco.app/resultado/${participante}`,
-            url: `https://www.borachurrasco.app/resultado/${participante}`,
-          },
-          image: {
-            "@type": "ImageObject",
-            url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-            width: 310,
-            height: 310,
-          },
-          inLanguage: "pt-BR",
-          breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://www.borachurrasco.app",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Calculadora",
-                item: "https://www.borachurrasco.app/resultado",
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: `${participante} Pessoas`,
-                item: `https://www.borachurrasco.app/resultado/${participante}`,
-              },
-            ],
-          },
+      <ArticleJsonLd
+        type="Article"
+        headline={`Cálculo De Churrasco Para ${participante} Pessoas`}
+        description={`Lista de compras e cálculo estimado para um churrasco de ${participante} pessoas. Guia completo com quantidades de carnes, acompanhamentos e dicas para organizar seu evento.`}
+        url={`https://www.borachurrasco.app/resultado/${participante}`}
+        author={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
         }}
+        image="https://www.borachurrasco.app/images/ms-icon-310x310.png"
+        publisher={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
+          logo: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+        }}
+        mainEntityOfPage={`https://www.borachurrasco.app/resultado/${participante}`}
+        isAccessibleForFree
+      />
+
+      <BreadcrumbJsonLd
+        items={[
+          {
+            name: "Home",
+            item: "https://www.borachurrasco.app",
+          },
+          {
+            name: "Calculadora",
+            item: "https://www.borachurrasco.app/resultado",
+          },
+          {
+            name: `${participante} Pessoas`,
+            item: `https://www.borachurrasco.app/resultado/${participante}`,
+          },
+        ]}
       />
     </div>
   );

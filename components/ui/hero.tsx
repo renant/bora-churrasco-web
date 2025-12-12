@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import appSampleImg from "@/public/app-sample.avif";
+import appSampleImg from "@/public/app-sample.webp";
 import { Check, ChevronRight, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -71,7 +71,7 @@ export function Hero() {
                   width={168}
                   height={56}
                   alt="Disponível no Google Play"
-                  src="/google-play-badge.avif"
+                  src="/google-play-badge.webp"
                   className="h-14 w-auto hover:opacity-90 transition-opacity"
                   priority
                   sizes="168px"

@@ -1,4 +1,3 @@
-import JsonLd from "@/components/JsonLd";
 import { CTASection } from "@/components/ui/cta-section";
 import { Faq } from "@/components/ui/faq";
 import { Features } from "@/components/ui/features";
@@ -6,6 +5,7 @@ import { Guide } from "@/components/ui/guide";
 import { Hero } from "@/components/ui/hero";
 import { HowItWorks } from "@/components/ui/how-it-works";
 import type { Metadata } from "next";
+import { FAQJsonLd, SoftwareApplicationJsonLd } from "next-seo";
 import { Suspense } from "react";
 
 // Metadata específica para a página inicial
@@ -122,92 +122,52 @@ export default function Home() {
       </main>
 
       {/* Structured Data for SEO */}
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WebApplication",
-          name: "Bora Churrasco - Calculadora de Churrasco",
-          description:
-            "Calculadora online gratuita para planejar churrascos com precisão",
-          url: "https://www.borachurrasco.app",
-          applicationCategory: "UtilityApplication",
-          operatingSystem: "Any",
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "BRL",
-          },
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: "4.8",
-            reviewCount: "486",
-          },
-          author: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-          },
+      <SoftwareApplicationJsonLd
+        name="Bora Churrasco - Calculadora de Churrasco"
+        offers={{ price: 0, priceCurrency: "BRL" }}
+        applicationCategory="UtilityApplication"
+        operatingSystem="Any"
+        aggregateRating={{
+          ratingValue: 4.8,
+          reviewCount: 486,
         }}
       />
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "MobileApplication",
-          name: "Bora Churrasco App",
-          operatingSystem: "Android",
-          applicationCategory: "UtilitiesApplication",
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "BRL",
-          },
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: "4.8",
-            ratingCount: "486",
-          },
+      <SoftwareApplicationJsonLd
+        type="MobileApplication"
+        name="Bora Churrasco App"
+        offers={{ price: 0, priceCurrency: "BRL" }}
+        applicationCategory="UtilitiesApplication"
+        operatingSystem="Android"
+        aggregateRating={{
+          ratingValue: 4.8,
+          ratingCount: 486,
         }}
       />
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: [
-            {
-              "@type": "Question",
-              name: "Como calcular a quantidade de carne para churrasco?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Use nossa calculadora gratuita! Em média, calcule 400g por homem, 300g por mulher e 200g por criança. A calculadora ajusta automaticamente baseado no tempo do evento.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Quanto de carvão usar no churrasco?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "A regra geral é 1,5kg de carvão para cada kg de carne. Para churrasqueiras a gás, não se preocupe com isso!",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Como calcular bebidas para churrasco?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Nossa calculadora considera: 1L de cerveja por hora/pessoa (que bebe), 600ml de refrigerante e 400ml de água por pessoa.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "O app Bora Churrasco é gratuito?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Sim! O Bora Churrasco é 100% gratuito, tanto a versão web quanto o aplicativo Android. Todas as funcionalidades são liberadas sem custo.",
-              },
-            },
-          ],
-        }}
+      <FAQJsonLd
+        questions={[
+          {
+            question: "Como calcular a quantidade de carne para churrasco?",
+            answer:
+              "Use nossa calculadora gratuita! Em média, calcule 400g por homem, 300g por mulher e 200g por criança. A calculadora ajusta automaticamente baseado no tempo do evento.",
+          },
+          {
+            question: "Quanto de carvão usar no churrasco?",
+            answer:
+              "A regra geral é 1,5kg de carvão para cada kg de carne. Para churrasqueiras a gás, não se preocupe com isso!",
+          },
+          {
+            question: "Como calcular bebidas para churrasco?",
+            answer:
+              "Nossa calculadora considera: 1L de cerveja por hora/pessoa (que bebe), 600ml de refrigerante e 400ml de água por pessoa.",
+          },
+          {
+            question: "O app Bora Churrasco é gratuito?",
+            answer:
+              "Sim! O Bora Churrasco é 100% gratuito, tanto a versão web quanto o aplicativo Android. Todas as funcionalidades são liberadas sem custo.",
+          },
+        ]}
       />
     </>
   );

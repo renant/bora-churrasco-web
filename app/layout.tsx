@@ -2,6 +2,7 @@ import { Header } from "@/components/ui/header";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
+import { SoftwareApplicationJsonLd } from "next-seo";
 
 import Script from "next/script";
 import "./globals.css";
@@ -75,32 +76,6 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "Bora Churrasco",
-  description:
-    "Calculadora de Churrasco Online Grátis - Planeje seu churrasco com precisão",
-  url: "https://www.borachurrasco.app",
-  applicationCategory: "UtilityApplication",
-  operatingSystem: "All",
-  inLanguage: "pt-BR",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "BRL",
-  },
-  author: {
-    "@type": "Organization",
-    name: "Bora Churrasco",
-    url: "https://www.borachurrasco.app",
-  },
-  potentialAction: {
-    "@type": "UseAction",
-    target: "https://www.borachurrasco.app/participantes",
-  },
-};
-
 export default async function RootLayout({
   children,
 }: {
@@ -118,13 +93,13 @@ export default async function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/google-play-badge.avif"
+          href="/google-play-badge.webp"
           type="image/avif"
         />
         <link
           rel="preload"
           as="image"
-          href="/app-sample.avif"
+          href="/app-sample.webp"
           type="image/avif"
         />
         <link
@@ -132,11 +107,6 @@ export default async function RootLayout({
           as="image"
           href="/images/ms-icon-310x310.png"
           type="image/png"
-        />
-        <script
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100">
@@ -150,10 +120,7 @@ export default async function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
           crossOrigin="anonymous"
         />
-        <Script 
-          id="clarity-script"
-          strategy="lazyOnload"
-        >
+        <Script id="clarity-script" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -163,6 +130,12 @@ export default async function RootLayout({
           `}
         </Script>
         <GoogleTagManager gtmId={process.env.GA_TRACKING_ID as string} />
+        <SoftwareApplicationJsonLd
+          name="Bora Churrasco"
+          offers={{ price: 0, priceCurrency: "BRL" }}
+          applicationCategory="UtilityApplication"
+          operatingSystem="All"
+        />
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
-import JsonLd from "@/components/JsonLd";
 import ClientSuggestedRecipes from "@/components/client-suggested-recipes";
+import { RecipeJsonLd } from "next-seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     },
     images: [
       {
-        url: recipe.imagePath,
+        url: recipe.hdWebp,
       },
     ],
     openGraph: {
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       url: url,
       images: [
         {
-          url: recipe.imagePath,
+          url: recipe.hdWebp,
         },
       ],
       locale: "pt_BR",
@@ -142,34 +142,16 @@ export default async function RecipePage({ params }: { params: Params }) {
         <ClientSuggestedRecipes excludeSlug={slug} count={3} />
       </main>
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Recipe",
-          name: recipe.title,
-          description: `Receita de ${recipe.title}`,
-          datePublished: new Date(recipe.date).toISOString(),
-          author: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-            url: "https://www.borachurrasco.app",
-          },
-          image: [recipe.imagePath],
-          publisher: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-            },
-          },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://www.borachurrasco.app/recipes/${slug}`,
-          },
-          isAccessibleForFree: "True",
-          inLanguage: "pt-BR",
+      <RecipeJsonLd
+        name={recipe.title}
+        description={`Receita de ${recipe.title}`}
+        datePublished={new Date(recipe.date).toISOString()}
+        author={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
         }}
+        image={[recipe.hdWebp]}
+        url={`https://www.borachurrasco.app/recipes/${slug}`}
       />
     </div>
   );
@@ -183,5 +165,3 @@ export function generateStaticParams() {
 
   return slugs;
 }
-
-export const dynamicParams = false;
