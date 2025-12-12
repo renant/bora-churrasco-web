@@ -28,26 +28,10 @@ export async function generateMetadata({ params }: { params: Params }) {
       "Organização de Churrasco",
       "Dicas de Churrasco",
     ],
-    images: [
-      {
-        url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-        width: 310,
-        height: 310,
-        alt: "Bora Churrasco - Calculadora de Churrasco",
-      },
-    ],
     openGraph: {
       title: `Calculadora de Churrasco: Quantidade Para ${participante} Pessoas | Bora Churrasco`,
       description: `Descubra a quantidade exata de carne e acompanhamentos para um churrasco de ${participante} pessoas. Cálculo preciso de carnes, acompanhamentos e bebidas para seu evento.`,
       url: url,
-      images: [
-        {
-          url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-          width: 310,
-          height: 310,
-          alt: "Bora Churrasco - Calculadora de Churrasco",
-        },
-      ],
       locale: "pt_BR",
       type: "article",
       siteName: "Bora Churrasco",
@@ -60,7 +44,6 @@ export async function generateMetadata({ params }: { params: Params }) {
       card: "summary_large_image",
       title: `Calculadora de Churrasco: Quantidade Para ${participante} Pessoas`,
       description: `Descubra a quantidade exata de carne e acompanhamentos para um churrasco de ${participante} pessoas`,
-      images: ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
     },
   };
 }
