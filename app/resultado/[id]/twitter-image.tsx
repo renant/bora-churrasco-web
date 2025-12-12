@@ -9,8 +9,9 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default async function Image({ params }: { params: { id: string } }) {
-  const participantes = params.id;
+export default async function Image({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const participantes = id;
 
   return new ImageResponse(
     (
@@ -134,7 +135,7 @@ export default async function Image({ params }: { params: { id: string } }) {
                 color: "#374151",
               }}
             >
-              🧄 Acompanhamentos
+              ✨ Essenciais
             </div>
           </div>
         </div>
