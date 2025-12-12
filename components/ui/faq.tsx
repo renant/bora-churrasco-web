@@ -1,11 +1,11 @@
 export function Faq() {
   return (
     <div className="prose prose-base mx-auto mt-10">
-      <h4 className="text-3xl font-extrabold text-red-500">FAQ</h4>
+      <h2 className="text-3xl font-extrabold text-red-500">Perguntas Frequentes</h2>
       <section className="mb-8">
-        <h5 className="text-lg font-semibold text-black">
-          Porque não calcular também o preço estimado?
-        </h5>
+        <h3 className="text-lg font-semibold text-black">
+          Por que não calcular também o preço estimado?
+        </h3>
         <div className="grid grid-cols-1 gap-2 text-justify font-light text-black">
           <p>
             Porque o preço varia muito de região para região, e também depende
@@ -19,20 +19,20 @@ export function Faq() {
         </div>
       </section>
       <section className="mb-8">
-        <h5 className="text-lg font-semibold text-black">
-          Alguma previsão para o lancamento para IOS?
-        </h5>
+        <h3 className="text-lg font-semibold text-black">
+          Alguma previsão para o lançamento para iOS?
+        </h3>
         <div className="grid grid-cols-1 gap-2 text-justify font-light text-black">
           <p>
-            No momento não temos uma previsão para o lançamento para IOS, mas
-            estamos trabalhando para que isso aconteça o mais breve possível
+            No momento não temos uma previsão para o lançamento para iOS, mas
+            estamos trabalhando para que isso aconteça o mais breve possível.
           </p>
         </div>
       </section>
       <section className="mb-8">
-        <h5 className="text-lg font-semibold text-black">
-          Como funciona o calculo?
-        </h5>
+        <h3 className="text-lg font-semibold text-black">
+          Como funciona o cálculo?
+        </h3>
         <div className="grid grid-cols-1 gap-2 text-justify font-light text-black">
           <p>
             O cálculo é fundamentado em uma média de consumo de cada

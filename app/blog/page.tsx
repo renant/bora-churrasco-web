@@ -34,11 +34,6 @@ export const metadata: Metadata = {
     description:
       "Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis. Clique agora e leve suas habilidades à brasa a um novo nível!",
     url: "https://www.borachurrasco.app/blog",
-    images: [
-      {
-        url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-      },
-    ],
     locale: "pt_BR",
     type: "website",
   },
@@ -58,7 +53,6 @@ export const metadata: Metadata = {
     title: "Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador",
     description:
       "Descubra os segredos do churrasco perfeito com nosso blog de churrasco.",
-    images: ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
   },
 };
 

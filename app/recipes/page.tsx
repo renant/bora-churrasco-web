@@ -68,14 +68,6 @@ export const metadata: Metadata = {
       "Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir para preparar carnes, acompanhamentos e molhos perfeitos. Aprenda técnicas de mestre churrasqueiro e surpreenda a todos com pratos suculentos e saborosos!",
     url: "https://www.borachurrasco.app/recipes",
     siteName: "Bora Churrasco",
-    images: [
-      {
-        url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-        width: 310,
-        height: 310,
-        alt: "Logo Bora Churrasco",
-      },
-    ],
     locale: "pt_BR",
     type: "website",
   },
@@ -84,7 +76,6 @@ export const metadata: Metadata = {
     title: "Receitas de Churrasco - Bora Churrasco",
     description:
       "Descubra as melhores receitas de churrasco, com passo a passo fácil de seguir.",
-    images: ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
   },
 };
 
@@ -175,7 +166,7 @@ export default async function RecipesPage(props: {
                           className="rounded-md object-cover"
                           src={recipe?.hdWebp ?? ""}
                           alt={`Foto da receita de ${recipe?.name}`}
-                          sizes="100vw"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                           loading="lazy"
                           unoptimized
                         />
