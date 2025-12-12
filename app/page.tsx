@@ -26,14 +26,6 @@ export const metadata: Metadata = {
     title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
     description:
       "Planeje o churrasco perfeito! Calcule carnes, bebidas e acompanhamentos em segundos. 100% Grátis.",
-    images: [
-      {
-        url: "/images/ms-icon-310x310.png",
-        width: 310,
-        height: 310,
-        alt: "Bora Churrasco - Calculadora de Churrasco",
-      },
-    ],
   },
 };
 

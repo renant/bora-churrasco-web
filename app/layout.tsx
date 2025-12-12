@@ -50,14 +50,6 @@ export const metadata: Metadata = {
       "Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos. Ferramenta gratuita para organizar churrascos sem desperdício.",
     url: "/",
     siteName: "Bora Churrasco",
-    images: [
-      {
-        url: "/images/ms-icon-310x310.png",
-        width: 310,
-        height: 310,
-        alt: "Bora Churrasco Logo",
-      },
-    ],
     locale: "pt_BR",
     type: "website",
   },
@@ -66,7 +58,6 @@ export const metadata: Metadata = {
     title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
     description:
       "Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos.",
-    images: ["/images/ms-icon-310x310.png"],
   },
   robots: {
     index: true,
