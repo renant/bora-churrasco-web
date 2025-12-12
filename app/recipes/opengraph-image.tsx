@@ -108,7 +108,7 @@ export default async function Image() {
                 color: "#374151",
               }}
             >
-              🧄 Acompanhamentos
+              ✨ Essenciais
             </div>
           </div>
         </div>
