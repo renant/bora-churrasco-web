@@ -1,5 +1,5 @@
-import JsonLd from "@/components/JsonLd";
 import ClientSuggestedPosts from "@/components/client-suggested-posts";
+import { ArticleJsonLd } from "next-seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     keywords: metadata.tags,
     images: [
       {
-        url: metadata.coverImage,
+        url: metadata.hdWebp,
       },
     ],
     openGraph: {
@@ -59,9 +59,9 @@ export async function generateMetadata({ params }: { params: Params }) {
       url: url,
       images: [
         {
-          url: metadata.coverImage,
-          width: 1200,
-          height: 630,
+          url: metadata.hdWebp,
+          width: 800,
+          height: 800,
           alt: metadata.title,
         },
       ],
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       card: "summary_large_image",
       title: `${metadata.title} | Bora Churrasco`,
       description: `${metadata.resume}`,
-      images: [metadata.coverImage],
+      images: [metadata.hdWebp],
     },
   };
 }
@@ -164,33 +164,25 @@ export default async function PostPage({ params }: { params: Params }) {
         <ClientSuggestedPosts excludeSlug={slug} count={3} />
       </main>
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          headline: metadata.title,
-          description: metadata.resume,
-          datePublished: new Date(metadata.date).toISOString(),
-          author: {
-            "@type": "Person",
-            name: "Bora Churrasco",
-          },
-          image: metadata.coverImage,
-          publisher: {
-            "@type": "Organization",
-            name: "Bora Churrasco",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-            },
-          },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://www.borachurrasco.app/post/${metadata.slug}`,
-          },
-          articleSection: metadata.tags?.[0],
-          keywords: metadata.tags?.join(", "),
+      <ArticleJsonLd
+        type="BlogPosting"
+        headline={metadata.title}
+        description={metadata.resume}
+        url={`https://www.borachurrasco.app/post/${metadata.slug}`}
+        datePublished={new Date(metadata.date).toISOString()}
+        dateModified={new Date(metadata.date).toISOString()}
+        author={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
         }}
+        image={metadata.hdWebp}
+        publisher={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
+          logo: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+        }}
+        mainEntityOfPage={`https://www.borachurrasco.app/post/${metadata.slug}`}
+        isAccessibleForFree
       />
     </div>
   );
@@ -204,5 +196,3 @@ export function generateStaticParams() {
 
   return slugs;
 }
-
-export const dynamicParams = false;

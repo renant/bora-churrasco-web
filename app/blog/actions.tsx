@@ -1,4 +1,5 @@
 import type { Post, PostContent } from "@/models/post-content";
+import { cacheLife } from "next/cache";
 import fs from "node:fs";
 import path from "node:path";
 import { remark } from "remark";
@@ -19,6 +20,8 @@ export async function getPosts({
   searchTerm,
   sort = "date_asc",
 }: GetPostParams) {
+  "use cache";
+  cacheLife("hours");
   const files = fs.readdirSync(POSTS_PATH);
   const slugs = files.map((file) => ({
     slug: file.replace(/\.mdx$/, ""),
@@ -108,6 +111,9 @@ export async function getPosts({
 }
 
 export async function getPost(slug: string): Promise<PostContent | null> {
+  "use cache";
+  cacheLife("days");
+
   try {
     const mdxPath = path.join(POSTS_PATH, `${slug}.mdx`);
 

@@ -1,7 +1,7 @@
 import { CardPost } from "@/components/ui/card-post";
 import type { Metadata } from "next";
+import { ArticleJsonLd } from "next-seo";
 import Link from "next/link";
-import Script from "next/script";
 import { getPosts } from "./actions";
 
 function getFirstValue(param: string | string[] | undefined): string {
@@ -79,27 +79,6 @@ export default async function PostsPage(props: {
     sort,
   });
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    headline: "Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador",
-    image: ["https://www.borachurrasco.app/images/ms-icon-310x310.png"],
-    datePublished: posts[0]?.date,
-    author: {
-      "@type": "Organization",
-      name: "Bora Churrasco",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Bora Churrasco",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
-      },
-    },
-    description: metadata.description,
-  };
-
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   const isPreviousDisabled = currentPage <= 1;
@@ -108,11 +87,28 @@ export default async function PostsPage(props: {
 
   return (
     <>
-      <Script
-        id="blog-jsonld"
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <ArticleJsonLd
+        type="Blog"
+        headline="Bora Churrasco: Dicas, Receitas e Segredos do Mestre Assador"
+        description="Descubra os segredos do churrasco perfeito com nosso blog de churrasco. Explore receitas irresistíveis, técnicas de assado, escolha de carnes, e muito mais para tornar-se um mestre no preparo de churrascos memoráveis."
+        url="https://www.borachurrasco.app/blog"
+        datePublished={
+          posts[0]?.date ? new Date(posts[0].date).toISOString() : undefined
+        }
+        dateModified={
+          posts[0]?.date ? new Date(posts[0].date).toISOString() : undefined
+        }
+        author={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
+        }}
+        image="https://www.borachurrasco.app/images/ms-icon-310x310.png"
+        publisher={{
+          name: "Bora Churrasco",
+          url: "https://www.borachurrasco.app",
+          logo: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+        }}
+        isAccessibleForFree
       />
       <main className="min-h-screen bg-transparent px-9  md:container md:mx-auto md:pt-10">
         <section aria-label="Posts do Blog">

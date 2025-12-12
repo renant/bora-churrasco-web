@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
+import { JsonLdScript } from "next-seo";
 import { Suspense } from "react";
 import { getRecipes } from "./actions";
 
@@ -42,8 +43,6 @@ const CardContent = dynamic(
     ssr: true,
   }
 );
-
-export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title:
@@ -106,21 +105,6 @@ export default async function RecipesPage(props: {
     sort,
   });
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: result.recipes.map((recipe, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Recipe",
-        name: recipe?.name,
-        image: recipe?.hdWebp,
-        url: `https://www.borachurrasco.app/recipes/${recipe?.slug}`,
-      },
-    })),
-  };
-
   const totalPages = Math.ceil(result.totalRecipes / postsPerPage);
 
   const isPreviousDisabled = currentPage <= 1;
@@ -129,10 +113,22 @@ export default async function RecipesPage(props: {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLdScript
+        scriptKey="recipes-item-list"
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          itemListElement: result.recipes.map((recipe, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "Recipe",
+              name: recipe?.name,
+              image: recipe?.hdWebp,
+              url: `https://www.borachurrasco.app/recipes/${recipe?.slug}`,
+            },
+          })),
+        }}
       />
       <main className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-10">
         <Suspense fallback={<LoadingPage />}>

@@ -2,6 +2,7 @@ import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  cacheComponents: true,
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   images: {
     remotePatterns: [
@@ -22,7 +23,7 @@ const nextConfig = {
         hostname: "pub-992a36cf1a614410b68f49587c83df71.r2.dev",
       },
     ],
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 365,
   },
   compress: true,
@@ -41,15 +42,6 @@ const nextConfig = {
     return [
       {
         source: "/images/(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/(.*).avif",
         headers: [
           {
             key: "Cache-Control",
