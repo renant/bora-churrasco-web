@@ -52,6 +52,7 @@ type ChurrascoStore = {
   setHomens: (homens: number) => void;
   setMulheres: (mulheres: number) => void;
   setCriancas: (criancas: number) => void;
+  setParticipantesFromUrl: (total: number) => void;
 
   changeBovina: () => void;
   changeSuina: () => void;
@@ -171,6 +172,9 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
   setHomens: (homens: number) => set(() => ({ homens })),
   setMulheres: (mulheres: number) => set(() => ({ mulheres })),
   setCriancas: (criancas: number) => set(() => ({ criancas })),
+  setParticipantesFromUrl: (total: number) => {
+    set(() => ({ homens: total, mulheres: 0, criancas: 0 }));
+  },
 
   changeBovina: () => set(() => ({ bovina: !get().bovina })),
   changeSuina: () => set(() => ({ suina: !get().suina })),

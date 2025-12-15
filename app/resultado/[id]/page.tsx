@@ -4,6 +4,7 @@ import ResultDefault from "@/components/ui/resultDefault";
 import SuggestedPostsSkeleton from "@/components/ui/suggested-posts-skeleton";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "next-seo";
 import { Suspense } from "react";
+import CustomizeCta from "@/components/customize-cta";
 
 type Params = Promise<{ id: string }>;
 
@@ -177,6 +178,7 @@ export default async function Resultado({ params }: { params: Params }) {
         <div className="flex flex-col md:flex-row items-center justify-center w-full gap-8">
           <ResultDefault participantes={participante} />
         </div>
+        <CustomizeCta participantes={participante} className="mb-8" />
         <div className="mb-4 md:mb-12">
           <Suspense fallback={<SuggestedPostsSkeleton />}>
             <ServerSuggestedPosts count={3} />

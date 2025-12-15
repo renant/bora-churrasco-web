@@ -2,10 +2,10 @@
 import { Button, buttonVariants } from '@/components/ui/button';
 import { CountUp } from '@/components/ui/count-up';
 import churrascoStore from '@/lib/churrascoStore';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Share2, ShoppingCart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createDefaultResult } from './resultDefault';
 import ShareButton from './share-button';
 import { Card, CardContent, CardHeader, CardTitle } from './card';
@@ -73,6 +73,7 @@ const item = {
 
 export default function Result({ participantes }: ResultProps) {
   const router = useRouter();
+  const [copiedItem, setCopiedItem] = useState<string | null>(null);
 
   const {
     getTempo,
@@ -126,6 +127,30 @@ export default function Result({ participantes }: ResultProps) {
     resetState();
     router.push('/');
   }, [resetState, router]);
+
+  const handleCopyClick = useCallback(async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedItem(text);
+      setTimeout(() => setCopiedItem(null), 2000);
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopiedItem(text);
+        setTimeout(() => setCopiedItem(null), 2000);
+      } catch (fallbackErr) {
+        // Ignore errors
+      }
+      document.body.removeChild(textArea);
+    }
+  }, []);
 
   const formatShoppingList = useCallback(() => {
     let text = `🍖 Lista de Compras - Bora Churrasco\n`;
@@ -226,8 +251,20 @@ export default function Result({ participantes }: ResultProps) {
                     { show: frango, label: 'Frango', value: assadosCalculados.frango },
                     { show: queijo, label: 'Queijo', value: assadosCalculados.queijo },
                     { show: paoDeAlho, label: 'Pão de Alho', value: assadosCalculados.paoAlho },
-                  ].map(item => item.show && (
-                    <div key={item.label} className="flex justify-between items-baseline">
+                  ]
+                    .filter(item => item.show)
+                    .map(item => ({
+                      ...item,
+                      copyText: `${item.label}: ${getMedida(item.value, TipoMedida.peso)}`,
+                    }))
+                    .map(item => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => handleCopyClick(item.copyText)}
+                      className="flex justify-between items-baseline w-full py-1 border-b border-red-100 last:border-b-0 cursor-pointer hover:bg-red-50 transition-all duration-200 relative group"
+                      aria-label={`Clique para copiar ${item.label}`}
+                    >
                       <span className="text-gray-600 font-medium">{item.label}</span>
                       <span className="text-xl font-bold text-gray-900">
                         <CountUp 
@@ -236,7 +273,19 @@ export default function Result({ participantes }: ResultProps) {
                           suffix={getMedidaParts(item.value, TipoMedida.peso).unit}
                         />
                       </span>
-                    </div>
+                      <AnimatePresence>
+                        {copiedItem === item.copyText && (
+                          <motion.span
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
+                          >
+                            ✓ Copiado!
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </button>
                   ))}
                 </CardContent>
               </Card>
@@ -258,8 +307,20 @@ export default function Result({ participantes }: ResultProps) {
                     { show: refrigerante, label: 'Refrigerante', value: bebidasCalculadas.refrigerante },
                     { show: agua, label: 'Água', value: bebidasCalculadas.agua },
                     { show: suco, label: 'Suco', value: bebidasCalculadas.suco },
-                  ].map(item => item.show && (
-                    <div key={item.label} className="flex justify-between items-baseline">
+                  ]
+                    .filter(item => item.show)
+                    .map(item => ({
+                      ...item,
+                      copyText: `${item.label}: ${getMedida(item.value, TipoMedida.liquido)}`,
+                    }))
+                    .map(item => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => handleCopyClick(item.copyText)}
+                      className="flex justify-between items-baseline w-full py-1 border-b border-blue-100 last:border-b-0 cursor-pointer hover:bg-blue-50 transition-all duration-200 relative group"
+                      aria-label={`Clique para copiar ${item.label}`}
+                    >
                       <span className="text-gray-600 font-medium">{item.label}</span>
                       <span className="text-xl font-bold text-gray-900">
                          <CountUp 
@@ -268,7 +329,19 @@ export default function Result({ participantes }: ResultProps) {
                           suffix={getMedidaParts(item.value, TipoMedida.liquido).unit}
                         />
                       </span>
-                    </div>
+                      <AnimatePresence>
+                        {copiedItem === item.copyText && (
+                          <motion.span
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
+                          >
+                            ✓ Copiado!
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </button>
                   ))}
                 </CardContent>
               </Card>
@@ -289,8 +362,20 @@ export default function Result({ participantes }: ResultProps) {
                     { show: temAssados(), label: 'Sal Grosso', value: essenciaisCalculados.salGrosso },
                     { show: temAssados(), label: 'Carvão', value: essenciaisCalculados.carvao },
                     { show: temBebidas(), label: 'Gelo', value: essenciaisCalculados.gelo },
-                  ].map(item => item.show && (
-                    <div key={item.label} className="flex justify-between items-baseline">
+                  ]
+                    .filter(item => item.show)
+                    .map(item => ({
+                      ...item,
+                      copyText: `${item.label}: ${getMedida(item.value, TipoMedida.peso)}`,
+                    }))
+                    .map(item => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => handleCopyClick(item.copyText)}
+                      className="flex justify-between items-baseline w-full py-1 border-b border-green-100 last:border-b-0 cursor-pointer hover:bg-green-50 transition-all duration-200 relative group"
+                      aria-label={`Clique para copiar ${item.label}`}
+                    >
                       <span className="text-gray-600 font-medium">{item.label}</span>
                       <span className="text-xl font-bold text-gray-900">
                          <CountUp 
@@ -299,7 +384,19 @@ export default function Result({ participantes }: ResultProps) {
                           suffix={getMedidaParts(item.value, TipoMedida.peso).unit}
                         />
                       </span>
-                    </div>
+                      <AnimatePresence>
+                        {copiedItem === item.copyText && (
+                          <motion.span
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
+                          >
+                            ✓ Copiado!
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </button>
                   ))}
                 </CardContent>
               </Card>

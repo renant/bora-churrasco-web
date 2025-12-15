@@ -4,6 +4,7 @@ import { Features } from "@/components/ui/features";
 import { Guide } from "@/components/ui/guide";
 import { Hero } from "@/components/ui/hero";
 import { HowItWorks } from "@/components/ui/how-it-works";
+import { QuickLinks } from "@/components/ui/quick-links";
 import type { Metadata } from "next";
 import { FAQJsonLd, SoftwareApplicationJsonLd } from "next-seo";
 import { Suspense } from "react";
@@ -38,6 +39,8 @@ export default function Home() {
         <HowItWorks />
 
         <Features />
+
+        <QuickLinks />
 
         {/* <Testimonials /> */}
 

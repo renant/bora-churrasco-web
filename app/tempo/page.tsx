@@ -9,6 +9,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import ProgressStepper from '@/components/progress-stepper';
+import SelectionSummary from '@/components/selection-summary';
 
 const container = {
   hidden: { opacity: 0 },
@@ -42,12 +44,14 @@ export default function TempoPage() {
 
   return (
     <main className="container mx-auto flex min-h-screen flex-col items-center">
+      <ProgressStepper />
       <motion.div
         initial="hidden"
         animate="show"
         variants={container}
         className="w-full max-w-xl"
       >
+        <SelectionSummary currentStep="tempo" />
         <Card className="border-red-200 bg-white/5 shadow-lg backdrop-blur">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold text-red-500 md:text-4xl">

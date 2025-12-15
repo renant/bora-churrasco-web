@@ -12,6 +12,7 @@ import churrascoStore from '@/lib/churrascoStore';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import ProgressStepper from '@/components/progress-stepper';
 
 const container = {
   hidden: { opacity: 0 },
@@ -50,6 +51,7 @@ export default function Participantes() {
 
   return (
     <main className="container mx-auto flex min-h-screen flex-col items-center">
+      <ProgressStepper />
       <motion.div
         initial="hidden"
         animate="show"
