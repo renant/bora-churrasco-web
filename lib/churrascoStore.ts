@@ -4,7 +4,7 @@ import BebidasCalculadas from "@/models/bebidas-calculadas";
 import EssenciaisCalculados from "@/models/essenciais-calculados";
 import ValoresReferencia from "@/models/valores-referencia";
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 function somatorio(x: number): number {
   if (x === 1 || x === 0) {
@@ -31,7 +31,7 @@ type ChurrascoStore = {
   valorSalGrosso: number;
   valorCarvao: number;
   valorGelo: number;
-  
+
   // User inputs - persisted
   homens: number | undefined;
   mulheres: number | undefined;
@@ -47,7 +47,7 @@ type ChurrascoStore = {
   agua: boolean;
   suco: boolean;
   tempo: Tempo;
-  
+
   // Calculated values - not persisted
   salGrosso: number;
   carvao: number;
@@ -64,7 +64,7 @@ type ChurrascoStore = {
   temParticipantes: () => boolean;
   temAssados: () => boolean;
   temBebidas: () => boolean;
-  
+
   // Check if there's valid saved progress
   hasSavedProgress: () => boolean;
   getCurrentStep: () => string;
@@ -180,7 +180,7 @@ const churrascoStore = create<ChurrascoStore>()(
       hasSavedProgress: () => {
         const lastUpdated = get().lastUpdated;
         if (!lastUpdated) return false;
-        
+
         // Check if data is expired (older than 24 hours)
         const now = Date.now();
         if (now - lastUpdated > EXPIRATION_TIME) {
@@ -188,16 +188,16 @@ const churrascoStore = create<ChurrascoStore>()(
           get().clearSavedProgress();
           return false;
         }
-        
+
         // Check if there's actual progress
         return get().temParticipantes();
       },
 
       getCurrentStep: () => {
-        if (!get().temParticipantes()) return '/participantes';
-        if (!get().temAssados()) return '/assados';
-        if (!get().temBebidas()) return '/bebidas';
-        return '/tempo';
+        if (!get().temParticipantes()) return "/participantes";
+        if (!get().temAssados()) return "/assados";
+        if (!get().temBebidas()) return "/bebidas";
+        return "/tempo";
       },
 
       getTempo: () => {
@@ -217,26 +217,48 @@ const churrascoStore = create<ChurrascoStore>()(
         }
       },
 
-      setHomens: (homens: number) => set(() => ({ homens, lastUpdated: Date.now() })),
-      setMulheres: (mulheres: number) => set(() => ({ mulheres, lastUpdated: Date.now() })),
-      setCriancas: (criancas: number) => set(() => ({ criancas, lastUpdated: Date.now() })),
+      setHomens: (homens: number) =>
+        set(() => ({ homens, lastUpdated: Date.now() })),
+      setMulheres: (mulheres: number) =>
+        set(() => ({ mulheres, lastUpdated: Date.now() })),
+      setCriancas: (criancas: number) =>
+        set(() => ({ criancas, lastUpdated: Date.now() })),
       setParticipantesFromUrl: (total: number) => {
-        set(() => ({ homens: total, mulheres: 0, criancas: 0, lastUpdated: Date.now() }));
+        set(() => ({
+          homens: total,
+          mulheres: 0,
+          criancas: 0,
+          lastUpdated: Date.now(),
+        }));
       },
 
-      changeBovina: () => set(() => ({ bovina: !get().bovina, lastUpdated: Date.now() })),
-      changeSuina: () => set(() => ({ suina: !get().suina, lastUpdated: Date.now() })),
-      changeLinguica: () => set(() => ({ linguica: !get().linguica, lastUpdated: Date.now() })),
-      changeFrango: () => set(() => ({ frango: !get().frango, lastUpdated: Date.now() })),
-      changeQueijo: () => set(() => ({ queijo: !get().queijo, lastUpdated: Date.now() })),
-      changePaoDeAlho: () => set(() => ({ paoDeAlho: !get().paoDeAlho, lastUpdated: Date.now() })),
+      changeBovina: () =>
+        set(() => ({ bovina: !get().bovina, lastUpdated: Date.now() })),
+      changeSuina: () =>
+        set(() => ({ suina: !get().suina, lastUpdated: Date.now() })),
+      changeLinguica: () =>
+        set(() => ({ linguica: !get().linguica, lastUpdated: Date.now() })),
+      changeFrango: () =>
+        set(() => ({ frango: !get().frango, lastUpdated: Date.now() })),
+      changeQueijo: () =>
+        set(() => ({ queijo: !get().queijo, lastUpdated: Date.now() })),
+      changePaoDeAlho: () =>
+        set(() => ({ paoDeAlho: !get().paoDeAlho, lastUpdated: Date.now() })),
 
-      changeCerveja: () => set(() => ({ cerveja: !get().cerveja, lastUpdated: Date.now() })),
-      changeRefrigerante: () => set(() => ({ refrigerante: !get().refrigerante, lastUpdated: Date.now() })),
-      changeAgua: () => set(() => ({ agua: !get().agua, lastUpdated: Date.now() })),
-      changeSuco: () => set(() => ({ suco: !get().suco, lastUpdated: Date.now() })),
+      changeCerveja: () =>
+        set(() => ({ cerveja: !get().cerveja, lastUpdated: Date.now() })),
+      changeRefrigerante: () =>
+        set(() => ({
+          refrigerante: !get().refrigerante,
+          lastUpdated: Date.now(),
+        })),
+      changeAgua: () =>
+        set(() => ({ agua: !get().agua, lastUpdated: Date.now() })),
+      changeSuco: () =>
+        set(() => ({ suco: !get().suco, lastUpdated: Date.now() })),
 
-      setTempo: (tempo: Tempo) => set(() => ({ tempo, lastUpdated: Date.now() })),
+      setTempo: (tempo: Tempo) =>
+        set(() => ({ tempo, lastUpdated: Date.now() })),
 
       createDefaultResult: (participantes: number) => {
         set(() => ({
@@ -263,7 +285,7 @@ const churrascoStore = create<ChurrascoStore>()(
       clearSavedProgress: () => {
         set(() => ({ ...initState }));
         // Also clear from localStorage
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           localStorage.removeItem(STORAGE_KEY);
         }
       },
@@ -336,7 +358,9 @@ const churrascoStore = create<ChurrascoStore>()(
         const assados: { [key: string]: number } = {};
 
         for (const assado of assadosList) {
-          assados[assado] = Math.round(auxDivisaoProporcional * totalSelecionado);
+          assados[assado] = Math.round(
+            auxDivisaoProporcional * totalSelecionado
+          );
           totalSelecionado--;
         }
 
@@ -389,13 +413,16 @@ const churrascoStore = create<ChurrascoStore>()(
       },
 
       calcularEssenciais() {
-        const bebidasCalculadas = get().bebidasCalculadas?.getTotalBebidas() ?? 0;
+        const bebidasCalculadas =
+          get().bebidasCalculadas?.getTotalBebidas() ?? 0;
         const totalGramasCarne =
           get().assadosCalculados?.getTotalGramasCarne() ?? 0;
 
         const essenciaisCalculados = new EssenciaisCalculados({
           carvao: Math.ceil((totalGramasCarne / 5000) * get().valorCarvao),
-          salGrosso: Math.ceil((totalGramasCarne / 10000) * get().valorSalGrosso),
+          salGrosso: Math.ceil(
+            (totalGramasCarne / 10000) * get().valorSalGrosso
+          ),
           gelo: Math.round((bebidasCalculadas / 1000) * get().valorGelo),
         });
 
@@ -417,7 +444,13 @@ const churrascoStore = create<ChurrascoStore>()(
         const multiplicador = get().getMultiplicadorTempo();
         const ref = get().getValoresReferencia(multiplicador);
 
-        get().calcularAssados(ref, homens, mulheres, criancas, totalParticipantes);
+        get().calcularAssados(
+          ref,
+          homens,
+          mulheres,
+          criancas,
+          totalParticipantes
+        );
         get().calcularBebidas(totalParticipantes, totalAdultos);
         get().calcularEssenciais();
       },
@@ -426,7 +459,7 @@ const churrascoStore = create<ChurrascoStore>()(
       name: STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
       // Only persist user input data, not calculated results
-      partialState: (state) => ({
+      partialize: (state) => ({
         homens: state.homens,
         mulheres: state.mulheres,
         criancas: state.criancas,
