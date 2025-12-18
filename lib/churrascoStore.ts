@@ -1,9 +1,9 @@
-import Tempo from '@/enum/tempo-enum';
-import AssadosCalculados from '@/models/assados-calculados';
-import BebidasCalculadas from '@/models/bebidas-calculadas';
-import EssenciaisCalculados from '@/models/essenciais-calculados';
-import ValoresReferencia from '@/models/valores-referencia';
-import { create } from 'zustand';
+import Tempo from "@/enum/tempo-enum";
+import AssadosCalculados from "@/models/assados-calculados";
+import BebidasCalculadas from "@/models/bebidas-calculadas";
+import EssenciaisCalculados from "@/models/essenciais-calculados";
+import ValoresReferencia from "@/models/valores-referencia";
+import { create } from "zustand";
 
 function somatorio(x: number): number {
   if (x === 1 || x === 0) {
@@ -157,15 +157,15 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
 
     switch (tempo) {
       case Tempo.quatroHoras:
-        return '4h';
+        return "4h";
       case Tempo.seisHoras:
-        return '6h';
+        return "6h";
       case Tempo.oitoHoras:
-        return '8h';
+        return "8h";
       case Tempo.dozeOuMaisHoras:
-        return '12h ou mais';
+        return "12h ou mais";
       default:
-        return '4h';
+        return "4h";
     }
   },
 
@@ -256,19 +256,19 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
     const assadosList = [];
 
     if (get().bovina) {
-      assadosList.push('bovina');
+      assadosList.push("bovina");
     }
     if (get().suina) {
-      assadosList.push('suina');
+      assadosList.push("suina");
     }
     if (get().linguica) {
-      assadosList.push('linguica');
+      assadosList.push("linguica");
     }
     if (get().frango) {
-      assadosList.push('frango');
+      assadosList.push("frango");
     }
     if (get().queijo) {
-      assadosList.push('queijo');
+      assadosList.push("queijo");
     }
 
     let totalSelecionado = assadosList.length;
@@ -299,11 +299,11 @@ const churrascoStore = create<ChurrascoStore>()((set, get) => ({
     const bebidasList = [];
 
     if (get().refrigerante) {
-      bebidasList.push('refrigerante');
+      bebidasList.push("refrigerante");
     }
 
     if (get().suco) {
-      bebidasList.push('suco');
+      bebidasList.push("suco");
     }
 
     let bebidasSelecionadas = bebidasList.length;

@@ -1,16 +1,15 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import CheckButton from '@/components/ui/check-button';
-import Tempo from '@/enum/tempo-enum';
-import churrascoStore from '@/lib/churrascoStore';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import ProgressStepper from '@/components/progress-stepper';
-import SelectionSummary from '@/components/selection-summary';
+import ProgressStepper from "@/components/progress-stepper";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import CheckButton from "@/components/ui/check-button";
+import Tempo from "@/enum/tempo-enum";
+import churrascoStore from "@/lib/churrascoStore";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -34,7 +33,7 @@ export default function TempoPage() {
 
   useEffect(() => {
     if (!temParticipantes()) {
-      router.push('/');
+      router.push("/");
     }
   }, [temParticipantes, router]);
 
@@ -51,7 +50,6 @@ export default function TempoPage() {
         variants={container}
         className="w-full max-w-xl"
       >
-        <SelectionSummary currentStep="tempo" />
         <Card className="border-red-200 bg-white/5 shadow-lg backdrop-blur">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold text-red-500 md:text-4xl">
@@ -59,10 +57,7 @@ export default function TempoPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 p-6">
-            <motion.div 
-              className="grid grid-cols-2 gap-4"
-              variants={container}
-            >
+            <motion.div className="grid grid-cols-2 gap-4" variants={container}>
               <CheckButton
                 isChecked={tempo === Tempo.quatroHoras}
                 description="Até 4 horas"
