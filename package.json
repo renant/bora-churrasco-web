@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "check": "biome check --apply .",
     "check-unsafe": "biome check --apply-unsafe ."
+  },
+  "engines": {
+    "bun": ">=1.0.0"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.940.0",

@@ -1,9 +1,7 @@
 import ComoCalcularComponent from "@/components/como-calcular-component";
-import ServerSuggestedPosts from "@/components/server-suggested-posts";
+import ClientSuggestedPosts from "@/components/client-suggested-posts";
 import ResultDefault from "@/components/ui/resultDefault";
-import SuggestedPostsSkeleton from "@/components/ui/suggested-posts-skeleton";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "next-seo";
-import { Suspense } from "react";
 import CustomizeCta from "@/components/customize-cta";
 
 type Params = Promise<{ id: string }>;
@@ -180,9 +178,7 @@ export default async function Resultado({ params }: { params: Params }) {
         </div>
         <CustomizeCta participantes={participante} className="mb-8" />
         <div className="mb-4 md:mb-12">
-          <Suspense fallback={<SuggestedPostsSkeleton />}>
-            <ServerSuggestedPosts count={3} />
-          </Suspense>
+          <ClientSuggestedPosts count={3} />
         </div>
 
         <ComoCalcularComponent />
