@@ -5,13 +5,11 @@ import CervejaIcon from "@/components/icons/cerveja-icon";
 import RefrigeranteIcon from "@/components/icons/refrigerante-icon";
 import SucoIcon from "@/components/icons/suco-icon";
 import ProgressStepper from "@/components/progress-stepper";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CheckButton from "@/components/ui/check-button";
+import { NavigationButtons } from "@/components/ui/navigation-buttons";
 import churrascoStore from "@/lib/churrascoStore";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -57,7 +55,7 @@ export default function Bebidas() {
   }
 
   return (
-    <main className="container mx-auto flex min-h-screen flex-col items-center">
+    <main className="container mx-auto flex min-h-screen flex-col items-center px-4 pb-4">
       <ProgressStepper />
       <motion.div
         initial="hidden"
@@ -65,13 +63,13 @@ export default function Bebidas() {
         variants={container}
         className="w-full max-w-xl"
       >
-        <Card className="border-red-200 bg-white/5 shadow-lg backdrop-blur">
+        <Card className="border-none bg-transparent">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-red-500 md:text-4xl">
+            <CardTitle className="text-xl font-bold text-red-500 md:text-3xl">
               Escolha agora as bebidas do seu churrasco
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 p-6">
+          <CardContent className="space-y-4 p-0">
             <motion.div className="grid grid-cols-2 gap-4" variants={container}>
               <CheckButton
                 isChecked={cerveja}
@@ -110,38 +108,15 @@ export default function Bebidas() {
                 <RefrigeranteIcon size={50} />
               </CheckButton>
             </motion.div>
-
-            <motion.div variants={item} className="flex justify-center pt-6">
-              <Link
-                href="/tempo"
-                className={cn(!temBebidas() && "pointer-events-none")}
-              >
-                <Button
-                  variant="outline"
-                  size="lg"
-                  disabled={!temBebidas()}
-                  className={cn(
-                    "group relative overflow-hidden px-8 py-6 transition-all",
-                    temBebidas()
-                      ? "border-red-500 text-red-500 hover:border-red-600 hover:text-red-600"
-                      : "border-red-300 text-red-300 cursor-not-allowed"
-                  )}
-                >
-                  <span className="relative z-10">Avançar</span>
-                  <div
-                    className={cn(
-                      "absolute inset-0 -z-0 transition-transform duration-300",
-                      temBebidas()
-                        ? "bg-red-500/10 group-hover:scale-95"
-                        : "bg-red-300/5"
-                    )}
-                  />
-                </Button>
-              </Link>
-            </motion.div>
           </CardContent>
         </Card>
       </motion.div>
+
+      <NavigationButtons
+        backHref="/assados"
+        nextHref="/tempo"
+        canAdvance={temBebidas()}
+      />
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { motion, type HTMLMotionProps, type Variants } from 'framer-motion';
+import { Check } from 'lucide-react';
 import type React from 'react';
 
 interface CheckButtonProps extends Omit<HTMLMotionProps<"div">, "children" | "onClick"> {
@@ -20,8 +21,6 @@ const CheckButton = ({
   variants,
   ...props
 }: CheckButtonProps) => {
-  const backgroundColor = isChecked ? 'rgba(255, 165, 0, 0.5)' : 'transparent';
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -34,24 +33,52 @@ const CheckButton = ({
       role="button"
       tabIndex={0}
       aria-pressed={isChecked}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       variants={variants}
       className={cn(
-        'flex flex-col items-center justify-center rounded-md border border-red-400 p-2 hover:cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2',
+        // Base styles
+        'relative flex flex-col items-center justify-center rounded-xl p-4',
+        // Minimum touch area - 64px minimum height
+        'min-h-[80px]',
+        // Border and background
+        'border-2 transition-all duration-200',
+        // Touch optimization
+        'touch-action-manipulation cursor-pointer select-none',
+        // Focus styles for accessibility
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2',
+        // Conditional styles based on checked state
+        isChecked
+          ? 'border-red-500 bg-red-500/10 shadow-md'
+          : 'border-red-300 bg-transparent hover:border-red-400 hover:bg-red-50/50',
         className
       )}
-      style={{
-        backgroundColor,
-      }}
       onClick={onClick}
       onKeyDown={handleKeyDown}
       {...props}
     >
-      {children}
-      <p className="mt-1 select-none text-center text-xs font-light text-red-500">
-        {description}
-      </p>
+      {/* Check indicator */}
+      <div
+        className={cn(
+          'absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full transition-all duration-200',
+          isChecked
+            ? 'bg-red-500 text-white scale-100 opacity-100'
+            : 'bg-gray-200 scale-75 opacity-0'
+        )}
+      >
+        <Check className="h-4 w-4" strokeWidth={3} />
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col items-center justify-center">
+        {children}
+        <p className={cn(
+          'mt-2 select-none text-center text-sm font-medium transition-colors duration-200',
+          isChecked ? 'text-red-600' : 'text-red-500/80'
+        )}>
+          {description}
+        </p>
+      </div>
     </motion.div>
   );
 };

@@ -1,13 +1,12 @@
 "use client";
 
 import ProgressStepper from "@/components/progress-stepper";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CheckButton from "@/components/ui/check-button";
+import { NavigationButtons } from "@/components/ui/navigation-buttons";
 import Tempo from "@/enum/tempo-enum";
 import churrascoStore from "@/lib/churrascoStore";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -42,7 +41,7 @@ export default function TempoPage() {
   }
 
   return (
-    <main className="container mx-auto flex min-h-screen flex-col items-center">
+    <main className="container mx-auto flex min-h-screen flex-col items-center px-4 pb-4">
       <ProgressStepper />
       <motion.div
         initial="hidden"
@@ -50,13 +49,13 @@ export default function TempoPage() {
         variants={container}
         className="w-full max-w-xl"
       >
-        <Card className="border-red-200 bg-white/5 shadow-lg backdrop-blur">
+        <Card className="border-none bg-transparent">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-red-500 md:text-4xl">
+            <CardTitle className="text-xl font-bold text-red-500 md:text-3xl">
               Diga aproximadamente o tempo do seu churrasco
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 p-6">
+          <CardContent className="space-y-4 p-0">
             <motion.div className="grid grid-cols-2 gap-4" variants={container}>
               <CheckButton
                 isChecked={tempo === Tempo.quatroHoras}
@@ -95,22 +94,15 @@ export default function TempoPage() {
                 <h2 className="text-5xl font-bold text-red-600">12h</h2>
               </CheckButton>
             </motion.div>
-
-            <motion.div variants={item} className="flex justify-center pt-6">
-              <Link href="/resultado">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="group relative overflow-hidden border-red-500 px-8 py-6 text-red-500 transition-all hover:border-red-600 hover:text-red-600"
-                >
-                  <span className="relative z-10">Avançar</span>
-                  <div className="absolute inset-0 -z-0 bg-red-500/10 transition-transform duration-300 group-hover:scale-95" />
-                </Button>
-              </Link>
-            </motion.div>
           </CardContent>
         </Card>
       </motion.div>
+
+      <NavigationButtons
+        backHref="/bebidas"
+        nextHref="/resultado"
+        nextLabel="Ver Resultado"
+      />
     </main>
   );
 }

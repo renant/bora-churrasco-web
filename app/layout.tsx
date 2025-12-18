@@ -83,34 +83,20 @@ export default async function RootLayout({
   return (
     <html lang="pt-BR" className={inter.variable}>
       <head>
-        {/* Preconnect to external domains for better performance */}
-        <link
-          rel="dns-prefetch"
-          href="https://firebasestorage.googleapis.com"
-        />
-        <link
-          rel="dns-prefetch"
-          href="https://pub-992a36cf1a614410b68f49587c83df71.r2.dev"
-        />
+        {/* Preconnect to Google Fonts for better font loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* DNS prefetch for external domains */}
+        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
+        <link rel="dns-prefetch" href="https://pub-992a36cf1a614410b68f49587c83df71.r2.dev" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.clarity.ms" />
-        {/* Preload critical above-the-fold images */}
-        <link
-          rel="preload"
-          as="image"
-          href="/google-play-badge.webp"
-          type="image/webp"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/app-sample.webp"
-          type="image/webp"
-        />
       </head>
       <body className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 font-sans antialiased">
         <Header />
+        {/* Spacer for fixed header */}
+        <div className="h-14 sm:h-16" aria-hidden="true" />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {children}
         </main>

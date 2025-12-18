@@ -5,6 +5,7 @@ import { Guide } from "@/components/ui/guide";
 import { Hero } from "@/components/ui/hero";
 import { HowItWorks } from "@/components/ui/how-it-works";
 import { QuickLinks } from "@/components/ui/quick-links";
+import { RecoveryDialog } from "@/components/ui/recovery-dialog";
 import type { Metadata } from "next";
 import { FAQJsonLd, SoftwareApplicationJsonLd } from "next-seo";
 import { Suspense } from "react";
@@ -33,6 +34,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <RecoveryDialog />
       <Hero />
 
       <main className="relative">
