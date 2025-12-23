@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
+  // Show fewer benefits on mobile - only first 2
   const benefits = [
     "Calcule quantidade exata de carnes",
     "Bebidas e acompanhamentos inclusos",
@@ -20,40 +21,27 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="container relative mx-auto px-4 py-16 sm:py-24 lg:py-32">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+      <div className="container relative mx-auto px-4 py-8 sm:py-16 lg:py-24">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Content */}
-          <div className="flex flex-col space-y-8">
-            {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+          <div className="flex flex-col space-y-4 sm:space-y-6">
+            {/* Headline - More compact on mobile */}
+            <div className="space-y-2 sm:space-y-4">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl xl:text-6xl">
                 Churrasco perfeito{" "}
                 <span className="text-red-600">sem complicação</span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                Calcule a quantidade ideal de carnes, bebidas e acompanhamentos
-                para seu evento em segundos. Economize tempo e dinheiro com
-                nossa calculadora inteligente.
+              <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed">
+                Calcule carnes, bebidas e acompanhamentos em segundos. 
+                <span className="hidden sm:inline"> Economize tempo e dinheiro com nossa calculadora inteligente.</span>
               </p>
             </div>
 
-            {/* Benefits */}
-            <ul className="space-y-3">
-              {benefits.map((benefit) => (
-                <li key={benefit} className="flex items-center gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-600 text-white">
-                    <Check className="h-4 w-4" />
-                  </div>
-                  <span className="text-gray-700">{benefit}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-center">
+            {/* Primary CTA - Above the fold on mobile */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button
                 size="lg"
-                className="bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25 hover:shadow-xl hover:shadow-red-600/25 transition-all"
+                className="w-full sm:w-auto min-h-[56px] text-lg font-semibold bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25 hover:shadow-xl hover:shadow-red-600/25 transition-all touch-manipulation"
                 asChild
               >
                 <Link href="/participantes">
@@ -63,7 +51,7 @@ export function Hero() {
               </Button>
               <a
                 href="https://play.google.com/store/apps/details?id=io.ionic.bora.churras"
-                className="inline-flex items-center"
+                className="hidden sm:inline-flex items-center justify-center"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -72,28 +60,61 @@ export function Hero() {
                   height={56}
                   alt="Disponível no Google Play"
                   src="/google-play-badge.webp"
-                  className="h-14 w-auto hover:opacity-90 transition-opacity"
+                  className="h-12 sm:h-14 w-auto hover:opacity-90 transition-opacity"
                   priority
                   sizes="168px"
                 />
               </a>
             </div>
 
-            {/* Social proof */}
-            <div className="flex flex-wrap gap-8 pt-4 border-t border-gray-200">
+            {/* Benefits - Show 2 on mobile, all on desktop */}
+            <ul className="space-y-2 sm:space-y-3">
+              {benefits.map((benefit, index) => (
+                <li 
+                  key={benefit} 
+                  className={`flex items-center gap-2 sm:gap-3 ${index >= 2 ? 'hidden sm:flex' : ''}`}
+                >
+                  <div className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-red-600 text-white">
+                    <Check className="h-3 w-3 sm:h-4 sm:w-4" />
+                  </div>
+                  <span className="text-sm sm:text-base text-gray-700">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Social proof - Horizontal on mobile */}
+            <div className="flex gap-6 sm:gap-8 pt-3 sm:pt-4 border-t border-gray-200">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center sm:text-left">
-                  <div className="text-2xl font-bold text-gray-900">
+                  <div className="text-xl sm:text-2xl font-bold text-gray-900">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
+                  <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
                 </div>
               ))}
             </div>
+
+            {/* Google Play badge - Show on mobile below stats */}
+            <a
+              href="https://play.google.com/store/apps/details?id=io.ionic.bora.churras"
+              className="sm:hidden flex items-center justify-center py-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                width={168}
+                height={56}
+                alt="Disponível no Google Play"
+                src="/google-play-badge.webp"
+                className="h-11 w-auto hover:opacity-90 transition-opacity"
+                loading="lazy"
+                sizes="168px"
+              />
+            </a>
           </div>
 
-          {/* Visual */}
-          <div className="relative lg:pr-8">
+          {/* Visual - Hidden on mobile, shown on tablet+ */}
+          <div className="hidden md:block relative lg:pr-8">
             <div className="relative mx-auto w-full max-w-lg">
               {/* Phone mockup background */}
               <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-red-700 rounded-[3rem] transform rotate-3 scale-105" />
@@ -149,15 +170,15 @@ export function Hero() {
               </div>
 
               {/* Floating app screenshot */}
-              <div className="absolute right-0 bottom-0 w-32 sm:w-40 transform rotate-12 hover:rotate-6 transition-transform duration-300">
+              <div className="absolute right-0 bottom-0 w-32 lg:w-40 transform rotate-12 hover:rotate-6 transition-transform duration-300">
                 <Image
                   src={appSampleImg}
                   alt="Bora Churrasco App"
                   width={160}
                   height={320}
                   className="rounded-2xl shadow-2xl border-4 border-white"
-                  priority
-                  sizes="(max-width: 640px) 128px, 160px"
+                  loading="lazy"
+                  sizes="(max-width: 1024px) 128px, 160px"
                 />
               </div>
             </div>

@@ -34,8 +34,14 @@ const nextConfig = {
   },
   experimental: {
     scrollRestoration: true,
-    // Optimize bundle for mobile
-    optimizePackageImports: ["lucide-react"],
+    // Optimize bundle for mobile - tree-shake these packages
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-label",
+      "@radix-ui/react-slot",
+    ],
   },
   // Headers for better caching and performance
   async headers() {
