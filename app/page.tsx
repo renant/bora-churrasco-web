@@ -1,33 +1,41 @@
-import { CTASection } from "@/components/ui/cta-section";
-import { Faq } from "@/components/ui/faq";
-import { Features } from "@/components/ui/features";
-import { Guide } from "@/components/ui/guide";
-import { Hero } from "@/components/ui/hero";
-import { HowItWorks } from "@/components/ui/how-it-works";
-import { QuickLinks } from "@/components/ui/quick-links";
-import { RecoveryDialog } from "@/components/ui/recovery-dialog";
-import type { Metadata } from "next";
-import { FAQJsonLd, SoftwareApplicationJsonLd } from "next-seo";
-import { Suspense } from "react";
+import { CTASection } from '@/components/ui/cta-section';
+import { Features } from '@/components/ui/features';
+import { Hero } from '@/components/ui/hero';
+import { HowItWorks } from '@/components/ui/how-it-works';
+import { QuickLinks } from '@/components/ui/quick-links';
+import { RecoveryDialog } from '@/components/ui/recovery-dialog';
+import type { Metadata } from 'next';
+import { FAQJsonLd, SoftwareApplicationJsonLd } from 'next-seo';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamic imports for heavy components
+const Guide = dynamic(() =>
+  import('@/components/ui/guide').then((mod) => mod.Guide)
+);
+
+const Faq = dynamic(() =>
+  import('@/components/ui/faq').then((mod) => ({ default: mod.Faq }))
+);
 
 // Metadata específica para a página inicial
 export const metadata: Metadata = {
-  title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
+  title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
   description:
-    "Calcule a quantidade exata de carne, bebidas e acompanhamentos para seu churrasco. Ferramenta 100% gratuita usada por mais de 50 mil pessoas. Evite desperdícios!",
+    'Calcule a quantidade exata de carne, bebidas e acompanhamentos para seu churrasco. Ferramenta 100% gratuita usada por mais de 50 mil pessoas. Evite desperdícios!',
   keywords: [
-    "calculadora de churrasco",
-    "calcular churrasco online",
-    "quantidade de carne por pessoa",
-    "planejar churrasco",
-    "lista de compras churrasco",
-    "app churrasco gratis",
-    "bora churrasco",
+    'calculadora de churrasco',
+    'calcular churrasco online',
+    'quantidade de carne por pessoa',
+    'planejar churrasco',
+    'lista de compras churrasco',
+    'app churrasco gratis',
+    'bora churrasco',
   ],
   openGraph: {
-    title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
+    title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
     description:
-      "Planeje o churrasco perfeito! Calcule carnes, bebidas e acompanhamentos em segundos. 100% Grátis.",
+      'Planeje o churrasco perfeito! Calcule carnes, bebidas e acompanhamentos em segundos. 100% Grátis.',
   },
 };
 
@@ -43,8 +51,6 @@ export default function Home() {
         <Features />
 
         <QuickLinks />
-
-        {/* <Testimonials /> */}
 
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4">
@@ -121,7 +127,7 @@ export default function Home() {
       {/* Structured Data for SEO */}
       <SoftwareApplicationJsonLd
         name="Bora Churrasco - Calculadora de Churrasco"
-        offers={{ price: 0, priceCurrency: "BRL" }}
+        offers={{ price: 0, priceCurrency: 'BRL' }}
         applicationCategory="UtilityApplication"
         operatingSystem="Any"
         aggregateRating={{
@@ -133,7 +139,7 @@ export default function Home() {
       <SoftwareApplicationJsonLd
         type="MobileApplication"
         name="Bora Churrasco App"
-        offers={{ price: 0, priceCurrency: "BRL" }}
+        offers={{ price: 0, priceCurrency: 'BRL' }}
         applicationCategory="UtilitiesApplication"
         operatingSystem="Android"
         aggregateRating={{
@@ -145,24 +151,24 @@ export default function Home() {
       <FAQJsonLd
         questions={[
           {
-            question: "Como calcular a quantidade de carne para churrasco?",
+            question: 'Como calcular a quantidade de carne para churrasco?',
             answer:
-              "Use nossa calculadora gratuita! Em média, calcule 400g por homem, 300g por mulher e 200g por criança. A calculadora ajusta automaticamente baseado no tempo do evento.",
+              'Use nossa calculadora gratuita! Em média, calcule 400g por homem, 300g por mulher e 200g por criança. A calculadora ajusta automaticamente baseado no tempo do evento.',
           },
           {
-            question: "Quanto de carvão usar no churrasco?",
+            question: 'Quanto de carvão usar no churrasco?',
             answer:
-              "A regra geral é 1,5kg de carvão para cada kg de carne. Para churrasqueiras a gás, não se preocupe com isso!",
+              'A regra geral é 1,5kg de carvão para cada kg de carne. Para churrasqueiras a gás, não se preocupe com isso!',
           },
           {
-            question: "Como calcular bebidas para churrasco?",
+            question: 'Como calcular bebidas para churrasco?',
             answer:
-              "Nossa calculadora considera: 1L de cerveja por hora/pessoa (que bebe), 600ml de refrigerante e 400ml de água por pessoa.",
+              'Nossa calculadora considera: 1L de cerveja por hora/pessoa (que bebe), 600ml de refrigerante e 400ml de água por pessoa.',
           },
           {
-            question: "O app Bora Churrasco é gratuito?",
+            question: 'O app Bora Churrasco é gratuito?',
             answer:
-              "Sim! O Bora Churrasco é 100% gratuito, tanto a versão web quanto o aplicativo Android. Todas as funcionalidades são liberadas sem custo.",
+              'Sim! O Bora Churrasco é 100% gratuito, tanto a versão web quanto o aplicativo Android. Todas as funcionalidades são liberadas sem custo.',
           },
         ]}
       />

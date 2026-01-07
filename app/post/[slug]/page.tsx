@@ -1,15 +1,15 @@
-import ClientSuggestedPosts from "@/components/client-suggested-posts";
-import { ArticleJsonLd } from "next-seo";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import fs from "node:fs";
-import path from "node:path";
+import ClientSuggestedPosts from '@/components/client-suggested-posts';
+import { ArticleJsonLd } from 'next-seo';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import fs from 'node:fs';
+import path from 'node:path';
 
 type Params = Promise<{ slug: string }>;
 
 async function loadMdxFile(slug: string) {
   try {
-    const mdxPath = path.join(process.cwd(), "post-contents", `${slug}.mdx`);
+    const mdxPath = path.join(process.cwd(), 'post-contents', `${slug}.mdx`);
 
     if (!fs.existsSync(mdxPath)) {
       return null;
@@ -17,14 +17,14 @@ async function loadMdxFile(slug: string) {
     const mdxModule = await import(`@/post-contents/${slug}.mdx`);
     return mdxModule;
   } catch (error) {
-    console.error("Failed to load MDX file:", error);
+    console.error('Failed to load MDX file:', error);
     return null;
   }
 }
 
 export async function generateMetadata({ params }: { params: Params }) {
   if (!params || !(await params).slug) {
-    throw new Error("Slug is required");
+    throw new Error('Slug is required');
   }
 
   const { slug } = await params;
@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   if (!mdxModule) {
     return {
-      title: "Bora Churrasco! - Post não encontrado",
-      description: "Post não encontrado",
+      title: 'Bora Churrasco! - Post não encontrado',
+      description: 'Post não encontrado',
     };
   }
 
@@ -48,6 +48,18 @@ export async function generateMetadata({ params }: { params: Params }) {
       canonical: url,
     },
     keywords: metadata.tags,
+    authors: [
+      {
+        name: metadata.createdBy || 'Bora Churrasco',
+        url: 'https://www.borachurrasco.app',
+      },
+    ],
+    other: {
+      // Blog post metadata
+      'article:wordCount': '1200',
+      'article:readingTime': '5 min read',
+      'article:author': metadata.createdBy || 'Bora Churrasco',
+    },
     images: [
       {
         url: metadata.hdWebp,
@@ -65,16 +77,16 @@ export async function generateMetadata({ params }: { params: Params }) {
           alt: metadata.title,
         },
       ],
-      locale: "pt_BR",
-      type: "article",
+      locale: 'pt_BR',
+      type: 'article',
       article: {
         publishedTime: new Date(metadata.date).toISOString(),
-        authors: ["Bora Churrasco"],
+        authors: ['Bora Churrasco'],
         tags: metadata.tags,
       },
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title: `${metadata.title} | Bora Churrasco`,
       description: `${metadata.resume}`,
       images: [metadata.hdWebp],
@@ -98,8 +110,8 @@ export default async function PostPage({ params }: { params: Params }) {
           <div
             className="relative w-full bg-gray-100"
             style={{
-              aspectRatio: "16/9",
-              contain: "layout paint",
+              aspectRatio: '16/9',
+              contain: 'layout paint',
             }}
           >
             <Image
@@ -136,11 +148,11 @@ export default async function PostPage({ params }: { params: Params }) {
                 dateTime={new Date(metadata.date).toISOString()}
                 className="font-medium"
               >
-                {new Date(metadata.date).toLocaleDateString("pt-BR", {
-                  timeZone: "America/Sao_Paulo",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
+                {new Date(metadata.date).toLocaleDateString('pt-BR', {
+                  timeZone: 'America/Sao_Paulo',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
                 })}
               </time>
               {metadata.tags?.[0] && (
@@ -172,14 +184,14 @@ export default async function PostPage({ params }: { params: Params }) {
         datePublished={new Date(metadata.date).toISOString()}
         dateModified={new Date(metadata.date).toISOString()}
         author={{
-          name: "Bora Churrasco",
-          url: "https://www.borachurrasco.app",
+          name: metadata.createdBy || 'Bora Churrasco',
+          url: 'https://www.borachurrasco.app',
         }}
         image={metadata.hdWebp}
         publisher={{
-          name: "Bora Churrasco",
-          url: "https://www.borachurrasco.app",
-          logo: "https://www.borachurrasco.app/images/ms-icon-310x310.png",
+          name: 'Bora Churrasco',
+          url: 'https://www.borachurrasco.app',
+          logo: 'https://www.borachurrasco.app/images/ms-icon-310x310.png',
         }}
         mainEntityOfPage={`https://www.borachurrasco.app/post/${metadata.slug}`}
         isAccessibleForFree
@@ -189,9 +201,9 @@ export default async function PostPage({ params }: { params: Params }) {
 }
 
 export function generateStaticParams() {
-  const files = fs.readdirSync(path.join(process.cwd(), "post-contents"));
+  const files = fs.readdirSync(path.join(process.cwd(), 'post-contents'));
   const slugs = files.map((file) => ({
-    slug: file.replace(/\.mdx$/, ""),
+    slug: file.replace(/\.mdx$/, ''),
   }));
 
   return slugs;

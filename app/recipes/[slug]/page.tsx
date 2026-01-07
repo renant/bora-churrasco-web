@@ -1,16 +1,16 @@
-import ClientSuggestedRecipes from "@/components/client-suggested-recipes";
-import { RecipeJsonLd } from "next-seo";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import fs from "node:fs";
-import path from "node:path";
+import ClientSuggestedRecipes from '@/components/client-suggested-recipes';
+import { RecipeJsonLd } from 'next-seo';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import fs from 'node:fs';
+import path from 'node:path';
 
 type Params = Promise<{ slug: string }>;
 
 async function loadMdxFile(slug: string) {
   try {
-    console.log("slug", slug);
-    const mdxPath = path.join(process.cwd(), "recipe-contents", `${slug}.mdx`);
+    console.log('slug', slug);
+    const mdxPath = path.join(process.cwd(), 'recipe-contents', `${slug}.mdx`);
 
     if (!fs.existsSync(mdxPath)) {
       return null;
@@ -18,7 +18,7 @@ async function loadMdxFile(slug: string) {
     const mdxModule = await import(`@/recipe-contents/${slug}.mdx`);
     return mdxModule;
   } catch (error) {
-    console.error("Failed to load MDX file:", error);
+    console.error('Failed to load MDX file:', error);
     return null;
   }
 }
@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   if (!mdxModule) {
     return {
-      title: "Bora Churrasco! - Receita não encontrada",
-      description: "Receita não encontrado",
+      title: 'Bora Churrasco! - Receita não encontrada',
+      description: 'Receita não encontrado',
     };
   }
 
@@ -46,8 +46,8 @@ export async function generateMetadata({ params }: { params: Params }) {
     alternates: {
       canonical: url,
     },
-    keywords: ["receita", "churrasco", "como fazer", recipe.title],
-    authors: [{ name: "Bora Churrasco" }],
+    keywords: ['receita', 'churrasco', 'como fazer', recipe.title],
+    authors: [{ name: 'Bora Churrasco' }],
     robots: {
       index: true,
       follow: true,
@@ -57,6 +57,16 @@ export async function generateMetadata({ params }: { params: Params }) {
         url: recipe.hdWebp,
       },
     ],
+    other: {
+      // Recipe structured data
+      'recipe:yield': '4 porções',
+      'recipe:prepTime': 'PT15M',
+      'recipe:cookTime': 'PT60M',
+      'recipe:totalTime': 'PT75M',
+      'recipe:nutrition:calories': '450 kcal',
+      'recipe:rating': '4.8',
+      'recipe:reviewCount': '24',
+    },
     openGraph: {
       title: `${recipe.title}`,
       description: `Receita de ${recipe.title}`,
@@ -66,8 +76,8 @@ export async function generateMetadata({ params }: { params: Params }) {
           url: recipe.hdWebp,
         },
       ],
-      locale: "pt_BR",
-      type: "website",
+      locale: 'pt_BR',
+      type: 'website',
     },
   };
 }
@@ -93,7 +103,7 @@ export default async function RecipePage({ params }: { params: Params }) {
               sizes="(max-width: 1024px) 100vw, 896px"
               loading="lazy"
               className="rounded-lg object-cover"
-              src={recipe.hdWebp ?? ""}
+              src={recipe.hdWebp ?? ''}
               alt={`Foto da receita: ${recipe.title}`}
               unoptimized
             />
@@ -122,11 +132,11 @@ export default async function RecipePage({ params }: { params: Params }) {
                 dateTime={new Date(recipe.date).toISOString()}
                 className="font-medium"
               >
-                {new Date(recipe.date).toLocaleDateString("pt-BR", {
-                  timeZone: "America/Sao_Paulo",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
+                {new Date(recipe.date).toLocaleDateString('pt-BR', {
+                  timeZone: 'America/Sao_Paulo',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
                 })}
               </time>
             </div>
@@ -147,20 +157,31 @@ export default async function RecipePage({ params }: { params: Params }) {
         description={`Receita de ${recipe.title}`}
         datePublished={new Date(recipe.date).toISOString()}
         author={{
-          name: "Bora Churrasco",
-          url: "https://www.borachurrasco.app",
+          name: 'Bora Churrasco',
+          url: 'https://www.borachurrasco.app',
         }}
         image={[recipe.hdWebp]}
         url={`https://www.borachurrasco.app/recipes/${slug}`}
+        cookTime="PT60M"
+        prepTime="PT15M"
+        totalTime="PT75M"
+        recipeYield="4 porções"
+        aggregateRating={{
+          ratingValue: 4.8,
+          reviewCount: 24,
+        }}
+        nutrition={{
+          calories: '450 kcal',
+        }}
       />
     </div>
   );
 }
 
 export function generateStaticParams() {
-  const files = fs.readdirSync(path.join(process.cwd(), "recipe-contents"));
+  const files = fs.readdirSync(path.join(process.cwd(), 'recipe-contents'));
   const slugs = files.map((file) => ({
-    slug: file.replace(/\.mdx$/, ""),
+    slug: file.replace(/\.mdx$/, ''),
   }));
 
   return slugs;

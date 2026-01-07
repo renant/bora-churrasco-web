@@ -1,63 +1,60 @@
-import { Header } from "@/components/ui/header";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import { SoftwareApplicationJsonLd } from "next-seo";
+import { Header } from '@/components/ui/header';
+import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+import { SoftwareApplicationJsonLd } from 'next-seo';
 
-import Script from "next/script";
-import "./globals.css";
+import Script from 'next/script';
+import './globals.css';
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FEF3C7",
-  width: "device-width",
+  themeColor: '#FEF3C7',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.borachurrasco.app"),
+  metadataBase: new URL('https://www.borachurrasco.app'),
   title: {
-    default: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
-    template: "%s | Bora Churrasco",
+    default: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
+    template: '%s | Bora Churrasco',
   },
   description:
-    "Calcule a quantidade exata de carne, acompanhamentos e bebidas para seu churrasco. Ferramenta gratuita para planejar churrasco com precisão. Evite desperdícios!",
+    'Calcule a quantidade exata de carne, acompanhamentos e bebidas para seu churrasco. Ferramenta gratuita para planejar churrasco com precisão. Evite desperdícios!',
   alternates: {
-    canonical: "/",
+    canonical: '/',
   },
-  manifest: "/manifest.json",
+  manifest: '/manifest.json',
   keywords: [
-    "Calculadora de Churrasco",
-    "Churrasco",
-    "Quantidade de Carne por Pessoa",
-    "Como Calcular Churrasco",
-    "Planejamento de Churrasco",
-    "Churrasco para Grupos",
-    "Lista de Compras Churrasco",
-    "App Churrasco",
+    'Calculadora de Churrasco',
+    'Churrasco',
+    'Quantidade de Carne por Pessoa',
+    'Como Calcular Churrasco',
+    'Planejamento de Churrasco',
+    'Churrasco para Grupos',
+    'Lista de Compras Churrasco',
+    'App Churrasco',
   ],
   openGraph: {
-    title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
+    title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
     description:
-      "Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos. Ferramenta gratuita para organizar churrascos sem desperdício.",
-    url: "/",
-    siteName: "Bora Churrasco",
-    locale: "pt_BR",
-    type: "website",
+      'Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos. Ferramenta gratuita para organizar churrascos sem desperdício.',
+    url: '/',
+    siteName: 'Bora Churrasco',
+    locale: 'pt_BR',
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Calculadora de Churrasco Online Grátis - Bora Churrasco!",
+    card: 'summary_large_image',
+    title: 'Calculadora de Churrasco Online Grátis - Bora Churrasco!',
     description:
-      "Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos.",
+      'Planeje seu churrasco perfeito! Calcule carne, bebidas e acompanhamentos.',
   },
   robots: {
     index: true,
@@ -65,9 +62,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   verification: {
@@ -85,10 +82,20 @@ export default async function RootLayout({
       <head>
         {/* Preconnect to Google Fonts for better font loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         {/* DNS prefetch for external domains */}
-        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
-        <link rel="dns-prefetch" href="https://pub-992a36cf1a614410b68f49587c83df71.r2.dev" />
+        <link
+          rel="dns-prefetch"
+          href="https://firebasestorage.googleapis.com"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://pub-992a36cf1a614410b68f49587c83df71.r2.dev"
+        />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.clarity.ms" />
@@ -100,8 +107,6 @@ export default async function RootLayout({
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {children}
         </main>
-        <Analytics />
-        <SpeedInsights />
         <Script
           strategy="lazyOnload"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9729996201347510"
@@ -116,10 +121,9 @@ export default async function RootLayout({
             })(window, document, "clarity", "script", "s5i93zjg9g");
           `}
         </Script>
-        <GoogleTagManager gtmId={process.env.GA_TRACKING_ID as string} />
         <SoftwareApplicationJsonLd
           name="Bora Churrasco"
-          offers={{ price: 0, priceCurrency: "BRL" }}
+          offers={{ price: 0, priceCurrency: 'BRL' }}
           applicationCategory="UtilityApplication"
           operatingSystem="All"
         />
