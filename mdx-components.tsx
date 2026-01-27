@@ -80,16 +80,24 @@ const customComponents = {
   img: ({
     className,
     alt,
+    src,
     ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <Image
-      alt={alt ?? ""}
-      sizes="100vw"
-      style={{ width: "100%", height: "auto" }}
-      className={className}
-      {...(props as ImageProps)}
-    />
-  ),
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+    if (!src || typeof src !== "string") return null;
+
+    const imageProps = props as Omit<ImageProps, "alt" | "src">;
+
+    return (
+      <Image
+        src={src}
+        alt={alt ?? ""}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+        className={className}
+        {...imageProps}
+      />
+    );
+  },
   hr: ({ ...props }) => <hr className="my-8 border-amber-200" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto">
