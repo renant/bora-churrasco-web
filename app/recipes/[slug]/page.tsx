@@ -94,7 +94,7 @@ export default async function RecipePage({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen bg-white">
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
         {/* Recipe Image */}
         <div className="relative w-full overflow-hidden rounded-lg shadow-lg mb-8 md:mb-12">
           <div className="relative z-0 h-80 w-full lg:h-[500px]">
@@ -150,7 +150,7 @@ export default async function RecipePage({ params }: { params: Params }) {
 
         {/* Client-Side Suggested Recipes Section */}
         <ClientSuggestedRecipes excludeSlug={slug} count={3} />
-      </main>
+      </div>
 
       <RecipeJsonLd
         name={recipe.title}
@@ -175,3 +175,4 @@ export function generateStaticParams() {
 
   return slugs;
 }
+

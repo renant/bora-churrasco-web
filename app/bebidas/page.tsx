@@ -55,7 +55,7 @@ export default function Bebidas() {
   }
 
   return (
-    <main className="container mx-auto flex min-h-screen flex-col items-center px-4 pb-4">
+    <div className="container mx-auto flex min-h-screen flex-col items-center px-4 pb-4">
       <ProgressStepper />
       <motion.div
         initial="hidden"
@@ -117,6 +117,7 @@ export default function Bebidas() {
         nextHref="/tempo"
         canAdvance={temBebidas()}
       />
-    </main>
+    </div>
   );
 }
+

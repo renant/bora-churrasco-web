@@ -121,7 +121,7 @@ export default async function RecipesPage(props: {
           })),
         }}
       />
-      <main className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-10">
+      <div className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-10">
         <Suspense fallback={<LoadingPage />}>
           <h1 className="text-2xl font-bold mb-8 text-center">
             Bora Churrasco: Receitas
@@ -218,7 +218,8 @@ export default async function RecipesPage(props: {
             </div>
           </div>
         </Suspense>
-      </main>
+      </div>
     </>
   );
 }
+

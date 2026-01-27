@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card className="max-w-md w-full space-y-8">
         <CardHeader>
           <svg
@@ -45,6 +45,7 @@ export default function NotFound() {
           </div>
         </CardContent>
       </Card>
-    </main>
+    </div>
   );
 }
+

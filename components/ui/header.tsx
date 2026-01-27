@@ -126,3 +126,4 @@ export function Header() {
 
 // Export header height for other components to use
 export const HEADER_HEIGHT = 56; // px - approximate height on mobile
+

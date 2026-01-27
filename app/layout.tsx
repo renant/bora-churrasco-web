@@ -101,10 +101,11 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://www.clarity.ms" />
       </head>
       <body className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 font-sans antialiased">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-red-700 focus:shadow-lg">Pular para o conteúdo</a>
         <Header />
         {/* Spacer for fixed header */}
         <div className="h-14 sm:h-16" aria-hidden="true" />
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main id="main-content" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {children}
         </main>
         <Script
@@ -131,3 +132,6 @@ export default async function RootLayout({
     </html>
   );
 }
+
+
+

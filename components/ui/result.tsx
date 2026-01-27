@@ -211,6 +211,7 @@ export default function Result({ participantes }: ResultProps) {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-8">
+      {copiedItem && (<p className="sr-only" aria-live="polite">Item copiado: {copiedItem}</p>)}
       <motion.div
         initial="hidden"
         animate="show"
@@ -423,3 +424,5 @@ export default function Result({ participantes }: ResultProps) {
     </div>
   );
 }
+
+

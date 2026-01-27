@@ -32,25 +32,18 @@ export function NavigationButtons({
 
   return (
     <>
-      {/* Spacer to prevent content from being hidden behind fixed buttons on mobile */}
       <div className="h-24 sm:hidden" aria-hidden="true" />
 
-      {/* Fixed navigation bar on mobile, normal flow on desktop */}
       <div
         className={cn(
-          // Mobile: fixed at bottom
           "fixed bottom-0 left-0 right-0 z-50 sm:relative sm:bottom-auto sm:left-auto sm:right-auto",
-          // Background and shadow for mobile
           "bg-white/95 backdrop-blur-sm shadow-[0_-4px_20px_rgba(0,0,0,0.1)] sm:bg-transparent sm:shadow-none sm:backdrop-blur-none",
-          // Padding
           "px-4 py-4 sm:px-0 sm:py-0",
-          // Safe area for notched devices
           "pb-[max(1rem,env(safe-area-inset-bottom))]",
           className
         )}
       >
         <div className="flex items-center justify-between gap-3 max-w-xl mx-auto sm:mt-8 mt-0">
-          {/* Back button */}
           {backHref ? (
             <Button
               variant="outline"
@@ -67,7 +60,7 @@ export function NavigationButtons({
               )}
             >
               <Link href={backHref}>
-                <ChevronLeft className="h-5 w-5 mr-1" />
+                <ChevronLeft className="h-5 w-5 mr-1" aria-hidden="true" />
                 <span className="hidden sm:inline">{backLabel}</span>
                 <span className="sm:hidden">Voltar</span>
               </Link>
@@ -76,32 +69,35 @@ export function NavigationButtons({
             <div className="flex-1 sm:flex-none" />
           )}
 
-          {/* Next button */}
           {nextHref ? (
-            <Link
-              href={nextHref}
+            <Button
+              variant="default"
+              size="lg"
+              asChild
+              disabled={isDisabled}
               className={cn(
                 "flex-1 sm:flex-none",
-                isDisabled && "pointer-events-none"
+                "min-h-[48px] min-w-[48px]",
+                "px-6 sm:px-8 py-3",
+                "text-base font-semibold",
+                "bg-red-600 hover:bg-red-700 text-white",
+                "shadow-lg shadow-red-600/25",
+                "touch-manipulation",
+                "active:scale-[0.98] transition-all",
+                isDisabled && "opacity-50 cursor-not-allowed shadow-none"
               )}
-              tabIndex={isDisabled ? -1 : undefined}
             >
-              <Button
-                variant="default"
-                size="lg"
-                disabled={isDisabled}
-                onClick={onNext}
-                className={cn(
-                  "w-full",
-                  "min-h-[48px] min-w-[48px]",
-                  "px-6 sm:px-8 py-3",
-                  "text-base font-semibold",
-                  "bg-red-600 hover:bg-red-700 text-white",
-                  "shadow-lg shadow-red-600/25",
-                  "touch-manipulation",
-                  "active:scale-[0.98] transition-all",
-                  isDisabled && "opacity-50 cursor-not-allowed shadow-none"
-                )}
+              <Link
+                href={nextHref}
+                onClick={(e) => {
+                  if (isDisabled) {
+                    e.preventDefault();
+                    return;
+                  }
+                  onNext?.();
+                }}
+                aria-disabled={isDisabled || undefined}
+                tabIndex={isDisabled ? -1 : undefined}
               >
                 {isLoading ? (
                   <>
@@ -111,11 +107,11 @@ export function NavigationButtons({
                 ) : (
                   <>
                     {nextLabel}
-                    <ChevronRight className="h-5 w-5 ml-1" />
+                    <ChevronRight className="h-5 w-5 ml-1" aria-hidden="true" />
                   </>
                 )}
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           ) : onNext ? (
             <Button
               variant="default"
@@ -142,7 +138,7 @@ export function NavigationButtons({
               ) : (
                 <>
                   {nextLabel}
-                  <ChevronRight className="h-5 w-5 ml-1" />
+                  <ChevronRight className="h-5 w-5 ml-1" aria-hidden="true" />
                 </>
               )}
             </Button>

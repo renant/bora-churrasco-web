@@ -104,7 +104,7 @@ export default async function PostsPage(props: {
         }}
         isAccessibleForFree
       />
-      <main className="min-h-screen bg-transparent px-9  md:container md:mx-auto md:pt-10">
+      <div className="min-h-screen bg-transparent px-9  md:container md:mx-auto md:pt-10">
         <section aria-label="Posts do Blog">
           <div className="flex justify-center mt-8 mb-8">
             <h1 className="text-2xl font-bold">
@@ -174,7 +174,8 @@ export default async function PostsPage(props: {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }
+

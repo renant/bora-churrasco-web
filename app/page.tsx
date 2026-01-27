@@ -45,7 +45,7 @@ export default function Home() {
       <RecoveryDialog />
       <Hero />
 
-      <main className="relative">
+      <div className="relative">
         <HowItWorks />
 
         <Features />
@@ -122,7 +122,7 @@ export default function Home() {
             </div>
           </section>
         </Suspense>
-      </main>
+      </div>
 
       {/* Structured Data for SEO */}
       <SoftwareApplicationJsonLd
@@ -184,3 +184,4 @@ function LoadingSection() {
     </div>
   );
 }
+

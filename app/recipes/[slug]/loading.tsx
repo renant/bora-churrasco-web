@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   return (
     <div className="min-h-screen bg-white">
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
         {/* Recipe Image Skeleton */}
         <div className="relative w-full overflow-hidden rounded-lg shadow-lg mb-8 md:mb-12">
           <Skeleton className="h-80 w-full lg:h-[500px] rounded-lg bg-red-100/50" />
@@ -23,7 +23,8 @@ export default function Loading() {
           <Skeleton className="h-4 w-full bg-gray-100/50" />
           <Skeleton className="h-4 w-3/4 bg-gray-100/50" />
         </div>
-      </main>
+      </div>
     </div>
   );
 }
+

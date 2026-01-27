@@ -83,8 +83,10 @@ const customComponents = {
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <Image
+      alt={alt ?? ""}
       sizes="100vw"
       style={{ width: "100%", height: "auto" }}
+      className={className}
       {...(props as ImageProps)}
     />
   ),

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <main className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-10">
+    <div className="min-h-screen bg-transparent px-9 md:container md:mx-auto md:pt-10">
       <div className="flex justify-center mt-8 mb-8">
         <Skeleton className="h-8 w-96 bg-red-100/50" />
       </div>
@@ -21,6 +21,7 @@ export default function Loading() {
           </Card>
         ))}
       </div>
-    </main>
+    </div>
   );
 }
+

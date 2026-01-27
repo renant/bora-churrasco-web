@@ -158,7 +158,7 @@ export default async function Resultado({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen">
-      <main className="flex flex-col items-center justify-between w-full max-w-7xl mx-auto px-4 md:px-16 py-8 md:py-16">
+      <div className="flex flex-col items-center justify-between w-full max-w-7xl mx-auto px-4 md:px-16 py-8 md:py-16">
         <div className="text-center mb-4 md:mb-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center leading-tight mb-4">
             <span className="text-red-600">Cálculo De Churrasco Para</span>
@@ -182,7 +182,7 @@ export default async function Resultado({ params }: { params: Params }) {
         </div>
 
         <ComoCalcularComponent />
-      </main>
+      </div>
 
       <ArticleJsonLd
         type="Article"
@@ -222,3 +222,4 @@ export default async function Resultado({ params }: { params: Params }) {
     </div>
   );
 }
+

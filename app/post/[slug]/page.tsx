@@ -104,7 +104,7 @@ export default async function PostPage({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen">
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16">
         {/* Cover Image */}
         <div className="relative w-full overflow-hidden rounded-lg shadow-lg mb-8 md:mb-12">
           <div
@@ -174,7 +174,7 @@ export default async function PostPage({ params }: { params: Params }) {
 
         {/* Client-Side Suggested Posts Section */}
         <ClientSuggestedPosts excludeSlug={slug} count={3} />
-      </main>
+      </div>
 
       <ArticleJsonLd
         type="BlogPosting"
@@ -208,3 +208,4 @@ export function generateStaticParams() {
 
   return slugs;
 }
+
